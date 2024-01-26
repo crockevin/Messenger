@@ -6,6 +6,7 @@ const app = express()
 const db = require('./config/connection')
 const { authMiddleware } = require('./utils/auth')
 const path = require('path')
+const { typeDefs, resolvers } = require('./schemas')
 const server = new ApolloServer({
   typeDefs,
   resolvers,
