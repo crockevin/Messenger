@@ -1,9 +1,9 @@
-const { User, Message, Conversation } = require('../models')
+const { User, Message, Conversation } = require('../')
 
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find()
+      return User.find().select('-password')
     },
   },
 }
