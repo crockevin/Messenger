@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const converstaionSchema = new mongoose.Schema({
+const converstationSchema = new mongoose.Schema({
   users: [
     {
       type: mongoose.Schema.ObjectId,
@@ -14,6 +14,6 @@ const converstaionSchema = new mongoose.Schema({
     },
   ],
 })
-const Conversation = mongoose.model('Conversation', converstaionSchema)
+const Conversation = mongoose.model('Conversation', converstationSchema)
 
 module.exports = Conversation
