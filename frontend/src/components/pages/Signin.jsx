@@ -1,4 +1,3 @@
-import theme from '../../theme';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,7 +10,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function Copyright(props) {
   return (
@@ -27,7 +25,6 @@ function Copyright(props) {
 }
 
 
-const defaultTheme = createTheme();
 
 export default function Signin() {
   const handleSubmit = (event) => {
@@ -40,7 +37,6 @@ export default function Signin() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -52,7 +48,9 @@ export default function Signin() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+            <LockOutlinedIcon 
+            color='primary'
+            />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -101,6 +99,5 @@ export default function Signin() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-    </ThemeProvider>
   );
 }

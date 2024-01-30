@@ -1,13 +1,51 @@
-import { Typography } from "@mui/material";
+import { Typography } from '@mui/material'
+import {Button} from '@mui/material'
+import {ButtonGroup} from '@mui/material'
+import {Container} from '@mui/material'
+
+
+
+
 
 export default function Home() {
+
+
+
   return (
-    <div>
+    <Container>
       <Typography 
-      align="center" 
-      color="red">
+      variant='h2'
+      align='center' 
+      color='primary'
+      gutterBottom>
         Home Page
       </Typography>
-    </div>
-  );
+
+      <Typography
+
+      color='textSecondary'
+      align='center'
+      gutterBottom
+      
+      >
+        🐏 Ram ranch, baby. Here, we ram ram ram, ram some more, then we keep rammin' til aint no more ram left in us. Ram on. 🐏
+      </Typography>
+
+      <ButtonGroup
+      
+      color='primary'
+      variant='contained'
+      >
+        <Button
+        type='signup'
+        href='/signup'
+        >Signup</Button>
+        <Button
+        type='signin'
+        href='signin'
+        >Signin</Button>
+      </ButtonGroup>
+    </Container>
+
+  )
 }
