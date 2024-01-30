@@ -34,6 +34,7 @@ type Auth {
 
 type Query {
     users: [User]
+    conversation(id: ID!): Conversation
 }
 
 type Mutation {
