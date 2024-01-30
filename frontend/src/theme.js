@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
+import '../src/index.css'
 
 // Theme instance
 // Themes stored in index.css for reference
