@@ -6,7 +6,7 @@ const resolvers = {
       return User.find().select('-password')
     },
     conversation: async (parent, { id }) => {
-      return Conversation.findById(id).populate('messages')
+      return Conversation.findById(id).populate("messages")
     },
   },
 }
