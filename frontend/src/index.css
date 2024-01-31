@@ -1,8 +1,9 @@
 :root {
     /* Color themse */
-    --primary: #242526;
-    --secondary: #e4ebf2;
-    --third: #ecf0f3;
+    --primary: #013440;
+    --secondary: #BBDDF2;
+    --third: #e4ebf2;
+    --fourth: #242526;
 }
 
 *{

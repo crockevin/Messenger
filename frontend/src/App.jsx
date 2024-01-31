@@ -14,10 +14,16 @@ import {
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#242526',
+      main: '#013440',
     },
     secondary: {
+      main: '#BBDDF2',
+    },
+    third: {
       main: '#e4ebf2',
+    },
+    fourth: {
+      main: '#242526',
     },
   },
 })

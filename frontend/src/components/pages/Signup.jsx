@@ -92,6 +92,7 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Button
+            TextField='secondary'
             type="submit"
             fullWidth
             variant="contained"
