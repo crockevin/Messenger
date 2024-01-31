@@ -12,7 +12,6 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AgricultureIcon from '@mui/icons-material/Agriculture'
-import { DarkModeToggle } from '@anatoliygatt/dark-mode-toggle'
 
 
 const pages = ['About', 'Contribute', 'Contact']
@@ -60,7 +59,7 @@ function NavBar() {
               textDecoration: 'none',
             }}
           >
-            RAM
+            LOL
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -119,7 +118,7 @@ function NavBar() {
               textDecoration: 'none',
             }}
           >
-            RAM
+            LOL
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -161,9 +160,6 @@ function NavBar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
-          <Box>
-            <DarkModeToggle />
           </Box>
         </Toolbar>
       </Container>
