@@ -1,6 +1,4 @@
 import { createTheme, ThemeProvider } from '@mui/material'
-
-
 import {
   createBrowserRouter,
   Route,
@@ -27,21 +25,21 @@ const theme = createTheme({
 })
 
 //Root Layout
-import RootLayout from './components/layouts/RootLayout'
+import RootLayout from './layouts/RootLayout'
 
 //Pages
-import Home from './components/pages/Home'
-import Signin from './components/pages/Signin'
-import SignUp from './components/pages/Signup'
-import Profile from './components/pages/Profile'
+import Home from './pages/Home'
+import Signin from './pages/Signin'
+import SignUp from './pages/Signup'
+import Profile from './pages/Profile'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<RootLayout />}>
-      <Route index element={<Home />} />
-      <Route path='Home' element={<Home />} />
-      <Route path='Signin' element={<Signin />} />
-      <Route path='Signup' element={<SignUp />} />
+    <Route path='/' element={<RootLayout/>}>
+      <Route index element={<Home/>}/>
+      <Route path='Home' element={<Home/>} />
+      <Route path='Signin' element={<Signin/>} />
+      <Route path='Signup' element={<SignUp/>} />
       <Route path='Profile' element={<Profile/>} />
     </Route>
   )

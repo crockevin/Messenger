@@ -1,5 +1,5 @@
 import { Typography, Button, Grid } from '@mui/material'
-import NavBar from '../Navbar'
+import NavBar from '../components/Navbar'
 
 
 
