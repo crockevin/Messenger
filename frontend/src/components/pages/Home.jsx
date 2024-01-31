@@ -1,52 +1,67 @@
+import { Typography, Button, Grid } from '@mui/material'
 import NavBar from '../Navbar'
-import { Typography } from '@mui/material'
-import {Button} from '@mui/material'
-import {ButtonGroup} from '@mui/material'
-import {Container} from '@mui/material'
-
-
 
 
 
 export default function Home() {
-
-
-
   return (
-    <Container>
-      <Typography 
-      variant='h2'
-      align='center' 
-      color='primary'
-      gutterBottom>
-        Home Page
-      </Typography>
+    <>
+    <NavBar/>
+  <Grid
+      container item
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      rowSpacing={3}
+      sx={{ minHeight: '35vh'}} // Vertical position for Container 
+    >
+      <Grid item>
+      </Grid>
+      <Grid item>
+        <Typography 
+        variant="h2" 
+        align="center" 
+        color="primary">
+          LOL
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Typography 
+        color="textSecondary" 
+        align="center"
+        sx={{ fontStyle: 'italic' }}
+        >
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, magnam hic aliquam omnis fugit magni sed ea quidem sunt eaque quo nesciunt.
+        </Typography>
+      </Grid>
 
-      <Typography
-
-      color='textSecondary'
-      align='center'
-      gutterBottom
-      
+      <Grid container item 
+      justifyContent="center" 
+      spacing={3}
       >
-        🐏 Ram ranch, baby. Here, we ram ram ram, ram some more, then we keep rammin' til aint no more ram left in us. Ram on. 🐏
-      </Typography>
 
-      <ButtonGroup
-      
-      color='primary'
-      variant='contained'
-      >
-        <Button
-        type='signup'
-        href='/signup'
-        >Signup</Button>
-        <Button
-        type='signin'
-        href='signin'
-        >Signin</Button>
-      </ButtonGroup>
-    </Container>
-
+        <Grid item>
+          <Button
+            color="primary"
+            variant="contained"
+            type="signup"
+            href="/signup"
+          >
+            Signup
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            color="primary"
+            variant="contained"
+            type="signin"
+            href="signin"
+          >
+            Signin
+          </Button>
+        </Grid>
+      </Grid>
+    </Grid>
+    </>
   )
 }

@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
-import AgricultureIcon from '@mui/icons-material/Agriculture'
+import EmailIcon from '@mui/icons-material/Email';
 
 
 const pages = ['About', 'Contribute', 'Contact']
@@ -40,7 +40,7 @@ function NavBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AgricultureIcon
+          <EmailIcon
             color="secondary"
             sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
           />
@@ -98,7 +98,7 @@ function NavBar() {
               ))}
             </Menu>
           </Box>
-          <AgricultureIcon
+          <EmailIcon
             color="secondary"
             sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
           />
