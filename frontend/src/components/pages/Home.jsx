@@ -1,3 +1,4 @@
+import NavBar from '../Navbar'
 import { Typography } from '@mui/material'
 import {Button} from '@mui/material'
 import {ButtonGroup} from '@mui/material'
