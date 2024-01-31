@@ -41,8 +41,9 @@ function NavBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AgricultureIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <AgricultureIcon color ='secondary' sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
+          color ='secondary'
             variant="h6"
             noWrap
             component="a"
@@ -53,7 +54,6 @@ function NavBar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
               textDecoration: 'none',
             }}
           >
@@ -96,8 +96,9 @@ function NavBar() {
               ))}
             </Menu>
           </Box>
-          <AgricultureIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <AgricultureIcon color ='secondary' sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
+            color ='secondary'
             variant="h5"
             noWrap
             component="a"
@@ -109,7 +110,6 @@ function NavBar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
               textDecoration: 'none',
             }}
           >
