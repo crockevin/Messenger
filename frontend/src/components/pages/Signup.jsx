@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
+import NavBar from '../Navbar'
 
 
 function Copyright(props) {
@@ -42,6 +43,8 @@ export default function SignUp() {
   }
 
   return (
+    <>
+    <NavBar/>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -111,5 +114,6 @@ export default function SignUp() {
       </Box>
       <Copyright sx={{ mt: 5 }} />
     </Container>
+    </>
   )
 }

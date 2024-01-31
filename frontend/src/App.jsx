@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react'
-import { QUERY_USERS } from './utlis/queries'
-import { useQuery } from '@apollo/client'
 import { createTheme, ThemeProvider } from '@mui/material'
 
 
@@ -36,6 +33,7 @@ import RootLayout from './components/layouts/RootLayout'
 import Home from './components/pages/Home'
 import Signin from './components/pages/Signin'
 import SignUp from './components/pages/Signup'
+import Profile from './components/pages/Profile'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,7 +42,7 @@ const router = createBrowserRouter(
       <Route path='Home' element={<Home />} />
       <Route path='Signin' element={<Signin />} />
       <Route path='Signup' element={<SignUp />} />
-      <Route path='Footer' element={<footer/>} />
+      <Route path='Profile' element={<Profile/>} />
     </Route>
   )
 )
