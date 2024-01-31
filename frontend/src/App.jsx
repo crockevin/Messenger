@@ -3,6 +3,7 @@ import { QUERY_USERS } from './utlis/queries'
 import { useQuery } from '@apollo/client'
 import { createTheme, ThemeProvider } from '@mui/material'
 
+
 import {
   createBrowserRouter,
   Route,
@@ -38,17 +39,19 @@ import SignUp from './components/pages/Signup'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
+    <Route path='/' element={<RootLayout />}>
       <Route index element={<Home />} />
-      <Route path="Home" element={<Home />} />
-      <Route path="Signin" element={<Signin />} />
-      <Route path="Signup" element={<SignUp />} />
+      <Route path='Home' element={<Home />} />
+      <Route path='Signin' element={<Signin />} />
+      <Route path='Signup' element={<SignUp />} />
+      <Route path='Footer' element={<footer/>} />
     </Route>
   )
 )
 
 function App() {
   return (
+    
     <ThemeProvider theme={theme}>
       <RouterProvider router={router} />
     </ThemeProvider>

@@ -1,49 +1,51 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AgricultureIcon from '@mui/icons-material/Agriculture';
+import * as React from 'react'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import Menu from '@mui/material/Menu'
+import MenuIcon from '@mui/icons-material/Menu'
+import Container from '@mui/material/Container'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import Tooltip from '@mui/material/Tooltip'
+import MenuItem from '@mui/material/MenuItem'
+import AgricultureIcon from '@mui/icons-material/Agriculture'
 
 
-const pages = ['About', 'Contribute', 'Contact'];
-const settings = ['Profile', 'Dashboard', 'Logout'];
+const pages = ['About', 'Contribute', 'Contact']
+const settings = ['Profile', 'Dashboard', 'Logout']
 
 function NavBar() {
-
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const [anchorElUser, setAnchorElUser] = React.useState(null)
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+    setAnchorElNav(event.currentTarget)
+  }
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    setAnchorElUser(event.currentTarget)
+  }
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+    setAnchorElNav(null)
+  }
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+    setAnchorElUser(null)
+  }
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AgricultureIcon color ='secondary' sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <AgricultureIcon
+            color="secondary"
+            sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
+          />
           <Typography
-          color ='secondary'
+            color="secondary"
             variant="h6"
             noWrap
             component="a"
@@ -57,7 +59,7 @@ function NavBar() {
               textDecoration: 'none',
             }}
           >
-            RAM
+            LOL
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -96,9 +98,12 @@ function NavBar() {
               ))}
             </Menu>
           </Box>
-          <AgricultureIcon color ='secondary' sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <AgricultureIcon
+            color="secondary"
+            sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
+          />
           <Typography
-            color ='secondary'
+            color="secondary"
             variant="h5"
             noWrap
             component="a"
@@ -113,7 +118,7 @@ function NavBar() {
               textDecoration: 'none',
             }}
           >
-            RAM
+            LOL
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -159,6 +164,6 @@ function NavBar() {
         </Toolbar>
       </Container>
     </AppBar>
-  );
+  )
 }
-export default NavBar;
+export default NavBar
