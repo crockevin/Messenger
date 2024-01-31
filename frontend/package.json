@@ -10,7 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@anatoliygatt/dark-mode-toggle": "^1.0.1",
     "@apollo/client": "^3.8.10",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.15.6",
+    "@mui/material": "^5.15.6",
     "graphql": "^16.8.1",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
@@ -21,6 +27,7 @@
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.17",
     "eslint": "^8.45.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
