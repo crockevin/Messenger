@@ -27,22 +27,25 @@ import Home from './pages/Home'
 import Signin from './pages/Signin'
 import SignUp from './pages/Signup'
 import Profile from './pages/Profile'
+import Conversation from './queryTest'
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<RootLayout/>}>
-      <Route index element={<Home/>}/>
-      <Route path='Home' element={<Home/>} />
-      <Route path='Signup' element={<SignUp/>} />
-      <Route path='Signin' element={<Signin/>} />
-      <Route path='Profile' element={<Profile/>} />
+    <Route path='/' element={<RootLayout />}>
+      <Route index element={<Home />} />
+      <Route path='Home' element={<Home />} />
+      <Route path='Signup' element={<SignUp />} />
+      <Route path='Signin' element={<Signin />} />
+      <Route path='Profile' element={<Profile />} />
+      <Route path='conversation/:conversationId' element={<Conversation />} />
     </Route>
   )
 )
 
 function App() {
   return (
-    
+
     <ThemeProvider theme={theme}>
       <RouterProvider router={router} />
     </ThemeProvider>
