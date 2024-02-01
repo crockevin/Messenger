@@ -9,3 +9,16 @@ export const QUERY_USERS = gql`
     }
   }
 `
+export const QUERY_CONVERSATION = gql`
+  query conversation($conversationId: ID!) {
+    conversation(id: $conversationId) {
+      messages {
+        id
+        content
+        sender {
+          _id
+        }
+      }
+    }
+  }
+`

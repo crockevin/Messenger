@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react'
-import { QUERY_USERS } from './utlis/queries'
+import { QUERY_CONVERSATION } from './utlis/queries'
 import { useQuery } from '@apollo/client'
+import { useParams } from 'react-router-dom'
 
 
 
-function App() {
-  const { loading, data } = useQuery(QUERY_USERS)
+function Conversation() {
+  const { conversationId } = useParams()
+  const { loading, data } = useQuery(QUERY_CONVERSATION, {
+    variables: { conversationId: conversationId }
+  })
 
   useEffect(() => {
     console.log(data)
   }, [data])
   return (
     <>
-      {data && data.users.map((user) => (
-        <div key={user._id}>{user.username}</div>
+      {data && data.conversation.messages.map((message) => (
+        <div key={message.id}>{message.content}  {message.sender._id}</div>
       ))}
     </>
   );
 }
 
-export default App
+export default Conversation
