@@ -163,18 +163,18 @@ export default function ProfileHeader() {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ mr: 2 }}
+            // sx={{ mr: 2 }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             LOL
-          </Typography>
+          </Typography> */}
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
