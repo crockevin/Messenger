@@ -40,6 +40,7 @@ type Query {
 type Mutation {
     AddUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    addMessage(senderId: ID!, conversationId: ID!, content: String!): Message
 }
 
 
