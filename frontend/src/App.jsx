@@ -1,10 +1,5 @@
 import { createTheme, ThemeProvider } from '@mui/material'
-import {
-  createBrowserRouter,
-  Route,
-  createRoutesFromElements,
-  RouterProvider,
-} from 'react-router-dom'
+import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 
 // Custom Theme instance - Colors, Fonts, etc go here for global use/overriding default values
 const theme = createTheme({
@@ -38,8 +33,8 @@ const router = createBrowserRouter(
     <Route path='/' element={<RootLayout/>}>
       <Route index element={<Home/>}/>
       <Route path='Home' element={<Home/>} />
-      <Route path='Signin' element={<Signin/>} />
       <Route path='Signup' element={<SignUp/>} />
+      <Route path='Signin' element={<Signin/>} />
       <Route path='Profile' element={<Profile/>} />
     </Route>
   )
