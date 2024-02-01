@@ -9,7 +9,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import NavBar from '../components/Navbar'
+
+import { useMutation } from '@apollo/client'
 import { useState } from 'react'
+import { signup } from '../utlis/mutation'
+import Auth from '../utlis/auth'
 
 
 function Copyright(props) {
@@ -32,21 +36,35 @@ function Copyright(props) {
 
 export default function SignUp() {
 
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+const [formState, setFormState] = useState({
+  username: '',
+  email: '',
+  password: '',
+})
 
+const [AddUser, { error, data }] = useMutation(signup);
 
+const handleChange = (event) => {
+  const { name, value } = event.target;
 
-  const handleSubmit = (event) => {
+  setFormState({
+    ...formState,
+    [name]: value,
+  });
+};
+
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      username: data.get('username'),
-      email: data.get('email'),
-      password: data.get('password'),
-    })
-  }
+    console.log(formState)
+    try {
+      const { data } = await AddUser({
+        variables: { ...formState },
+      });
+      Auth.login(data.AddUser.token);
+    } catch (e) {
+      console.error("AddUser Error:", e);
+    }
+  };
 
   return (
     <>
@@ -76,7 +94,8 @@ export default function SignUp() {
                 id="username"
                 label="Username"
                 name="username"
-                onChange={(e) => setUsername(e.target.value)}
+                value={formState.name}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -87,7 +106,8 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={(e) => setEmail(e.target.value)}
+                value={formState.email}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -99,7 +119,8 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
-                onChange={(e) => setPassword(e.target.value)}
+                value={formState.password}
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
