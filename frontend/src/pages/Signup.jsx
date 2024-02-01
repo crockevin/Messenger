@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import NavBar from '../components/Navbar'
+import { useState } from 'react'
 
 
 function Copyright(props) {
@@ -21,7 +22,7 @@ function Copyright(props) {
     >
       {'Copyright © '}
       <Link color="inherit" href="/">
-      LOL Messenger
+      Messenger App
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -30,6 +31,11 @@ function Copyright(props) {
 }
 
 export default function SignUp() {
+
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
 
 
   const handleSubmit = (event) => {
@@ -70,6 +76,7 @@ export default function SignUp() {
                 id="username"
                 label="Username"
                 name="username"
+                onChange={(e) => setUsername(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -80,6 +87,7 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,6 +99,7 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Grid>
           </Grid>
@@ -103,7 +112,7 @@ export default function SignUp() {
           >
             Sign Up
           </Button>
-          <Grid container justifyContent="flex-end">
+          <Grid container justifyContent="center">
             <Grid item>
               <Link href="/signin" variant="body2">
                 Already have an account? Sign in

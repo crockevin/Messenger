@@ -17,7 +17,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="/">
-      LOL Messenger
+      Messenger App
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -91,10 +91,10 @@ export default function Signin() {
             >
               Sign In
             </Button>
-            <Grid container>
+            <Grid container justifyContent='center'>
               <Grid item>
                 <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  Don't have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>
