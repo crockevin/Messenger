@@ -98,7 +98,8 @@ export default function ProfileHeader() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   )
 
@@ -167,14 +168,6 @@ export default function ProfileHeader() {
           >
             <MenuIcon />
           </IconButton>
-          {/* <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            LOL
-          </Typography> */}
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

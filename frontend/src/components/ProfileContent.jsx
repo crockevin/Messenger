@@ -37,10 +37,10 @@ export default function ProfileContent() {
     <Box sx={{ pb: 7 }} ref={ref}>
       <CssBaseline />
       <List>
-        {messages.map(({ primary, secondary, person }, index) => (
-          <ListItemButton key={index + person}>
+        {messages.map(({ primary, secondary, pfp }, index) => (
+          <ListItemButton key={index + pfp}>
             <ListItemAvatar>
-              <Avatar alt="Profile Picture" src={person} />
+              <Avatar alt="Profile Picture" src={pfp} />
             </ListItemAvatar>
             <ListItemText primary={primary} secondary={secondary} />
           </ListItemButton>
@@ -67,22 +67,22 @@ const messageExamples = [
   {
     primary: "Kevin", // USERNAME
     secondary: 'I love otters.', // CONTENT
-    person: '/static/images/avatar/4.jpg', // PFP
+    pfp: '/static/images/avatar/4.jpg', // PFP
   },
   {
     primary: 'Nic',
-    secondary: `Coding is hard.`,
-    person: '/static/images/avatar/5.jpg',
+    secondary: `My back hurts.`,
+    pfp: '/static/images/avatar/5.jpg',
   },
   {
     primary: 'Chris',
     secondary: `Let's play some Apex, Nic. Really need you to carry me out of Bronze.`,
-    person: '/static/images/avatar/1.jpg',
+    pfp: '/static/images/avatar/1.jpg',
   },
   {
     primary: 'Tyler',
     secondary: `Who wants to have a cookout this weekend? I just got some furniture
       for my backyard and would love to fire up the grill.`,
-    person: '/static/images/avatar/1.jpg',
+    pfp: '/static/images/avatar/1.jpg',
   },
 ];
