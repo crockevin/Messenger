@@ -44,8 +44,8 @@ export default function SignUp() {
     password: '',
   })
 
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false) // For success alert
-  const [showErrorAlert, setShowErrorAlert] = useState(false)
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false) // Successful sign in alert
+  const [showErrorAlert, setShowErrorAlert] = useState(false) //  Failed sign in alert
 
   const [AddUser, { error, data }] = useMutation(signup)
 
@@ -91,7 +91,7 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          {/* Render success alert conditionally */}
+          {/* Render success/failure alert conditionally */}
           {showSuccessAlert ? (
             <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
               Registration successful! Redirecting to profile...
