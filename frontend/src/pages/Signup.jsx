@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import { signup } from '../utlis/mutation'
 import Auth from '../utlis/auth'
 
+// move to own file
 function Copyright(props) {
   return (
     <Typography

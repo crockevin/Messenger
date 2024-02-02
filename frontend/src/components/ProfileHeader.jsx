@@ -131,10 +131,10 @@ export default function ProfileHeader() {
       <MenuItem>
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
+          aria-label="show 10 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={10} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -159,15 +159,15 @@ export default function ProfileHeader() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            // sx={{ mr: 2 }}
+            // sx={{ mr:0 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -190,10 +190,10 @@ export default function ProfileHeader() {
             </IconButton>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label="show 10 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={10} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
