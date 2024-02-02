@@ -15,8 +15,11 @@ export default function Profile() {
     <>
       <ProfileHeader />
       <ProfileContent />
-      <Typography>
-        Hi, user {id} ✌️
+      <Typography
+      align='center'
+      variant='h6'
+      >
+        Hi, user {id}! ✌️
       </Typography>
     </>
   )

@@ -1,5 +1,4 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import * as React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import ArchiveIcon from '@mui/icons-material/Archive';

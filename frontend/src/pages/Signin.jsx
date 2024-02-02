@@ -89,11 +89,11 @@ export default function Signin() {
         >
             {showSuccessAlert ? (
             <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
-              Signup successful! Redirecting to profile...
+              Login successful! Redirecting to profile...
             </Alert>
           ) : showErrorAlert ? (
             <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
-              Signup failed! Please be sure all inputs are valid.
+              Login failed! Please be sure your information is correct, or create an account.
             </Alert>
           ) : null}
           
