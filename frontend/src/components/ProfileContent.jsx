@@ -1,6 +1,5 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
+import * as React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import ArchiveIcon from '@mui/icons-material/Archive';
@@ -12,6 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import InboxIcon from '@mui/icons-material/Inbox';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import {Box} from '@mui/material';
 
 function refreshMessages() {
   const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));

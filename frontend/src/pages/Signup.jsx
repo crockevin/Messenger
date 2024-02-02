@@ -1,17 +1,20 @@
+import CssBaseline from '@mui/material/CssBaseline'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import NavBar from '../components/Navbar'
+import {Box} from '@mui/material'
+import Alert from '@mui/material/Alert';
+
 
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { signup } from '../utlis/mutation'
 import Auth from '../utlis/auth'
 
@@ -35,6 +38,7 @@ function Copyright(props) {
 }
 
 export default function SignUp() {
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
 const [formState, setFormState] = useState({
   username: '',
@@ -61,6 +65,7 @@ const handleChange = (event) => {
         variables: { ...formState },
       });
       Auth.login(data.AddUser.token);
+      navigate('/signin');  // send to signin in page after successful sign up
     } catch (e) {
       console.error("AddUser Error:", e);
     }
@@ -86,6 +91,7 @@ const handleChange = (event) => {
           Sign up
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -133,6 +139,7 @@ const handleChange = (event) => {
           >
             Sign Up
           </Button>
+          
           <Grid container justifyContent="center">
             <Grid item>
               <Link href="/signin" variant="body2">
@@ -141,6 +148,7 @@ const handleChange = (event) => {
             </Grid>
           </Grid>
         </Box>
+        
       </Box>
       <Copyright sx={{ mt: 5 }} />
     </Container>
