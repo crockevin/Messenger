@@ -38,7 +38,7 @@ function Copyright(props) {
 }
 
 export default function SignUp() {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate(); // Initialize useNavigate hook - on handlesubmit sends to /profile
 
 const [formState, setFormState] = useState({
   username: '',
@@ -47,6 +47,8 @@ const [formState, setFormState] = useState({
 })
 
 const [AddUser, { error, data }] = useMutation(signup);
+const [showSuccessAlert, setShowSuccessAlert] = useState(false); // For success alert
+
 
 const handleChange = (event) => {
   const { name, value } = event.target;
@@ -65,7 +67,12 @@ const handleChange = (event) => {
         variables: { ...formState },
       });
       Auth.login(data.AddUser.token);
-      navigate('/signin');  // send to signin in page after successful sign up
+      // Show success alert
+      setShowSuccessAlert(true);
+      // Redirect to /profile after a brief delay
+      setTimeout(() => {
+        navigate('/profile');
+      }, 1500); // Adjust the delay as needed
     } catch (e) {
       console.error("AddUser Error:", e);
     }
@@ -84,6 +91,15 @@ const handleChange = (event) => {
           alignItems: 'center',
         }}
       >
+        {/* Render success alert conditionally */}
+        {showSuccessAlert && (
+            <Alert
+              severity="success"
+              sx={{ width: '100%', mb: 2 }}
+            >
+              Registration successful! Redirecting to profile...
+            </Alert>
+          )}
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon color="primary" />
         </Avatar>
