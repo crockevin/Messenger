@@ -64,10 +64,10 @@ export default function Signin() {
       Auth.login(data.login.token)
       // Show success alert
       setShowSuccessAlert(true)
-      // Redirect to /profile after a brief delay
+      
       setTimeout(() => {
-        navigate('/profile')
-      }, 1500) // Adjust the delay as needed
+        navigate('/profile/' + data.login.user._id) // adjust to be specific to user _id
+      }, 1500) 
     } catch (e) {
       setShowErrorAlert(true)
       console.error('Login Error:', e)

@@ -69,10 +69,10 @@ export default function SignUp() {
       Auth.login(data.AddUser.token)
       // Show success alert
       setShowSuccessAlert(true)
-      // Redirect to /profile after a brief delay
+      
       setTimeout(() => {
         navigate('/profile')
-      }, 1500) // Adjust the delay as needed
+      }, 1500) 
     } catch (e) {
       setShowErrorAlert(true)
       console.error('AddUser Error:', e)

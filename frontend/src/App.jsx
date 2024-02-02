@@ -40,6 +40,7 @@ const router = createBrowserRouter(
       <Route path='Signup' element={<SignUp />} />
       <Route path='Signin' element={<Signin />} />
       <Route path='Profile' element={<Profile />} />
+      <Route path='Profile/:id' element={<Profile />} />
       <Route path='conversation/:conversationId' element={<Conversation />} />
     </Route>
   )
