@@ -11,7 +11,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import NavBar from '../components/Navbar';
 import {Box} from '@mui/material';
+import { useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { login } from '../utlis/mutation';
+import { useNavigate } from 'react-router-dom'
+import Alert from '@mui/material/Alert'
+import Auth from '../utlis/auth'
 
+// move to own file
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -25,17 +32,47 @@ function Copyright(props) {
   );
 }
 
-
-
 export default function Signin() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const navigate = useNavigate() // Initialize useNavigate hook - on handlesubmit sends to /profile
+
+  const [formState, setFormState] = useState({
+    email: '',
+    password: '',
+  })
+
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false) // Successful sign in alert
+  const [showErrorAlert, setShowErrorAlert] = useState(false) //  Failed sign in alert
+
+  const [loginUser, { error, data }] = useMutation(login)
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    })
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    console.log(formState)
+    try {
+      const { data } = await loginUser({
+        variables: { ...formState },
+      })
+      Auth.login(data.login.token)
+      // Show success alert
+      setShowSuccessAlert(true)
+      
+      setTimeout(() => {
+        navigate('/profile/' + data.login.user._id) // adjust to be specific to user _id
+      }, 1500) 
+    } catch (e) {
+      setShowErrorAlert(true)
+      console.error('Login Error:', e)
+    }
+  }
 
   return (
     <>
@@ -50,6 +87,16 @@ export default function Signin() {
             alignItems: 'center',
           }}
         >
+            {showSuccessAlert ? (
+            <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
+              Login successful! Redirecting to profile...
+            </Alert>
+          ) : showErrorAlert ? (
+            <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+              Login failed! Please be sure your information is correct, or create an account.
+            </Alert>
+          ) : null}
+          
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon 
             color='primary'
@@ -68,6 +115,7 @@ export default function Signin() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleChange}
             />
             <TextField
               margin="normal"
@@ -78,6 +126,7 @@ export default function Signin() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

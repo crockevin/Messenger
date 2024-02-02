@@ -98,7 +98,8 @@ export default function ProfileHeader() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   )
 
@@ -130,10 +131,10 @@ export default function ProfileHeader() {
       <MenuItem>
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
+          aria-label="show 10 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={10} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -158,23 +159,15 @@ export default function ProfileHeader() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            // sx={{ mr: 2 }}
+            // sx={{ mr:0 }}
           >
             <MenuIcon />
-          </IconButton>
-          {/* <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            LOL
-          </Typography> */}
+          </IconButton> */}
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -197,10 +190,10 @@ export default function ProfileHeader() {
             </IconButton>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label="show 10 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={10} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>

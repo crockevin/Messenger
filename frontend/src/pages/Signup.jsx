@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import { signup } from '../utlis/mutation'
 import Auth from '../utlis/auth'
 
+// move to own file
 function Copyright(props) {
   return (
     <Typography
@@ -44,8 +45,8 @@ export default function SignUp() {
     password: '',
   })
 
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false) // For success alert
-  const [showErrorAlert, setShowErrorAlert] = useState(false)
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false) // Successful sign in alert
+  const [showErrorAlert, setShowErrorAlert] = useState(false) //  Failed sign in alert
 
   const [AddUser, { error, data }] = useMutation(signup)
 
@@ -68,10 +69,10 @@ export default function SignUp() {
       Auth.login(data.AddUser.token)
       // Show success alert
       setShowSuccessAlert(true)
-      // Redirect to /profile after a brief delay
+      
       setTimeout(() => {
-        navigate('/profile')
-      }, 1500) // Adjust the delay as needed
+        navigate('/profile/' + data.AddUser.user._id)
+      }, 1500) 
     } catch (e) {
       setShowErrorAlert(true)
       console.error('AddUser Error:', e)
@@ -91,7 +92,7 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          {/* Render success alert conditionally */}
+          {/* Render success/failure alert conditionally */}
           {showSuccessAlert ? (
             <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
               Registration successful! Redirecting to profile...
