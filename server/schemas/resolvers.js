@@ -1,10 +1,15 @@
 const { User, Message, Conversation } = require('../models')
 const { signToken, AuthenticationError } = require('../utils/auth')
+const { PubSub } = require('graphql-subscriptions')
+const pubSub = new PubSub()
 
 const resolvers = {
   Query: {
     users: async () => {
       return User.find().select('-password')
+    },
+    user: async (parent, { id }) => {
+      return User.findById(id).populate('friends').populate('friendRequests')
     },
     conversation: async (parent, { id }) => {
       return Conversation.findById(id).populate('messages')
@@ -70,10 +75,20 @@ const resolvers = {
         conversation.messages.push(message._id)
         await conversation.save()
         await message.populate('sender')
+        const channel = `MESSAGE_ADDED${conversationId}`
+        pubSub.publish(channel, { messageAdded: message })
         return message
       } catch (e) {
         throw new Error(e)
       }
+    },
+  },
+  Subscription: {
+    messageAdded: {
+      subscribe: (parent, { conversationId }) => {
+        const channel = `MESSAGE_ADDED${conversationId}`
+        return pubSub.asyncIterator(channel)
+      },
     },
   },
 }

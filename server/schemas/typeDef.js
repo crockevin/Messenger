@@ -34,7 +34,12 @@ type Auth {
 
 type Query {
     users: [User]
+    user(id: ID!): User
     conversation(id: ID!): Conversation
+}
+
+type Subscription {
+    messageAdded(conversationId: ID!): Message
 }
 
 type Mutation {
