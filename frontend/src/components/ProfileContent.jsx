@@ -13,7 +13,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {Box} from '@mui/material';
 import { useState, useRef, useEffect } from 'react';
 
-// Seeds messages
+// Seeds sample messages
 function refreshMessages() {
   const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
 

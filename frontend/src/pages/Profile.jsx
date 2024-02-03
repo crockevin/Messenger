@@ -4,6 +4,11 @@ import ProfileContent from '../components/ProfileContent'
 import { Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
+import { QUERY_SINGLE_USER } from '../utlis/queries'
+import { useQuery } from "react-query";
+import { gql } from '@apollo/client';
+
+
 
 // render profile if logged in
 export default function Profile() {
