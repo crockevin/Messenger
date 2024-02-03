@@ -13,6 +13,13 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {Box} from '@mui/material';
 import { useState, useRef, useEffect } from 'react';
 
+import { gql } from '@apollo/client';
+import { useQuery } from "react-query";
+import { useParams } from 'react-router-dom'
+import { QUERY_SINGLE_USER } from '../utlis/queries'
+import Auth from '../utlis/auth'
+
+
 // Seeds sample messages
 function refreshMessages() {
   const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
