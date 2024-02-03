@@ -43,17 +43,18 @@ export default function ProfileContent() {
     <Box sx={{ pb: 7 }} ref={ref}>
       <CssBaseline />
       <List>
-        {messages.map(({ primary, secondary, pfp }, index) => (
+        {messages.map(({ username, message, pfp }, index) => (
           <ListItemButton key={index + pfp}>
             <ListItemAvatar>
               <Avatar alt="Profile Picture" src={pfp} />
             </ListItemAvatar>
-            <ListItemText primary={primary} secondary={secondary} />
+            <ListItemText primary={username} secondary={message} />
           </ListItemButton>
         ))}
       </List>
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
         <BottomNavigation
+          
           showLabels
           value={value}
           onChange={(event, newValue) => {
@@ -71,23 +72,23 @@ export default function ProfileContent() {
 
 const messageExamples = [
   {
-    primary: "Kevin", // USERNAME
-    secondary: 'I love otters.', // CONTENT
+    username: "Kevin", // USERNAME
+    message: 'I love otters.', // CONTENT
     pfp: '/static/images/avatar/4.jpg', // PFP
   },
   {
-    primary: 'Nic',
-    secondary: `My back hurts.`,
+    username: 'Nic',
+    message: `My back hurts.`,
     pfp: '/static/images/avatar/5.jpg',
   },
   {
-    primary: 'Chris',
-    secondary: `Let's play some Apex, Nic. Really need you to carry me out of Bronze.`,
+    username: 'Chris',
+    message: `Let's play some Apex, Nic. Really need you to carry me out of Bronze.`,
     pfp: '/static/images/avatar/1.jpg',
   },
   {
-    primary: 'Tyler',
-    secondary: `Who wants to have a cookout this weekend? I just got some furniture
+    username: 'Tyler',
+    message: `Who wants to have a cookout this weekend? I just got some furniture
       for my backyard and would love to fire up the grill.`,
     pfp: '/static/images/avatar/1.jpg',
   },
