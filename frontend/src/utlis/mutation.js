@@ -22,3 +22,23 @@ export const login = gql`
     }
   }
 `
+
+export const addMessage = gql`
+  mutation addMessage($senderId: ID!, $conversationId: ID!, $content: String!) {
+    addMessage(
+      senderId: $senderId
+      conversationId: $conversationId
+      content: $content
+    ) {
+      id
+      sender {
+        _id
+      }
+      conversation {
+        id
+      }
+      content
+      timeStamp
+    }
+  }
+`

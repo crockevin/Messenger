@@ -23,29 +23,28 @@ export const QUERY_CONVERSATION = gql`
   }
 `
 // Need to add this server side (type Query & resolver)
-export const QUERY_SINGLE_USER = gql `
-query getSingleUser($_id: ID! ) {
-  user (_id: $_id) {
-    _id
-    username
-    email
-    password
-    pfp
-    isOnline
-    friends {
+export const QUERY_SINGLE_USER = gql`
+  query getSingleUser($_id: ID!) {
+    user(_id: $_id) {
       _id
       username
       email
       pfp
       isOnline
-    }
-    friendRequests {
-      _id
-      username
-      email
-      pfp
-      isOnline
+      friends {
+        _id
+        username
+        email
+        pfp
+        isOnline
+      }
+      friendRequests {
+        _id
+        username
+        email
+        pfp
+        isOnline
+      }
     }
   }
-}
 `
