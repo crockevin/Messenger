@@ -1,41 +1,29 @@
 const express = require('express')
-const { createServer } = require('http')
-const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer')
 const { ApolloServer } = require('@apollo/server')
 const { expressMiddleware } = require('@apollo/server/express4')
-const { useServer } = require('graphql-ws/lib/use/ws')
-const { authMiddleware } = require('./utils/auth')
-const { WebSocketServer } = require('ws')
-const { makeExecutableSchema } = require('@graphql-tools/schema')
-const { PORT = 3001 } = process.env
+const PORT = process.env.PORT || 3001
 const app = express()
 const db = require('./config/connection')
+const { authMiddleware } = require('./utils/auth')
 const path = require('path')
 const { typeDefs, resolvers } = require('./schemas')
+const { createServer } = require('http')
+const WebSocket = require('ws')
 const httpServer = createServer(app)
-const startApolloServer = async () => {
-  const schema = makeExecutableSchema({ typeDefs, resolvers })
-  const wsServer = new WebSocketServer({
-    server: httpServer,
+const wsServer = new WebSocket.Server({
+  server: httpServer,
+  path: '/graphql',
+})
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware,
+  subscriptions: {
     path: '/graphql',
-  })
-  const serverCleanup = useServer({ schema }, wsServer)
-  const server = new ApolloServer({
-    schema,
-    plugins: [
-      ApolloServerPluginDrainHttpServer({ httpServer }),
-      {
-        async serverWillStart() {
-          return {
-            async drainServer() {
-              await serverCleanup.dispose()
-            },
-          }
-        },
-      },
-    ],
-  })
+  },
+})
 
+const startApolloServer = async () => {
   await server.start()
 
   app.use(express.urlencoded({ extended: true }))
@@ -46,6 +34,16 @@ const startApolloServer = async () => {
       context: authMiddleware,
     })
   )
+  wsServer.on('connection', (ws) => {
+    console.log('connected')
+    ws.on('message', (message) => {
+      const parsedMessage = JSON.parse(message)
+
+      if (parsedMessage.type === 'connection_init') {
+        ws.send(JSON.stringify({ type: 'connection_ack' }))
+      }
+    })
+  })
 
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')))

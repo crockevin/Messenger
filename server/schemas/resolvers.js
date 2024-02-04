@@ -39,16 +39,14 @@ const resolvers = {
           throw AuthenticationError
         }
         const token = signToken(user)
+        user.isOnline = true
+        await user.save()
         return { token, user }
       } catch (e) {
         throw new Error(e)
       }
     },
-    addMessage: async (
-      parent,
-      { senderId, conversationId, content },
-      context
-    ) => {
+    addMessage: async (parent, { senderId, conversationId, content }, context) => {
       try {
         // if (!context.user) {
         //   throw new Error('you are not logged in')
@@ -85,8 +83,9 @@ const resolvers = {
   },
   Subscription: {
     messageAdded: {
-      subscribe: (parent, { conversationId }) => {
+      async subscribe(parent, { conversationId }) {
         const channel = `MESSAGE_ADDED${conversationId}`
+        console.log(`Subscription initiated for channel: ${channel}`)
         return pubSub.asyncIterator(channel)
       },
     },

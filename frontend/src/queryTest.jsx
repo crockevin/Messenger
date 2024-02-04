@@ -1,24 +1,44 @@
 import { useEffect, useState } from 'react'
 import { QUERY_CONVERSATION } from './utlis/queries'
-import { useQuery } from '@apollo/client'
+import { messageAdded } from './utlis/subscriptions'
+import { addMessage } from './utlis/mutation'
+import { useQuery, useSubscription, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 
 
 
 function Conversation() {
-  const { conversationId } = useParams()
+  const { conversationId } = useParams();
+  const [messages, setMessages] = useState([]);
   const { loading, data } = useQuery(QUERY_CONVERSATION, {
-    variables: { conversationId: conversationId }
-  })
+    variables: { conversationId: conversationId },
+    onCompleted: (data) => {
+      if (data && data.conversation) {
+        setMessages(data.conversation.messages);
+      }
+    },
+  });
+
+  const { data: newMessage } = useSubscription(messageAdded, {
+    variables: { conversationId: conversationId },
+  });
 
   useEffect(() => {
-    console.log(data)
-  }, [data])
+    if (newMessage && newMessage.messageAdded) {
+      const message = newMessage.messageAdded;
+      setMessages((prevMessages) => [...prevMessages, message]);
+    }
+  }, [newMessage]);
+
   return (
     <>
-      {data && data.conversation.messages.map((message) => (
-        <div key={message.id}>{message.content}  {message.sender._id}</div>
-      ))}
+      {messages.length}
+      {messages &&
+        messages.map((message) => (
+          <div key={message.id}>
+            {message.content} {message.sender._id}
+          </div>
+        ))}
     </>
   );
 }
