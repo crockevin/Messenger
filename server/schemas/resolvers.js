@@ -9,7 +9,19 @@ const resolvers = {
       return User.find().select('-password')
     },
     user: async (parent, { id }) => {
-      return User.findById(id).populate('friends').populate('friendRequests')
+      console.log('User ID:', id)
+      const user = await User.findById(id).select('-password')
+      await user.populate({
+        path: 'friends',
+        select: '-password',
+      })
+      await user.populate({
+        path: 'friendRequests',
+        select: '-password',
+      })
+
+      console.log('User Data:', user)
+      return user
     },
     conversation: async (parent, { id }) => {
       return Conversation.findById(id).populate('messages')
