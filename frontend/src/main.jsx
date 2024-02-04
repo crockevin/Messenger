@@ -4,8 +4,9 @@ import App from './App.jsx'
 import '../src/index.css';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context';
+import { QueryClientProvider, QueryClient } from 'react-query';
 
-
+const queryClient = new QueryClient()
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -34,7 +35,9 @@ const client = new ApolloClient({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </ApolloProvider>
   </React.StrictMode>,
 )
