@@ -22,11 +22,11 @@ import Auth from '../utlis/auth'
 
 // Seeds sample messages
 function refreshMessages() {
-  const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
-
-  return Array.from(new Array(4)).map(
-    () => messageExamples[getRandomInt(messageExamples.length)],
-  );
+  // const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
+  return messageExamples;
+  // Array.from(new Array(4)).map(
+  //   () => messageExamples[getRandomInt(messageExamples.length)],
+  // );
 }
 
 export default function ProfileContent() {
@@ -52,9 +52,8 @@ export default function ProfileContent() {
           </ListItemButton>
         ))}
       </List>
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={4}>
         <BottomNavigation
-          
           showLabels
           value={value}
           onChange={(event, newValue) => {

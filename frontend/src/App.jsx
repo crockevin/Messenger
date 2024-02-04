@@ -31,7 +31,6 @@ import Profile from './pages/Profile'
 import Conversation from './queryTest'
 
 
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
@@ -48,7 +47,6 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-
     <ThemeProvider theme={theme}>
       <RouterProvider router={router} />
     </ThemeProvider>

@@ -1,12 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
 import '../src/index.css';
-import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client'
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-
-// Construct our main GraphQL API endpoint
+// Construct main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -24,17 +24,22 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const client = new ApolloClient({
-  // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
+const apolloClient = new ApolloClient({
+  // Set client to execute the `authLink` middleware prior to making the request to our GraphQL API
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
+    <ApolloProvider client={apolloClient}>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </ApolloProvider>
   </React.StrictMode>,
-)
+);
+
+
