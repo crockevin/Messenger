@@ -28,7 +28,7 @@ import Home from './pages/Home'
 import Signin from './pages/Signin'
 import SignUp from './pages/Signup'
 import Profile from './pages/Profile'
-import Conversation from './queryTest'
+import Conversation from './pages/queryTest'
 
 
 
