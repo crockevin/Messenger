@@ -25,6 +25,8 @@
     "graphql-ws": "^5.14.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.0",
+    "socket.io": "^4.7.4",
+    "subscriptions-transport-ws": "^0.11.0",
     "ws": "^8.16.0"
   }
 }

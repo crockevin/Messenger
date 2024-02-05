@@ -34,9 +34,6 @@ export const addMessage = gql`
       sender {
         _id
       }
-      conversation {
-        id
-      }
       content
       timeStamp
     }
