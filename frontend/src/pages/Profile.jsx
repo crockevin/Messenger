@@ -2,8 +2,7 @@ import ProfileHeader from '../components/ProfileHeader' // Top Nav bar
 import ProfileContent from '../components/ProfileContent' // Body and Bottom bar
 import { useEffect } from 'react'
 import { Typography } from '@mui/material'
-import { gql, useLazyQuery } from '@apollo/client'
-import { useQuery } from 'react-query'
+import { useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { QUERY_SINGLE_USER } from '../utlis/queries'
 import Auth from '../utlis/auth'
@@ -12,13 +11,9 @@ import Auth from '../utlis/auth'
 export default function Profile() {
   const { id } = useParams()
 
-  const [loadUser, { loading, data, error }] = useLazyQuery(QUERY_SINGLE_USER, {
+  const { loading, data, error } = useQuery(QUERY_SINGLE_USER, {
     variables: { id: id },
   });
-  useEffect(() => {
-    loadUser();
-  }, [loadUser]);
-
 
   if (error) {
     console.error('GraphQL Error:', error);
