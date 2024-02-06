@@ -26,6 +26,22 @@ const resolvers = {
     conversation: async (parent, { id }) => {
       return Conversation.findById(id).populate('messages')
     },
+    userConversation: async (parent, { userId }) => {
+      try {
+        const conversations = await Conversation.find({ users: userId })
+        const conversationsWithUsers = conversations.map(async (conversation) => {
+          const otherUserId = conversation.users.find((user) => user !== userId)
+          const otherUser = await User.findById(otherUserId)
+          return {
+            id: conversation._id,
+            otherUser: otherUser,
+          }
+        })
+        return conversationsWithUsers
+      } catch (error) {
+        throw new Error('Error retrieving user conversations')
+      }
+    },
   },
   Mutation: {
     AddUser: async (parent, { username, email, password }) => {
@@ -39,6 +55,22 @@ const resolvers = {
       } catch (e) {
         throw new Error(e)
       }
+    },
+    addfriend: async (parent, { userId, friendId }) => {
+      const user = await User.findById(userId)
+      const friend = await User.findById(friendId)
+      if (!user || !friend) {
+        throw new Error('User or friend not found')
+      }
+      user.friends.push(friend)
+      await user.save()
+      friend.friends.push(user)
+      await friend.save()
+
+      const conversation = new Conversation({
+        users: [user, friend],
+      })
+      await conversation.save()
     },
     login: async (parent, { email, password }) => {
       try {
@@ -60,12 +92,6 @@ const resolvers = {
     },
     addMessage: async (parent, { senderId, conversationId, content }, context) => {
       try {
-        // if (!context.user) {
-        //   throw new Error('you are not logged in')
-        // }
-        // if (context.user._id !== senderId) {
-        //   throw new Error('You are not this user')
-        // }
         const conversation = await Conversation.findById(conversationId)
         if (!conversation) {
           throw new Error('Invalid Conversation')

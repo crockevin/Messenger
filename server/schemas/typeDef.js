@@ -31,11 +31,16 @@ type Auth {
     token: ID!
     user: User
 }
+type UserConversation {
+    id: ID
+    otherUser: User
+}
 
 type Query {
     users: [User]
     user(id: ID!): User
     conversation(id: ID!): Conversation
+    userConversation(userId:ID!): [UserConversation]
 }
 
 type Subscription {
@@ -46,6 +51,7 @@ type Mutation {
     AddUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addMessage(senderId: ID!, conversationId: ID!, content: String!): Message
+    addfriend(userId: ID!, friendId: ID!): String
 }
 
 
