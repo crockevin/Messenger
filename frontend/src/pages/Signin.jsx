@@ -1,19 +1,19 @@
-import CssBaseline from '@mui/material/CssBaseline';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import NavBar from '../components/Navbar';
-import {Box} from '@mui/material';
-import { useMutation } from '@apollo/client';
-import { useState } from 'react';
-import { login } from '../utlis/mutation';
+import CssBaseline from '@mui/material/CssBaseline'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import Link from '@mui/material/Link'
+import Grid from '@mui/material/Grid'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import NavBar from '../components/Navbar'
+import { Box } from '@mui/material'
+import { useMutation } from '@apollo/client'
+import { useState } from 'react'
+import { login } from '../utlis/mutation'
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert'
 import Auth from '../utlis/auth'
@@ -21,15 +21,20 @@ import Auth from '../utlis/auth'
 // move to own file
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {'Copyright © '}
       <Link color="inherit" href="/">
-      Messenger App
+        Messenger App
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
-  );
+  )
 }
 
 export default function Signin() {
@@ -64,10 +69,10 @@ export default function Signin() {
       Auth.login(data.login.token)
       // Show success alert
       setShowSuccessAlert(true)
-      
+
       setTimeout(() => {
-        navigate('/profile/' + data.login.user._id) // adjust to be specific to user _id
-      }, 1500) 
+        navigate(`/profile/${data.login.user._id}`) // adjust to be specific to user _id
+      }, 1500)
     } catch (e) {
       setShowErrorAlert(true)
       console.error('Login Error:', e)
@@ -76,7 +81,7 @@ export default function Signin() {
 
   return (
     <>
-    <NavBar/>
+      <NavBar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -87,25 +92,29 @@ export default function Signin() {
             alignItems: 'center',
           }}
         >
-            {showSuccessAlert ? (
+          {showSuccessAlert ? (
             <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
               Login successful! Redirecting to profile...
             </Alert>
           ) : showErrorAlert ? (
             <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
-              Login failed! Please be sure your information is correct, or create an account.
+              Login failed! Please be sure your information is correct, or
+              create an account.
             </Alert>
           ) : null}
-          
+
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon 
-            color='primary'
-            />
+            <LockOutlinedIcon color="primary" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -140,7 +149,7 @@ export default function Signin() {
             >
               Sign In
             </Button>
-            <Grid container justifyContent='center'>
+            <Grid container justifyContent="center">
               <Grid item>
                 <Link href="/signup" variant="body2">
                   Don't have an account? Sign Up
@@ -151,6 +160,6 @@ export default function Signin() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-      </>
-  );
+    </>
+  )
 }
