@@ -5,7 +5,7 @@ import { addMessage } from '../../utlis/mutation'
 import { useQuery, useSubscription, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 
-// userid: 65b6b87f1a77190affd0dfd9 
+
 
 export default function NavInbox() {
   const { conversationId } = useParams()
