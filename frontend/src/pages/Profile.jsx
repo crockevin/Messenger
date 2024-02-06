@@ -1,25 +1,22 @@
-import ProfileHeader from '../components/ProfileHeader' // Top Nav bar
+import ProfileHeader from '../components/Profile/ProfileHeader' // Top Nav bar
 import { useEffect } from 'react'
 import { Typography, Box } from '@mui/material'
-import { gql, useLazyQuery } from '@apollo/client'
+import { gql } from '@apollo/client'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { QUERY_SINGLE_USER } from '../utlis/queries'
 import Auth from '../utlis/auth'
-import ProfileFooterNav from '../components/ProfileFooterNav'
-import ProfileBody from '../components/ProfileBody'
+import ProfileFooterNav from '../components/Profile/ProfileFooterNav'
+import ProfileBody from '../components/Profile/ProfileBody'
 
 // get user by id param, grab user data and spread across page
 export default function Profile() {
   const { id } = useParams()
   console.log(`User id: ${id}`)
 
-  const [loadUser, { loading, data, error }] = useLazyQuery(QUERY_SINGLE_USER, {
+  const {loading, data, error} = useQuery(QUERY_SINGLE_USER, {
     variables: { id: id },
   })
-  useEffect(() => {
-    loadUser()
-  }, [loadUser])
 
   if (error) {
     console.error('GraphQL Error:', error)
