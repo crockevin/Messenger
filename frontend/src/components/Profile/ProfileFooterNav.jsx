@@ -13,6 +13,7 @@ import NavInbox from './NavInbox'
 import NavProfile from './NavProfile'
 import NavArchive from './NavArchive'
 import NavNew from './NavNew'
+import PersonIcon from '@mui/icons-material/Person';
 
 export default function ProfileFooterNav() {
   const [value, setValue] = useState(0)
@@ -25,10 +26,10 @@ export default function ProfileFooterNav() {
         setSelectedComponent(<NavInbox />)
         break
       case 1:
-        setSelectedComponent(<NavArchive />)
+        setSelectedComponent(<NavNew />)
         break
       case 2:
-        setSelectedComponent(<NavNew />)
+        setSelectedComponent(<NavArchive />)
         break
       case 3:
         setSelectedComponent(<NavProfile />)
@@ -59,19 +60,20 @@ export default function ProfileFooterNav() {
             icon={<InboxIcon />}
             onClick={() => handleClick(0)}
           />
-          <BottomNavigationAction
-            label="Archive"
-            icon={<ArchiveIcon />}
-            onClick={() => handleClick(2)}
-          />
+    
              <BottomNavigationAction
             label="New"
             icon={<AddCircleOutlineIcon />}
             onClick={() => handleClick(1)}
           />
+              <BottomNavigationAction
+            label="Archive"
+            icon={<ArchiveIcon />}
+            onClick={() => handleClick(2)}
+          />
           <BottomNavigationAction
             label="Profile"
-            icon={<ArchiveIcon />}
+            icon={<PersonIcon />}
             onClick={() => handleClick(3)}
           />
           {/* <Badge badgeContent={1} color="primary">
