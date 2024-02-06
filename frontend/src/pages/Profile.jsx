@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { Typography, Box } from '@mui/material'
 import { gql } from '@apollo/client'
 import { useQuery } from 'react-query'
+import { useLazyQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { QUERY_SINGLE_USER } from '../utlis/queries'
 import Auth from '../utlis/auth'
@@ -14,9 +15,12 @@ export default function Profile() {
   const { id } = useParams()
   console.log(`User id: ${id}`)
 
-  const {loading, data, error} = useQuery(QUERY_SINGLE_USER, {
+  const [loadUser, { loading, data, error }] = useLazyQuery(QUERY_SINGLE_USER, {
     variables: { id: id },
   })
+  useEffect(() => {
+    loadUser()
+  }, [loadUser])
 
   if (error) {
     console.error('GraphQL Error:', error)
@@ -40,7 +44,7 @@ export default function Profile() {
       )} */}
       <ProfileHeader />
       {/* Render body onClick on 'inbox' */}
-      <ProfileBody /> 
+      <ProfileBody />
       <Box sx={{ pb: 7 }}>
         <ProfileFooterNav />
       </Box>
