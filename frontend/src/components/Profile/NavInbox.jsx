@@ -5,7 +5,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
 import Avatar from '@mui/material/Avatar'
 import { useEffect, useState, useRef } from 'react'
-import { QUERY_CONVERSATION } from '../../utlis/queries'
+import { QUERY_SINGLE_USER_CONVERSATIONS } from '../../utlis/queries'
 import { messageAdded } from '../../utlis/subscriptions'
 import { useQuery, useSubscription, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
@@ -15,28 +15,27 @@ import SingleChat from '../SingleChat'
 export default function NavInbox() {
   const [selectedMessage, setSelectedMessage] = useState(null);
   const ref = useRef(null)
-  const { conversationId } = useParams()
-  const [messages, setMessages] = useState([])
-  const { loading, data } = useQuery(QUERY_CONVERSATION, {
-    variables: { conversationId: '65b6b87f1a77190affd0dfef' },
+  const { userId } = useParams()
+  const [inbox, setInbox] = useState([])
+  const { loading, data } = useQuery(QUERY_SINGLE_USER_CONVERSATIONS, {
+    variables: { userId: "65c3e7d4005a13cd5af65de7" },
     onCompleted: (data) => {
-      if (data && data.conversation) {
-        console.log(data)
-        setMessages(data.conversation.messages)
+      if (data && data.userConversation) {
+        setInbox(data.userConversation)
       }
-    },
-  })
-
-  const { data: newMessage } = useSubscription(messageAdded, {
-    variables: { conversationId: conversationId },
-  })
-
-  useEffect(() => {
-    if (newMessage && newMessage.messageAdded) {
-      const message = newMessage.messageAdded
-      setMessages((prevMessages) => [...prevMessages, message])
     }
-  }, [newMessage])
+  })
+
+  // const { data: newMessage } = useSubscription(messageAdded, {
+  //   variables: { conversationId: conversationId },
+  // })
+
+  // useEffect(() => {
+  //   if (newMessage && newMessage.messageAdded) {
+  //     const message = newMessage.messageAdded
+  //     setMessages((prevMessages) => [...prevMessages, message])
+  //   }
+  // }, [newMessage])
 
   const handleClick = (message) => {
     setSelectedMessage(message);
@@ -50,22 +49,24 @@ export default function NavInbox() {
   if (selectedMessage) {
     return <SingleChat message={selectedMessage} />;
   }
-
+  console.log(data.userConversation)
   return (
     <Box sx={{ pb: 7 }} ref={ref}>
       <CssBaseline />
       <List>
-        {messages &&
-          messages.map(({ content, sender }, index) => {
-            // Find the corresponding user from the users array
-            const user = data.conversation.users.find((u) => u._id === sender._id);
+        {inbox &&
+          inbox.map((message) => {
             return (
-              <ListItemButton key={index + sender._id} onClick={() => handleClick({ content, sender, user })}>
-                <ListItemAvatar>
-                  <Avatar alt={user.username} src={user.pfp} />
-                </ListItemAvatar>
-                <ListItemText primary={user.username} secondary={content} />
-              </ListItemButton>
+              <>
+                {message.lastMessage && (
+                  <ListItemButton key={message.id} onClick={() => handleClick(message.id)}>
+                    <ListItemAvatar>
+                      <Avatar alt={message.otherUser.username} src={message.otherUser.username} />
+                    </ListItemAvatar>
+                    <ListItemText primary={message.otherUser.username} secondary={message.lastMessage} />
+                  </ListItemButton>
+                )}
+              </>
             );
           })}
       </List>

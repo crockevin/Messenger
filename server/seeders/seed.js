@@ -26,6 +26,8 @@ db.once('open', async () => {
       content: 'Whats up man',
     })
     conversation1.messages.push(message1._id)
+    conversation1.lastMessage = message1.content
+    conversation1.lastSender = message1.sender
     await conversation1.save()
     const message2 = await Message.create({
       sender: users[1],
@@ -33,6 +35,8 @@ db.once('open', async () => {
       content: 'Big Dog!',
     })
     conversation1.messages.push(message2._id)
+    conversation1.lastMessage = message2.content
+    conversation1.lastSender = message2.sender
     await conversation1.save()
     const message3 = await Message.create({
       sender: users[2],
@@ -40,6 +44,8 @@ db.once('open', async () => {
       content: 'Whats up lil guy',
     })
     conversation2.messages.push(message3._id)
+    conversation2.lastMessage = message3.content
+    conversation2.lastSender = message3.sender
     await conversation2.save()
     const message4 = await Message.create({
       sender: users[3],
@@ -47,6 +53,8 @@ db.once('open', async () => {
       content: 'Whats up old man',
     })
     conversation2.messages.push(message4._id)
+    conversation2.lastMessage = message4.content
+    conversation2.lastSender = message4.sender
     await conversation2.save()
     const message5 = await Message.create({
       sender: users[4],
@@ -54,6 +62,8 @@ db.once('open', async () => {
       content: 'i hate it here',
     })
     conversation3.messages.push(message5._id)
+    conversation3.lastMessage = message5.content
+    conversation3.lastSender = message5.sender
     await conversation3.save()
     const message6 = await Message.create({
       sender: users[5],
@@ -61,6 +71,8 @@ db.once('open', async () => {
       content: 'me too',
     })
     conversation3.messages.push(message6._id)
+    conversation3.lastMessage = message6.content
+    conversation3.lastSender = message6.sender
     await conversation3.save()
 
     users[0].friends.push(users[1])

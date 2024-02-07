@@ -6,20 +6,11 @@ const pubSub = new PubSub()
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().select('-password')
+      return User.find()
     },
     user: async (parent, { id }) => {
       console.log('User ID:', id)
-      const user = await User.findById(id).select('-password')
-      await user.populate({
-        path: 'friends',
-        select: '-password',
-      })
-      await user.populate({
-        path: 'friendRequests',
-        select: '-password',
-      })
-
+      const user = await User.findById(id)
       console.log('User Data:', user)
       return user
     },
@@ -30,11 +21,13 @@ const resolvers = {
       try {
         const conversations = await Conversation.find({ users: userId })
         const conversationsWithUsers = conversations.map(async (conversation) => {
-          const otherUserId = conversation.users.find((user) => user !== userId)
+          const otherUserId = conversation.users.find((user) => user.toString() !== userId)
           const otherUser = await User.findById(otherUserId)
           return {
             id: conversation._id,
             otherUser: otherUser,
+            lastMessage: conversation.lastMessage,
+            lastSender: conversation.lastSender,
           }
         })
         return conversationsWithUsers
