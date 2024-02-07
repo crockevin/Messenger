@@ -1,9 +1,10 @@
 import React from 'react'
 import { TextField, Box, Typography, Grid, Button } from '@mui/material'
+import SnackbarContent from '@mui/material/SnackbarContent';
 
 // userid: 65b6b87f1a77190affd0dfd9
 
- HEAD
+ 
 export default function NavInbox() {
   const { conversationId } = useParams()
   const [messages, setMessages] = useState([])
@@ -64,8 +65,8 @@ export default function NavInbox() {
       </Box>
     </Container>
   );
-=======
-export default function SingleChat({ message }) {
+
+//export default function SingleChat({ message }) {
   return (
     <Grid container direction="column">
       <Grid item>
@@ -88,7 +89,6 @@ export default function SingleChat({ message }) {
       {/* Add more details or rendering logic as needed */}
     </Grid>
   )
->>>>>>> 79c436b1978d7fd4cde93422640b164a6be431bf
 }
 
 // sx={{ position: 'fixed', bottom: 60, left: 0, right: 0 }}>
