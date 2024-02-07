@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react'
-import { QUERY_CONVERSATION } from '../../utlis/queries'
-import { messageAdded } from '../../utlis/subscriptions'
-import { addMessage } from '../../utlis/mutation'
-import { useQuery, useSubscription, useMutation } from '@apollo/client'
-import { useParams } from 'react-router-dom'
+import React from 'react'
+import { TextField, Box, Typography, Grid, Button } from '@mui/material'
 
-// userid: 65b6b87f1a77190affd0dfd9 
+// userid: 65b6b87f1a77190affd0dfd9
 
+ HEAD
 export default function NavInbox() {
   const { conversationId } = useParams()
   const [messages, setMessages] = useState([])
@@ -67,6 +64,31 @@ export default function NavInbox() {
       </Box>
     </Container>
   );
+=======
+export default function SingleChat({ message }) {
+  return (
+    <Grid container direction="column">
+      <Grid item>
+        <Typography variant="h5">{message.user.username}</Typography>
+      </Grid>
+      <Grid item>
+        <Typography>{message.content}</Typography>
+      </Grid>
+      <Grid container direction="row">
+        <Grid item sx={{ position: 'fixed', bottom: 57, left: 0, right: 0 }}>
+          <TextField
+            fullWidth
+            id="fullWidth"
+            InputProps={{
+              endAdornment: <Button variant="contained">Send</Button>,
+            }}
+          />
+        </Grid>
+      </Grid>
+      {/* Add more details or rendering logic as needed */}
+    </Grid>
+  )
+>>>>>>> 79c436b1978d7fd4cde93422640b164a6be431bf
 }
 
-
+// sx={{ position: 'fixed', bottom: 60, left: 0, right: 0 }}>

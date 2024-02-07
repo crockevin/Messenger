@@ -19,6 +19,13 @@ export const QUERY_CONVERSATION = gql`
           _id
         }
       }
+      users {
+        _id
+        username
+        email
+        isOnline
+        pfp
+      }
     }
   }
 `

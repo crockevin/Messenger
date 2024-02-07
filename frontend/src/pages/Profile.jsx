@@ -3,20 +3,23 @@ import { useEffect } from 'react'
 import { Typography, Box } from '@mui/material'
 import { gql } from '@apollo/client'
 import { useQuery } from 'react-query'
+import { useLazyQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { QUERY_SINGLE_USER } from '../utlis/queries'
 import Auth from '../utlis/auth'
 import ProfileFooterNav from '../components/Profile/ProfileFooterNav'
-import ProfileBody from '../components/Profile/ProfileBody'
 
 // get user by id param, grab user data and spread across page
 export default function Profile() {
   const { id } = useParams()
   console.log(`User id: ${id}`)
 
-  const {loading, data, error} = useQuery(QUERY_SINGLE_USER, {
+  const [loadUser, { loading, data, error }] = useLazyQuery(QUERY_SINGLE_USER, {
     variables: { id: id },
   })
+  useEffect(() => {
+    loadUser()
+  }, [loadUser])
 
   if (error) {
     console.error('GraphQL Error:', error)
@@ -29,21 +32,15 @@ export default function Profile() {
   const user = data?.user // Access the 'username' field from the response data
   return (
     <>
-      {/* <ProfileHeader />
-      <ProfileContent />
-      {user ? (
-        <Typography align="center" variant="h6">
+      <ProfileHeader />
+      {/* {user ? (
+        <Typography align="center" variant="h4">
           Welcome, {user.username}! ✅
         </Typography>
       ) : (
         <p>❌ User not found ❌</p>
       )} */}
-      <ProfileHeader />
-      {/* Render body onClick on 'inbox' */}
-      <ProfileBody /> 
-      <Box sx={{ pb: 7 }}>
-        <ProfileFooterNav />
-      </Box>
+      <ProfileFooterNav />
     </>
   )
 }
