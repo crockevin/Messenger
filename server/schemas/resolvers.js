@@ -24,7 +24,7 @@ const resolvers = {
       return user
     },
     conversation: async (parent, { id }) => {
-      return Conversation.findById(id).populate('messages')
+      return Conversation.findById(id).populate('messages').populate('users')
     },
     userConversation: async (parent, { userId }) => {
       try {
