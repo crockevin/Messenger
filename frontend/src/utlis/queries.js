@@ -55,3 +55,17 @@ export const QUERY_SINGLE_USER = gql`
     }
   }
 `
+export const QUERY_SINGLE_USER_CONVERSATIONS = gql`
+  query inbox($userId: ID!) {
+    userConversation(userId: $userId) {
+      id
+      otherUser {
+        _id
+        username
+        pfp
+      }
+      lastMessage
+      lastSender
+    }
+  }
+`
