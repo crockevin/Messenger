@@ -13,6 +13,13 @@ const converstationSchema = new mongoose.Schema({
       ref: 'Message',
     },
   ],
+  lastMessage: {
+    type: String,
+  },
+  lastSender: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
 })
 const Conversation = mongoose.model('Conversation', converstationSchema)
 

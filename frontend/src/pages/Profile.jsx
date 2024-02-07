@@ -33,13 +33,13 @@ export default function Profile() {
   return (
     <>
       <ProfileHeader />
-      {/* {user ? (
+      {user ? (
         <Typography align="center" variant="h4">
           Welcome, {user.username}! ✅
         </Typography>
       ) : (
         <p>❌ User not found ❌</p>
-      )} */}
+      )}
       <ProfileFooterNav />
     </>
   )

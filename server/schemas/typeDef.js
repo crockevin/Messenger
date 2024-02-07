@@ -6,7 +6,6 @@ type User {
     _id: ID
     username: String
     email: String
-    password: String
     friends: [User]
     friendRequests: [User]
     pfp: String
@@ -34,6 +33,8 @@ type Auth {
 type UserConversation {
     id: ID
     otherUser: User
+    lastMessage: String
+    lastSender: ID
 }
 
 type Query {
