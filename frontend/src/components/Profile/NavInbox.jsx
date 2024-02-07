@@ -7,13 +7,13 @@ import Avatar from '@mui/material/Avatar'
 import { useEffect, useState, useRef } from 'react'
 import { QUERY_CONVERSATION } from '../../utlis/queries'
 import { messageAdded } from '../../utlis/subscriptions'
-import { addMessage } from '../../utlis/mutation'
 import { useQuery, useSubscription, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { Box } from '@mui/material'
+import SingleChat from '../SingleChat'
 
 export default function NavInbox() {
-  const [value, setValue] = useState(0)
+  const [selectedMessage, setSelectedMessage] = useState(null);
   const ref = useRef(null)
   const { conversationId } = useParams()
   const [messages, setMessages] = useState([])
@@ -37,26 +37,43 @@ export default function NavInbox() {
       setMessages((prevMessages) => [...prevMessages, message])
     }
   }, [newMessage])
+
+  const handleClick = (message) => {
+    setSelectedMessage(message);
+  };
+
   if (loading) {
     return <p>loading...</p>
   }
+
+  // Render a new component when a message is selected
+  if (selectedMessage) {
+    return <SingleChat message={selectedMessage} />;
+  }
+
   return (
     <Box sx={{ pb: 7 }} ref={ref}>
       <CssBaseline />
       <List>
         {messages &&
-          messages.map(({ content, sender }, index) => (
-            <ListItemButton key={index + sender._id}>
-              <ListItemAvatar>
-                <Avatar alt="Profile Picture" src={sender.pfp} />
-              </ListItemAvatar>
-              <ListItemText primary={sender._id} secondary={content} />
-            </ListItemButton>
-          ))}
+          messages.map(({ content, sender }, index) => {
+            // Find the corresponding user from the users array
+            const user = data.conversation.users.find((u) => u._id === sender._id);
+            return (
+              <ListItemButton key={index + sender._id} onClick={() => handleClick({ content, sender, user })}>
+                <ListItemAvatar>
+                  <Avatar alt={user.username} src={user.pfp} />
+                </ListItemAvatar>
+                <ListItemText primary={user.username} secondary={content} />
+              </ListItemButton>
+            );
+          })}
       </List>
     </Box>
   )
 }
+
+
 
 // const testMessages = [
 //   {
@@ -80,4 +97,4 @@ export default function NavInbox() {
 //       for my backyard and would love to fire up the grill.`,
 //     pfp: '/static/images/avatar/1.jpg',
 //   },
-// ];
+// ]
