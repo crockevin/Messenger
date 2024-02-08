@@ -12,7 +12,7 @@ const Settings = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [deleteUser] = useMutation(DeleteUser, {
-    variables: { id: id }
+    variables: { userId: id }
   });
   const navigate = useNavigate()
   const handleDeleteUser = async () => {
