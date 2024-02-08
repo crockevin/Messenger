@@ -24,6 +24,7 @@ export default function NavInbox(props) {
   const { data: newMessage } = useSubscription(messageAdded, {
     variables: { conversationId: props.message },
   })
+  const id = Auth.getProfile().data._id
 
   useEffect(() => {
     if (newMessage && newMessage.messageAdded) {

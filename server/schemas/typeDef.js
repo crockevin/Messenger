@@ -42,6 +42,7 @@ type Query {
     user(id: ID!): User
     conversation(id: ID!): Conversation
     userConversation(userId:ID!): [UserConversation]
+    
 }
 
 type Subscription {
@@ -53,7 +54,8 @@ type Mutation {
     login(email: String!, password: String!): Auth
     addMessage(senderId: ID!, conversationId: ID!, content: String!): Message
     addfriend(userId: ID!, friendId: ID!): String
-    DeleteUser: Boolean
+    addfriendRequest(userId: ID!, friendId: ID!): String
+    deleteUser(userId: ID!): String
 }
 
 
