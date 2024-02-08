@@ -29,6 +29,7 @@ import Signin from './pages/Signin'
 import SignUp from './pages/Signup'
 import Profile from './pages/Profile'
 import Conversation from './pages/queryTest'
+import Settings from "./pages/Settings"
 
 
 
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
       <Route path='Profile' element={<Profile />} />
       <Route path='Profile/:id' element={<Profile />} />
       <Route path='conversation/:conversationId' element={<Conversation />} />
+      <Route path='Settings' element={<Settings />} />
     </Route>
   )
 )

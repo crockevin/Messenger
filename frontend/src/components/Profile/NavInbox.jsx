@@ -15,10 +15,10 @@ import SingleChat from '../SingleChat'
 export default function NavInbox() {
   const [selectedMessage, setSelectedMessage] = useState(null);
   const ref = useRef(null)
-  const { userId } = useParams()
+  const { id } = useParams()
   const [inbox, setInbox] = useState([])
   const { loading, data } = useQuery(QUERY_SINGLE_USER_CONVERSATIONS, {
-    variables: { userId: "65c3e7d4005a13cd5af65de7" },
+    variables: { userId: id },
     onCompleted: (data) => {
       if (data && data.userConversation) {
         setInbox(data.userConversation)
