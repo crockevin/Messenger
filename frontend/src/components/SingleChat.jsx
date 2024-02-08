@@ -1,17 +1,16 @@
-import React from 'react'
 import { useState, useEffect } from 'react'
-import { TextField, Box, Typography, Grid, Button } from '@mui/material'
-import SnackbarContent from '@mui/material/SnackbarContent';
-import { Container } from '@mui/material'
+import { TextField, Typography, Grid, Button } from '@mui/material'
 import { addMessage } from '../utlis/mutation'
-import { useMutation, useQuery, useSubscription } from '@apollo/client';
-import { QUERY_CONVERSATION } from '../utlis/queries';
-import { messageAdded } from '../utlis/subscriptions';
-
-
+import { useMutation, useQuery, useSubscription } from '@apollo/client'
+import { QUERY_CONVERSATION } from '../utlis/queries'
+import { messageAdded } from '../utlis/subscriptions'
+import auth from '../utlis/auth'
+import { Form } from 'react-router-dom'
 
 export default function NavInbox(props) {
+  const id = auth.getProfile().data._id
   const [messages, setMessages] = useState([])
+  const [sendNewMessage, setSendNewMessage] = useState('')
   const { loading, data } = useQuery(QUERY_CONVERSATION, {
     variables: { conversationId: props.message },
     onCompleted: (data) => {
@@ -20,7 +19,18 @@ export default function NavInbox(props) {
       }
     },
   })
-  const [sendMessage, { messageData, messageLoading, error }] = useMutation(addMessage)
+
+  const [sendMessage, { messageData, messageLoading, error }] = useMutation(
+    addMessage,
+    {
+      variables: {
+        senderId: id,
+        conversationId: props.message,
+        content: sendNewMessage,
+      },
+    }
+  )
+
   const { data: newMessage } = useSubscription(messageAdded, {
     variables: { conversationId: props.message },
   })
@@ -31,69 +41,49 @@ export default function NavInbox(props) {
       const message = newMessage.messageAdded
       setMessages((prevMessages) => [...prevMessages, message])
     }
-  }, [newMessage]);
-  // const handleToggleNewMessage = () => {
-  //   setShowNewMessage((prev) => !prev);
-  //  };
-
-  // const handleSend = (content) => {
-  //   sendMessage({
-  //     variables: {
-  //       senderId: '65b6b87f1a77190affd0dfd9',
-  //       conversationId,
-  //       content,
-  //     },
-  //   });
-  // };
+  }, [newMessage])
 
   if (loading) {
     return <p>loading</p>
   }
   return (
-    <Container>
-      <Box mt={2}>
-        <Button variant="contained" color="primary">
-          New Message
-        </Button>
-        {/* {showNewMessage && <NewMessage onSend={handleSend} />} */}
-      </Box>
-      <Box mt={2}>
-        <Typography variant="h5" component="div">
-          Messages
-        </Typography>
-        {messages &&
-          messages.map((message) => (
-            <Typography key={message.id} component="div">
-              {message.content} {message.sender._id}
-            </Typography>
-          ))}
-      </Box>
-    </Container>
-  );
+    <Grid container direction="column">
+    {messages && messages.map((message) => (
+      <Grid
+        item
+        key={message.id}
+        sx={{
+          textAlign: 'center', 
+          backgroundColor: message.sender._id === id ? '#80ADA0' : '#013440',
+          color: message.sender._id === id ? '#fff' : '#fff',
+          borderRadius: 10,
+          padding: '0.5rem', 
+          marginBottom: '0.5rem',
+          maxWidth: '70%',
+          marginLeft: message.sender._id !== id ? 'auto' : 0,
+          marginRight: message.sender._id === id ? 'auto' : 0,
+        }}
+      >
+        <Typography variant="body1">{message.content}</Typography>
+      </Grid>
+    ))} 
+          <Grid item sx={{ position: 'fixed', bottom: 57, left: 0, right: 0 }}>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault() // Prevent the default form submission behavior
+              sendMessage() // Call the sendMessage function to send the new message
+            }}
+          >
+            <TextField
+              onChange={(e) => setSendNewMessage(e.target.value)}
+              fullWidth
+              id="fullWidth"
+            />
+            <Button type="submit" variant="contained">
+              Send Message
+            </Button>
+          </Form>
+        </Grid>
+      </Grid>
+  )
 }
-//export default function SingleChat({ message }) {
-//   return (
-//     <Grid container direction="column">
-//       <Grid item>
-//         <Typography variant="h5">{message.user.username}</Typography>
-//       </Grid>
-//       <Grid item>
-//         <Typography>{message.content}</Typography>
-//       </Grid>
-//       <Grid container direction="row">
-//         <Grid item sx={{ position: 'fixed', bottom: 57, left: 0, right: 0 }}>
-//           <TextField
-//             fullWidth
-//             id="fullWidth"
-//             InputProps={{
-//               endAdornment: <Button variant="contained">Send</Button>,
-//             }}
-//           />
-//         </Grid>
-//       </Grid>
-//       {/* Add more details or rendering logic as needed */}
-//     </Grid>
-//   )
-// }
-
-// sx={{ position: 'fixed', bottom: 60, left: 0, right: 0 }}>
