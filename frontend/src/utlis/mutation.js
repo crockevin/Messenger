@@ -39,3 +39,9 @@ export const addMessage = gql`
     }
   }
 `
+
+export const DeleteUser = gql`
+  mutation {
+    DeleteUser
+  }
+`;
