@@ -111,6 +111,18 @@ const resolvers = {
         throw new Error(e)
       }
     },
+    DeleteUser: async (parent, arg, { user }) => {
+      if (!user) {
+        throw new Error('User not authenticated')
+      }
+      try {
+        const { _id } = user;
+        await User.deleteOne({ _id});
+        return true
+      } catch (e) {
+        throw new Error('Failed to delete user')
+      }
+    },
   },
   Subscription: {
     messageAdded: {
