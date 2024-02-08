@@ -44,6 +44,8 @@ const resolvers = {
           throw new Error('ERROR')
         }
         const token = signToken(user)
+        user.isOnline = true
+        await user.save()
         return { token, user }
       } catch (e) {
         throw new Error(e)
@@ -138,6 +140,21 @@ const resolvers = {
         return message
       } catch (e) {
         throw new Error(e)
+      }
+    },
+    updateOnlineStatus: async (parent, { userId, isOnline }) => {
+      try {
+        console.log('test')
+        const user = await User.findById(userId)
+        if (!user) {
+          throw new Error('User not found')
+        }
+        user.isOnline = isOnline
+        await user.save()
+        return `${user.username} status updated`
+      } catch (error) {
+        console.error('Resolver error:', error)
+        throw new Error('Failed to update user status')
       }
     },
   },

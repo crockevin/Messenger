@@ -1,7 +1,10 @@
 import createTheme from "@mui/material/styles/createTheme";
 import { ThemeProvider } from '@mui/material'
 import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from 'react-router-dom'
-
+import { useMutation } from "@apollo/client";
+import { onlineStatus } from "./utlis/mutation";
+import { useEffect } from "react";
+import Auth from './utlis/auth'
 // Custom Theme instance - Colors, Fonts, etc go here for global use/overriding default values
 const theme = createTheme({
   palette: {
@@ -49,7 +52,41 @@ const router = createBrowserRouter(
 )
 
 function App() {
+  const id = Auth.getProfile().data._id
+  const [userStatus, { error }] = useMutation(onlineStatus)
+  useEffect(() => {
+    console.log('onstart test')
+    console.log(Auth.getProfile())
+    const updateStatus = async (isOnline) => {
+      try {
+        await userStatus({
+          variables: {
+            userId: id,
+            isOnline: isOnline
+          }
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
 
+    if (Auth.loggedIn()) {
+      updateStatus(true)
+    }
+
+    const pageClose = () => {
+      if (Auth.loggedIn()) {
+        console.log('test')
+        updateStatus(false)
+      }
+    }
+
+    window.addEventListener('beforeunload', pageClose)
+
+    return () => {
+      window.removeEventListener('beforeunload', pageClose)
+    }
+  }, [])
   return (
 
     <ThemeProvider theme={theme}>
