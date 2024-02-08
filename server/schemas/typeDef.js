@@ -24,6 +24,8 @@ type Conversation {
     id: ID
     users: [User]
     messages: [Message]
+    lastMessage: String
+    lastSender: ID
 }
 
 type Auth {
@@ -56,6 +58,7 @@ type Mutation {
     addfriend(userId: ID!, friendId: ID!): String
     addfriendRequest(userId: ID!, friendId: ID!): String
     deleteUser(userId: ID!): String
+    updateOnlineStatus(userId: ID!, isOnline: Boolean!): String
 }
 
 

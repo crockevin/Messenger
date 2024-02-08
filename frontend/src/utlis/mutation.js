@@ -45,3 +45,9 @@ export const DeleteUser = gql`
     deleteUser(userId: $userId)
   }
 `
+
+export const onlineStatus = gql`
+  mutation UpdateOnlineStatus($userId: ID!, $isOnline: Boolean!) {
+    updateOnlineStatus(userId: $userId, isOnline: $isOnline)
+  }
+`
