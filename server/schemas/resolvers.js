@@ -49,6 +49,24 @@ const resolvers = {
         throw new Error(e)
       }
     },
+    deleteUser: async (parent, { userId }) => {
+      try {
+        const user = await User.findById(userId)
+        const name = user.username
+        await User.updateMany({ friendRequests: userId }, { $pull: { friendRequests: userId } })
+        const conversations = await Conversation.find({
+          users: userId,
+        })
+        for (const conversation of conversations) {
+          await Message.deleteMany({ conversation: conversation._id })
+          await conversation.deleteOne()
+        }
+        await user.deleteOne()
+        return `${name} got Hollow Purpled`
+      } catch (e) {
+        throw new Error(e)
+      }
+    },
     addfriend: async (parent, { userId, friendId }) => {
       const user = await User.findById(userId)
       const friend = await User.findById(friendId)
@@ -64,6 +82,17 @@ const resolvers = {
         users: [user, friend],
       })
       await conversation.save()
+    },
+    addfriendRequest: async (parent, { userId, friendId }) => {
+      const user = await User.findById(userId)
+      const friend = await User.findById(friendId)
+      if (!user || !friend) {
+        throw new Error('User or friend not found')
+      }
+      user.friendRequests.push(friend)
+      await user.save()
+      friend.friendRequests.push(user)
+      await friend.save()
     },
     login: async (parent, { email, password }) => {
       try {
@@ -109,18 +138,6 @@ const resolvers = {
         return message
       } catch (e) {
         throw new Error(e)
-      }
-    },
-    DeleteUser: async (parent, arg, { user }) => {
-      if (!user) {
-        throw new Error('User not authenticated')
-      }
-      try {
-        const { _id } = user;
-        await User.deleteOne({ _id});
-        return true
-      } catch (e) {
-        throw new Error('Failed to delete user')
       }
     },
   },

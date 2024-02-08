@@ -11,11 +11,12 @@ import { useQuery, useSubscription, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { Box } from '@mui/material'
 import SingleChat from '../SingleChat'
+import Auth from '../../utlis/auth'
 
 export default function NavInbox() {
   const [selectedMessage, setSelectedMessage] = useState(null);
   const ref = useRef(null)
-  const { id } = useParams()
+  const id = Auth.getProfile().data._id
   const [inbox, setInbox] = useState([])
   const { loading, data } = useQuery(QUERY_SINGLE_USER_CONVERSATIONS, {
     variables: { userId: id },
