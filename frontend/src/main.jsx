@@ -7,6 +7,7 @@ import { setContext } from '@apollo/client/link/context'
 import { QueryClientProvider, QueryClient } from 'react-query'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
+import Auth from "./utlis/auth";
 
 const queryClient = new QueryClient()
 // Construct our main GraphQL API endpoint
@@ -50,7 +51,7 @@ const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache(),
 })
-
+const auth = Auth.loggedIn()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
