@@ -62,8 +62,17 @@ export default function NavInbox() {
     <Grid container>
       <Grid item xs={12} sx={{ pb: 7 }} ref={ref}>
         <CssBaseline />
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <List sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        <Box
+          sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        >
+          <List
+            sx={{
+              flex: '1',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
             {inbox &&
               inbox.map((message) => {
                 return (
@@ -71,7 +80,6 @@ export default function NavInbox() {
                     <ListItemButton
                       key={message.id}
                       onClick={() => handleClick(message.id)}
-                      sx={{ marginRight: 2 }}
                     >
                       <ListItemAvatar>
                         <Avatar
@@ -85,15 +93,18 @@ export default function NavInbox() {
                       />
                     </ListItemButton>
                   )
-                );
+                )
               })}
           </List>
-          <ListItemButton sx={{ width: 1, justifyContent: 'end' }} onClick={deleteMessage}>
-            <DeleteForeverIcon />
-          </ListItemButton>
+          {data.userConversation && data.userConversation.length > 0 ? (
+            <Box sx={{ width: '10%', display: 'flex' }}>
+              <ListItemButton onClick={deleteMessage}>
+                <DeleteForeverIcon />
+              </ListItemButton>
+            </Box>
+          ) : null}
         </Box>
       </Grid>
     </Grid>
-  );
-  
+  )
 }
