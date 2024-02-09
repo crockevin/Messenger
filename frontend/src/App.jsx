@@ -53,7 +53,7 @@ const router = createBrowserRouter(
 
 function App() {
   const id = Auth.getProfile().data._id
-  const [userStatus, { error }] = useMutation(onlineStatus)
+  const [userStatus] = useMutation(onlineStatus)
   useEffect(() => {
     console.log('onstart test')
     console.log(Auth.getProfile())
