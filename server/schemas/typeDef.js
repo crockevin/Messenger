@@ -1,7 +1,7 @@
 const typeDefs = `
 
 scalar Date
-
+scalar Upload
 type User {
     _id: ID
     username: String
@@ -38,6 +38,12 @@ type UserConversation {
     lastMessage: String
     lastSender: ID
 }
+type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+    path: String!
+}
 
 type Query {
     users: [User]
@@ -59,6 +65,7 @@ type Mutation {
     addfriendRequest(userId: ID!, friendId: ID!): String
     deleteUser(userId: ID!): String
     updateOnlineStatus(userId: ID!, isOnline: Boolean!): String
+    singleUpload(userId: ID!, file: Upload!): File
 }
 
 
