@@ -2,7 +2,7 @@ const { User, Message, Conversation } = require('../models')
 const { signToken, AuthenticationError } = require('../utils/auth')
 const { PubSub } = require('graphql-subscriptions')
 const pubSub = new PubSub()
-
+const fs = require('fs')
 const resolvers = {
   Query: {
     users: async () => {
@@ -91,8 +91,6 @@ const resolvers = {
       if (!user || !friend) {
         throw new Error('User or friend not found')
       }
-      user.friendRequests.push(friend)
-      await user.save()
       friend.friendRequests.push(user)
       await friend.save()
     },
@@ -156,6 +154,21 @@ const resolvers = {
         console.error('Resolver error:', error)
         throw new Error('Failed to update user status')
       }
+    },
+    singleUpload: async (parent, { file, userId }) => {
+      const user = await User.findById(userId)
+      if (!user) {
+        throw new Error('User not found')
+      }
+      const { createReadStream, filename, mimetype, encoding } = await file
+      const stream = createReadStream()
+      const path = `uploads/${filename}`
+      user.pfp = path
+      console.log(path)
+      await user.save()
+      await stream.pipe(fs.createWriteStream(path))
+
+      return { filename, mimetype, encoding, path }
     },
   },
   Subscription: {

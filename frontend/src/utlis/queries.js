@@ -63,6 +63,7 @@ export const QUERY_SINGLE_USER_CONVERSATIONS = gql`
         _id
         username
         pfp
+        isOnline
       }
       lastMessage
       lastSender
