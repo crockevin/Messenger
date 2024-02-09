@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Box, Typography, TextField, Button } from '@mui/material'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client'
-import { QUERY_SINGLE_USER_CONVERSATIONS, addMessage } from '../utils/queries'
+import { QUERY_SINGLE_USER_CONVERSATIONS } from '../../utils/queries'
 
 export default function NavNew() {
   const { id } = useParams()

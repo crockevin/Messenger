@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useMutation, gql } from '@apollo/client'
-import { DeleteUser } from '../utlis/mutation'
+import { DeleteUser } from '../utils/mutation'
 import ProfileHeader from '../components/Profile/ProfileHeader'
 import ProfileFooterNav from '../components/Profile/ProfileFooterNav'
-import Auth from '../utlis/auth'
+import Auth from '../utils/auth'
 import { useNavigate } from 'react-router-dom'
 
 
