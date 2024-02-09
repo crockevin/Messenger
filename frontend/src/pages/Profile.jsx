@@ -41,7 +41,7 @@ export default function Profile() {
           <Grid item xs={4}>
 
           </Grid>
-          <Grid item xs={8}>
+          {/* <Grid item xs={8}>
             {user ? (
               <Typography align="center" variant="h4">
               Welcome, {user.username}! ✅
@@ -49,7 +49,7 @@ export default function Profile() {
             ) : (
             <p>❌ User not found ❌</p>
             )}
-          </Grid>
+          </Grid> */}
         </Grid>
       <ProfileFooterNav />
     </>

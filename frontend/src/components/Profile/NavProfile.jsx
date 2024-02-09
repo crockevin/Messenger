@@ -36,6 +36,7 @@ export default function NavProfile() {
       justifyContent="center"
       alignItems="center"
       sx={{
+<<<<<<< HEAD
         minHeight: '80vh', 
       }}
     >
@@ -64,6 +65,30 @@ export default function NavProfile() {
             </Grid>
             {/* send friend request */}
             <Grid item>
+=======
+        minHeight: '60vh', // Adjusted minHeight to fit the content better
+      }}
+    >
+      <Paper
+        elevation={5}
+        sx={{
+          backgroundColor: '#013440',
+          color: '#e4ebf2',
+          display: 'flex',
+          padding: 7.5,
+        }}
+      >
+        <Grid container direction="column" alignItems="center" spacing={3}>
+          <Grid item>
+            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          </Grid>
+          <Grid item>
+            <Typography>{user.username}</Typography>
+          </Grid>
+          {/* send friend request */}
+          <Grid item>
+            {!sameUser ? (
+>>>>>>> cf08eca923ff83da255daae9ad119336b4f54a27
               <Button
                 color="secondary"
                 variant="contained"
@@ -76,6 +101,7 @@ export default function NavProfile() {
             <Grid item>
               <Button
                 color="secondary"
+<<<<<<< HEAD
                 variant="contained"
                 type="newMessage"
                 href="#"
@@ -143,6 +169,8 @@ export default function NavProfile() {
 {
   /* <Button
                 color="primary"
+=======
+>>>>>>> cf08eca923ff83da255daae9ad119336b4f54a27
                 variant="contained"
                 type="signup"
                 href="/settings"

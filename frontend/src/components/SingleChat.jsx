@@ -6,6 +6,7 @@ import { QUERY_CONVERSATION } from '../utils/queries'
 import { messageAdded } from '../utils/subscriptions'
 import auth from '../utils/auth'
 import { Form } from 'react-router-dom'
+import { InputAdornment } from '@mui/material'
 
 export default function NavInbox(props) {
   const id = auth.getProfile().data._id
@@ -47,25 +48,27 @@ export default function NavInbox(props) {
   }
   return (
     <Grid container direction="column">
-      {messages && messages.map((message) => (
-        <Grid
-          item
-          key={message.id}
-          sx={{
-            textAlign: 'center',
-            backgroundColor: message.sender._id === id ? '#80ADA0' : '#013440',
-            color: message.sender._id === id ? '#fff' : '#fff',
-            borderRadius: 10,
-            padding: '0.5rem',
-            marginBottom: '0.5rem',
-            maxWidth: '70%',
-            marginLeft: message.sender._id !== id ? 'auto' : 0,
-            marginRight: message.sender._id === id ? 'auto' : 0,
-          }}
-        >
-          <Typography variant="body1">{message.content}</Typography>
-        </Grid>
-      ))}
+      {messages &&
+        messages.map((message) => (
+          <Grid
+            item
+            key={message.id}
+            sx={{
+              textAlign: 'center',
+              backgroundColor:
+                message.sender._id === id ? '#013440' : '#80ADA0', 
+              color: message.sender._id === id ? '#fff' : '#fff',
+              borderRadius: 10,
+              padding: '0.5rem',
+              marginBottom: '0.5rem',
+              maxWidth: '70%',
+              marginLeft: message.sender._id === id ? 'auto' : 2,
+              marginRight: message.sender._id !== id ? 'auto' : 2,
+            }}
+          >
+            <Typography variant="body1">{message.content}</Typography>
+          </Grid>
+        ))}
       <Grid item sx={{ position: 'fixed', bottom: 57, left: 0, right: 0 }}>
         <Form
           onSubmit={(e) => {
@@ -77,10 +80,16 @@ export default function NavInbox(props) {
             onChange={(e) => setSendNewMessage(e.target.value)}
             fullWidth
             id="fullWidth"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button type="submit" variant="contained">
+                    Send Message
+                  </Button>
+                </InputAdornment>
+              ),
+            }}
           />
-          <Button type="submit" variant="contained">
-            Send Message
-          </Button>
         </Form>
       </Grid>
     </Grid>
