@@ -15,7 +15,7 @@ import EmailIcon from '@mui/icons-material/Email';
 
 
 const pages = ['About', 'Contribute', 'Contact']
-const settings = ['Profile', 'Dashboard', 'Logout']
+// const settings = ['Profile', 'Dashboard', 'Logout']
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
@@ -59,7 +59,7 @@ function NavBar() {
               textDecoration: 'none',
             }}
           >
-            LOL
+            M
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -118,7 +118,7 @@ function NavBar() {
               textDecoration: 'none',
             }}
           >
-            LOL
+            M
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -132,7 +132,7 @@ function NavBar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Username" src="/static/images/avatar/2.jpg" />
@@ -160,7 +160,7 @@ function NavBar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>

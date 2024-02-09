@@ -22,7 +22,7 @@ export default function Home() {
         variant="h2" 
         align="center" 
         color="primary">
-          LOL
+          M
         </Typography>
       </Grid>
       <Grid item>

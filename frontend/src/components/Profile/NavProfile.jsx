@@ -32,7 +32,7 @@ export default function NavProfile() {
       justifyContent="center"
       alignItems="center"
       sx={{
-        minHeight: '40vh', // Adjusted minHeight to fit the content better
+        minHeight: '60vh', // Adjusted minHeight to fit the content better
       }}
     >
       <Paper
@@ -41,10 +41,10 @@ export default function NavProfile() {
           backgroundColor: '#013440',
           color: '#e4ebf2',
           display: 'flex',
-          padding: 8.5,
+          padding: 7.5,
         }}
       >
-        <Grid container direction="column" alignItems="center" spacing={2}>
+        <Grid container direction="column" alignItems="center" spacing={3}>
           <Grid item>
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           </Grid>
