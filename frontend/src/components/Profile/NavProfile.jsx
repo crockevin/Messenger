@@ -5,8 +5,8 @@ import { Avatar } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 
-import { QUERY_SINGLE_USER } from '../../utlis/queries'
-import auth from '../../utlis/auth'
+import { QUERY_SINGLE_USER } from '../../utils/queries'
+import auth from '../../utils/auth'
 import App from '../../App'
 
 export default function NavProfile() {

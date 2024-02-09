@@ -7,8 +7,8 @@ import { setContext } from '@apollo/client/link/context'
 import { QueryClientProvider, QueryClient } from 'react-query'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
-import Auth from "./utlis/auth";
-import { onlineStatus } from './utlis/mutation.js'
+import Auth from "./utils/auth";
+import { onlineStatus } from './utils/mutation.js'
 
 
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { QUERY_CONVERSATION } from '../utlis/queries'
-import { messageAdded } from '../utlis/subscriptions'
-import { addMessage } from '../utlis/mutation'
+import { QUERY_CONVERSATION } from '../utils/queries'
+import { messageAdded } from '../utils/subscriptions'
+import { addMessage } from '../utils/mutation'
 import { useQuery, useSubscription, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 

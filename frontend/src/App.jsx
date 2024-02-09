@@ -2,9 +2,9 @@ import createTheme from "@mui/material/styles/createTheme";
 import { ThemeProvider } from '@mui/material'
 import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 import { useMutation } from "@apollo/client";
-import { onlineStatus } from "./utlis/mutation";
+import { onlineStatus } from "./utils/mutation";
 import { useEffect } from "react";
-import Auth from './utlis/auth'
+import Auth from './utils/auth'
 // Custom Theme instance - Colors, Fonts, etc go here for global use/overriding default values
 const theme = createTheme({
   palette: {
