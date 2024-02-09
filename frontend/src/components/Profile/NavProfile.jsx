@@ -32,27 +32,19 @@ export default function NavProfile() {
       justifyContent="center"
       alignItems="center"
       sx={{
-        minHeight: '80vh', // Adjusted minHeight to fit the content better
+        minHeight: '40vh', // Adjusted minHeight to fit the content better
       }}
     >
       <Paper
-        elevation={2}
+        elevation={5}
         sx={{
-            backgroundColor: '#013440',
-            color:'#e4ebf2',
-            display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          textAlign: 'center',
-          padding: 7.5,
-          width: '15%', // Adjusted width for better appearance
-          maxWidth: 400, // Added maxWidth to limit the width of Paper
+          backgroundColor: '#013440',
+          color: '#e4ebf2',
+          display: 'flex',
+          padding: 8.5,
         }}
       >
-        <Grid 
-        container 
-        direction="column" alignItems="center" spacing={2}>
+        <Grid container direction="column" alignItems="center" spacing={2}>
           <Grid item>
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           </Grid>
@@ -72,7 +64,7 @@ export default function NavProfile() {
               </Button>
             ) : (
               <Button
-                color="primary"
+                color="secondary"
                 variant="contained"
                 type="signup"
                 href="/settings"
