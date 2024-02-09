@@ -67,12 +67,13 @@ export default function NavProfile() {
                 variant="contained"
                 type="signup"
                 href="#"
+                
               >
                 Add Friend
               </Button>
             ) : (
               <Button
-                color="primary"
+                color="secondary"
                 variant="contained"
                 type="signup"
                 href="/settings"
