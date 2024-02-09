@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useMatches, useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
-import { Typography, Box, Button } from '@mui/material'
+import { Typography, Box, Button, useMediaQuery } from '@mui/material'
 import { Avatar } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
@@ -18,6 +18,8 @@ export default function NavProfile() {
 
   // boolean to check if profile is yours
   const sameUser = id == auth.getProfile().data._id
+
+  const smallView = useMediaQuery('(max-width:800px')
 
   const { loading, data } = useQuery(QUERY_SINGLE_USER, {
     variables: { id: id },
@@ -36,7 +38,6 @@ export default function NavProfile() {
       justifyContent="center"
       alignItems="center"
       sx={{
-<<<<<<< HEAD
         minHeight: '80vh', 
       }}
     >
@@ -65,30 +66,6 @@ export default function NavProfile() {
             </Grid>
             {/* send friend request */}
             <Grid item>
-=======
-        minHeight: '60vh', // Adjusted minHeight to fit the content better
-      }}
-    >
-      <Paper
-        elevation={5}
-        sx={{
-          backgroundColor: '#013440',
-          color: '#e4ebf2',
-          display: 'flex',
-          padding: 7.5,
-        }}
-      >
-        <Grid container direction="column" alignItems="center" spacing={3}>
-          <Grid item>
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-          </Grid>
-          <Grid item>
-            <Typography>{user.username}</Typography>
-          </Grid>
-          {/* send friend request */}
-          <Grid item>
-            {!sameUser ? (
->>>>>>> cf08eca923ff83da255daae9ad119336b4f54a27
               <Button
                 color="secondary"
                 variant="contained"
@@ -101,7 +78,6 @@ export default function NavProfile() {
             <Grid item>
               <Button
                 color="secondary"
-<<<<<<< HEAD
                 variant="contained"
                 type="newMessage"
                 href="#"
@@ -113,7 +89,7 @@ export default function NavProfile() {
         </Paper>
       ) : (
         <Grid container spacing={3}>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={smallView ? 12 : 4}>
             <Paper
               elevation={3}
               sx={{
@@ -123,7 +99,9 @@ export default function NavProfile() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 padding: 2.5,
-                minHeight: '100%'
+                // minHeight: '100%',
+                margin: '0 2%', 
+                maxWidth: '100%'
               }}
             >
               <Grid item sx={{ padding: 1.5 }}>
@@ -144,7 +122,7 @@ export default function NavProfile() {
               </Grid>
             </Paper>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12} sm={smallView ? 12 : 8}>
             <Paper
               elevation={3}
               sx={{
@@ -154,7 +132,9 @@ export default function NavProfile() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 padding: 2.5,
-                minHeight: '100%'
+                margin: '0 2%',
+                minHeight: '100%',
+                maxWidth: '100%'
               }}
             >
               <Typography>This is where the chats will go!</Typography>
@@ -169,8 +149,6 @@ export default function NavProfile() {
 {
   /* <Button
                 color="primary"
-=======
->>>>>>> cf08eca923ff83da255daae9ad119336b4f54a27
                 variant="contained"
                 type="signup"
                 href="/settings"
