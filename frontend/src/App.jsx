@@ -52,41 +52,41 @@ const router = createBrowserRouter(
 )
 
 function App() {
-  const id = Auth.getProfile().data._id
-  const [userStatus] = useMutation(onlineStatus)
-  useEffect(() => {
-    console.log('onstart test')
-    console.log(Auth.getProfile())
-    const updateStatus = async (isOnline) => {
-      try {
-        await userStatus({
-          variables: {
-            userId: id,
-            isOnline: isOnline
-          }
-        })
-      } catch (e) {
-        console.log(e)
-      }
-    }
+  // const id = Auth.getProfile().data._id
+  // const [userStatus] = useMutation(onlineStatus)
+  // useEffect(() => {
+  //   console.log('onstart test')
+  //   console.log(Auth.getProfile())
+  //   const updateStatus = async (isOnline) => {
+  //     try {
+  //       await userStatus({
+  //         variables: {
+  //           userId: id,
+  //           isOnline: isOnline
+  //         }
+  //       })
+  //     } catch (e) {
+  //       console.log(e)
+  //     }
+  //   }
 
-    if (Auth.loggedIn()) {
-      updateStatus(true)
-    }
+  //   if (Auth.loggedIn()) {
+  //     updateStatus(true)
+  //   }
 
-    const pageClose = () => {
-      if (Auth.loggedIn()) {
-        console.log('test')
-        updateStatus(false)
-      }
-    }
+  //   const pageClose = () => {
+  //     if (Auth.loggedIn()) {
+  //       console.log('test')
+  //       updateStatus(false)
+  //     }
+  //   }
 
-    window.addEventListener('beforeunload', pageClose)
+  //   window.addEventListener('beforeunload', pageClose)
 
-    return () => {
-      window.removeEventListener('beforeunload', pageClose)
-    }
-  }, [])
+  //   return () => {
+  //     window.removeEventListener('beforeunload', pageClose)
+  //   }
+  // }, [])
   return (
 
     <ThemeProvider theme={theme}>

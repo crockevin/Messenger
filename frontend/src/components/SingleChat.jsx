@@ -3,7 +3,7 @@ import { TextField, Typography, Grid, Button } from '@mui/material'
 import { addMessage } from '../utils/mutation'
 import { useMutation, useQuery, useSubscription } from '@apollo/client'
 import { QUERY_CONVERSATION } from '../utils/queries'
-import { messageAdded } from '../utlis/subscriptions'
+import { messageAdded } from '../utils/subscriptions'
 import auth from '../utils/auth'
 import { Form } from 'react-router-dom'
 
