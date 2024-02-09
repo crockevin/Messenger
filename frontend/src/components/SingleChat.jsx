@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { TextField, Typography, Grid, Button } from '@mui/material'
-import { addMessage } from '../utlis/mutation'
+import { addMessage } from '../utils/mutation'
 import { useMutation, useQuery, useSubscription } from '@apollo/client'
-import { QUERY_CONVERSATION } from '../utlis/queries'
+import { QUERY_CONVERSATION } from '../utils/queries'
 import { messageAdded } from '../utlis/subscriptions'
-import auth from '../utlis/auth'
+import auth from '../utils/auth'
 import { Form } from 'react-router-dom'
 
 export default function NavInbox(props) {

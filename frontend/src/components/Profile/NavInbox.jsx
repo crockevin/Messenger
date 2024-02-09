@@ -5,13 +5,13 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
 import Avatar from '@mui/material/Avatar'
 import { useEffect, useState, useRef } from 'react'
-import { QUERY_SINGLE_USER_CONVERSATIONS } from '../../utlis/queries'
-import { messageAdded } from '../../utlis/subscriptions'
+import { QUERY_SINGLE_USER_CONVERSATIONS } from '../../utils/queries'
+import { messageAdded } from '../../utils/subscriptions'
 import { useQuery, useSubscription, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { Box } from '@mui/material'
 import SingleChat from '../SingleChat'
-import Auth from '../../utlis/auth'
+import Auth from '../../utils/auth'
 
 export default function NavInbox() {
   const [selectedMessage, setSelectedMessage] = useState(null);

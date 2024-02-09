@@ -13,10 +13,10 @@ import NavBar from '../components/Navbar'
 import { Box } from '@mui/material'
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
-import { login } from '../utlis/mutation'
+import { login } from '../utils/mutation'
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert'
-import Auth from '../utlis/auth'
+import Auth from '../utils/auth'
 
 // move to own file
 function Copyright(props) {

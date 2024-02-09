@@ -5,8 +5,8 @@ import { useLazyQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 
 import ProfileHeader from '../components/Profile/ProfileHeader' // Top Nav bar
-import { QUERY_SINGLE_USER } from '../utlis/queries'
-import Auth from '../utlis/auth'
+import { QUERY_SINGLE_USER } from '../utils/queries'
+import Auth from '../utils/auth'
 import ProfileFooterNav from '../components/Profile/ProfileFooterNav'
 
 import Box from '@mui/material/Box'
