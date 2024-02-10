@@ -1,9 +1,14 @@
-import createTheme from "@mui/material/styles/createTheme";
+import createTheme from '@mui/material/styles/createTheme'
 import { ThemeProvider } from '@mui/material'
-import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from 'react-router-dom'
-import { useMutation } from "@apollo/client";
-import { onlineStatus } from "./utils/mutation";
-import { useEffect } from "react";
+import {
+  createBrowserRouter,
+  Route,
+  createRoutesFromElements,
+  RouterProvider,
+} from 'react-router-dom'
+import { useMutation } from '@apollo/client'
+import { onlineStatus } from './utils/mutation'
+import { useEffect } from 'react'
 import Auth from './utils/auth'
 // Custom Theme instance - Colors, Fonts, etc go here for global use/overriding default values
 const theme = createTheme({
@@ -32,21 +37,19 @@ import Signin from './pages/Signin'
 import SignUp from './pages/Signup'
 import Profile from './pages/Profile'
 import Conversation from './pages/queryTest'
-import Settings from "./pages/Settings"
-
-
+import Settings from './pages/Settings'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<RootLayout />}>
+    <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
-      <Route path='Home' element={<Home />} />
-      <Route path='Signup' element={<SignUp />} />
-      <Route path='Signin' element={<Signin />} />
-      <Route path='Profile' element={<Profile />} />
-      <Route path='Profile/:id' element={<Profile />} />
-      <Route path='conversation/:conversationId' element={<Conversation />} />
-      <Route path='Settings' element={<Settings />} />
+      <Route path="Home" element={<Home />} />
+      <Route path="Signup" element={<SignUp />} />
+      <Route path="Signin" element={<Signin />} />
+      {/* <Route path='Profile' element={<Profile />} /> */}
+      <Route path="Profile/:id" element={<Profile />} />
+      <Route path="conversation/:conversationId" element={<Conversation />} />
+      <Route path="Settings" element={<Settings />} />
     </Route>
   )
 )
@@ -61,8 +64,8 @@ function App() {
           await userStatus({
             variables: {
               userId: id,
-              isOnline: isOnline
-            }
+              isOnline: isOnline,
+            },
           })
         } catch (e) {
           console.log(e)
@@ -87,7 +90,6 @@ function App() {
     }, [])
   }
   return (
-
     <ThemeProvider theme={theme}>
       <RouterProvider router={router} />
     </ThemeProvider>
