@@ -10,6 +10,7 @@ import { useMutation } from '@apollo/client'
 import { onlineStatus } from './utils/mutation'
 import { useEffect } from 'react'
 import Auth from './utils/auth'
+
 // Custom Theme instance - Colors, Fonts, etc go here for global use/overriding default values
 const theme = createTheme({
   palette: {
@@ -38,6 +39,7 @@ import SignUp from './pages/Signup'
 import Profile from './pages/Profile'
 import Conversation from './pages/queryTest'
 import Settings from './pages/Settings'
+import ErrorPage from './pages/ErrorPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,10 +48,10 @@ const router = createBrowserRouter(
       <Route path="Home" element={<Home />} />
       <Route path="Signup" element={<SignUp />} />
       <Route path="Signin" element={<Signin />} />
-      {/* <Route path='Profile' element={<Profile />} /> */}
       <Route path="Profile/:id" element={<Profile />} />
       <Route path="conversation/:conversationId" element={<Conversation />} />
       <Route path="Settings" element={<Settings />} />
+      <Route path='*' element={<ErrorPage/>} />
     </Route>
   )
 )

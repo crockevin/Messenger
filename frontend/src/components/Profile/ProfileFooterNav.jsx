@@ -34,6 +34,7 @@ export default function ProfileFooterNav() {
     }
   }
 
+  // When profile comp initially renders in the footer, start on Profile tab
   useEffect(() => {
     setSelectedComponent(<NavProfile />)
   }, [])
