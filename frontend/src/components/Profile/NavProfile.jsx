@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useMatches, useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
+
 import { Typography, Box, Button, useMediaQuery } from '@mui/material'
 import { Avatar } from '@mui/material'
 import Grid from '@mui/material/Grid'
@@ -14,12 +15,13 @@ export default function NavProfile() {
   const { id } = useParams()
   console.log(`User id: ${id}`)
 
-  const [userHeight, setUserHeight] = useState(0)
-
   // boolean to check if profile is yours
   const sameUser = id == auth.getProfile().data._id
+  console.log('id=' + id)
+  console.log('authId= ' + auth.getProfile().data._id)
 
-  const smallView = useMediaQuery('(max-width:800px')
+
+  const smallView = useMediaQuery('(max-width:800px)')
 
   const { loading, data } = useQuery(QUERY_SINGLE_USER, {
     variables: { id: id },
@@ -30,7 +32,6 @@ export default function NavProfile() {
   }
   const user = data?.user // Access the 'username' field from the response data
   console.log(user)
-  console.log('userHeight = ' + userHeight)
   return (
     <Grid
       container
