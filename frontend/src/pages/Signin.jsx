@@ -71,7 +71,7 @@ export default function Signin() {
       setShowSuccessAlert(true)
 
       setTimeout(() => {
-        navigate(`/profile/${data.login.user._id}`) // adjust to be specific to user _id
+        navigate(`/Profile/${data.login.user._id}`) // adjust to be specific to user _id
       }, 1500)
     } catch (e) {
       setShowErrorAlert(true)

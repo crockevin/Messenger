@@ -64,6 +64,7 @@ export default function NavInbox(props) {
               maxWidth: '70%',
               marginLeft: message.sender._id === id ? 'auto' : 2,
               marginRight: message.sender._id !== id ? 'auto' : 2,
+              marginTop: 1
             }}
           >
             <Typography variant="body1">{message.content}</Typography>

@@ -71,7 +71,7 @@ export default function SignUp() {
       setShowSuccessAlert(true)
       
       setTimeout(() => {
-        navigate(`/profile/${data.AddUser.user._id}`)
+        navigate(`/Profile/${data.AddUser.user._id}`)
       }, 1500) 
     } catch (e) {
       setShowErrorAlert(true)

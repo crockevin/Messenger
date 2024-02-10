@@ -150,7 +150,7 @@ export default function ProfileHeader() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Logout</p>
       </MenuItem>
     </Menu>
   )
