@@ -15,6 +15,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import MailIcon from '@mui/icons-material/Mail'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import MoreIcon from '@mui/icons-material/MoreVert'
+import { useQuery } from '@apollo/client'
+import { useState } from 'react'
+import { QUERY_SEARCH_USERS } from '../../utils/queries'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,7 +59,37 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
+
 export default function ProfileHeader() {
+
+  const [username, setUsername] = useState('');
+
+  // Update the username search
+const handleSearchInputChange = (event) => {
+  setUsername(event.target.value);
+};
+
+// Render the suggestions box
+const renderSuggestions = () => {
+  return (
+    <div>
+      {suggestions.map((user) => (
+        <div key={user.id}>{user.username}</div>
+      ))}
+    </div>
+  );
+};
+
+  // query usernames based off username variable
+  const {data, loading, error} = useQuery(QUERY_SEARCH_USERS, {
+    variables: { username },
+  });
+
+  if (loading) return <p>Loading...</p>; // change to loading spinner component
+  if (error) return <p>Error: {error.message}</p>
+
+  const suggestions = data.searchUsers; // Update suggestions field with fetched results
+
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
@@ -173,9 +206,13 @@ export default function ProfileHeader() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+            type='text'
+              placeholder="Search for friends…"
               inputProps={{ 'aria-label': 'search' }}
+              value={username}
+              onChange={handleSearchInputChange}
             />
+            {renderSuggestions()}
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
