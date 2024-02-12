@@ -51,3 +51,12 @@ export const onlineStatus = gql`
     updateOnlineStatus(userId: $userId, isOnline: $isOnline)
   }
 `
+
+// export const addFriend = gql`
+//   mutation addFriend($userId: ID!, $friendId: ID!) {
+//     addfriend(
+//       userId: $userId
+//       friendId: $friendId
+//     )
+//   }
+// `
