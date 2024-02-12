@@ -41,7 +41,13 @@ export const addMessage = gql`
 `
 
 export const DeleteUser = gql`
-  mutation {
-    DeleteUser
+  mutation delete($userId: ID!) {
+    deleteUser(userId: $userId)
   }
-`;
+`
+
+export const onlineStatus = gql`
+  mutation UpdateOnlineStatus($userId: ID!, $isOnline: Boolean!) {
+    updateOnlineStatus(userId: $userId, isOnline: $isOnline)
+  }
+`

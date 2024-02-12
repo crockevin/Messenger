@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
   },
   isOnline: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 })
 

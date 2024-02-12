@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Paper,
   BottomNavigation,
@@ -7,13 +7,11 @@ import {
 } from '@mui/material'
 import InboxIcon from '@mui/icons-material/Inbox'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import ArchiveIcon from '@mui/icons-material/Archive'
 import MailIcon from '@mui/icons-material/Mail'
 import NavInbox from './NavInbox'
 import NavProfile from './NavProfile'
-import NavArchive from './NavArchive'
 import NavNew from './NavNew'
-import PersonIcon from '@mui/icons-material/Person';
+import PersonIcon from '@mui/icons-material/Person'
 
 export default function ProfileFooterNav() {
   const [value, setValue] = useState(0)
@@ -29,18 +27,17 @@ export default function ProfileFooterNav() {
         setSelectedComponent(<NavNew />)
         break
       case 2:
-        setSelectedComponent(<NavArchive />)
-        break
-      case 3:
         setSelectedComponent(<NavProfile />)
         break
-      // case 4:
-      //   setSelectedComponent(<TestComponent />)
-      //   break
       default:
         setSelectedComponent(null)
     }
   }
+
+  // When profile comp initially renders in the footer, start on Profile tab
+  useEffect(() => {
+    setSelectedComponent(<NavProfile />)
+  }, [])
 
   return (
     <div>
@@ -56,25 +53,20 @@ export default function ProfileFooterNav() {
           }}
         >
           <BottomNavigationAction
+            label="Profile"
+            icon={<PersonIcon />}
+            onClick={() => handleClick(2)}
+          />
+          <BottomNavigationAction
             label="Inbox"
             icon={<InboxIcon />}
             onClick={() => handleClick(0)}
           />
-    
-             <BottomNavigationAction
+
+          <BottomNavigationAction
             label="New"
             icon={<AddCircleOutlineIcon />}
             onClick={() => handleClick(1)}
-          />
-              <BottomNavigationAction
-            label="Archive"
-            icon={<ArchiveIcon />}
-            onClick={() => handleClick(2)}
-          />
-          <BottomNavigationAction
-            label="Profile"
-            icon={<PersonIcon />}
-            onClick={() => handleClick(3)}
           />
           {/* <Badge badgeContent={1} color="primary">
             <BottomNavigationAction

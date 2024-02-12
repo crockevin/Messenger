@@ -14,8 +14,8 @@ import Alert from '@mui/material/Alert'
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { signup } from '../utlis/mutation'
-import Auth from '../utlis/auth'
+import { signup } from '../utils/mutation'
+import Auth from '../utils/auth'
 
 // move to own file
 function Copyright(props) {
@@ -71,7 +71,7 @@ export default function SignUp() {
       setShowSuccessAlert(true)
       
       setTimeout(() => {
-        navigate(`/profile/${data.AddUser.user._id}`)
+        navigate(`/Profile/${data.AddUser.user._id}`)
       }, 1500) 
     } catch (e) {
       setShowErrorAlert(true)

@@ -12,9 +12,19 @@ const app = express()
 const db = require('./config/connection')
 const path = require('path')
 const cors = require('cors')
-
+const multer = require('multer')
 const { typeDefs, resolvers } = require('./schemas')
 const httpServer = createServer(app)
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, 'uploads/'))
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  },
+})
+
+const upload = multer({ storage: storage })
 
 const startApolloServer = async () => {
   const schema = makeExecutableSchema({ typeDefs, resolvers })
@@ -30,7 +40,10 @@ const startApolloServer = async () => {
   app.use(cors())
   app.use(express.urlencoded({ extended: true }))
   app.use(express.json())
-
+  // app.post('/upload', upload.single('file'), (req, res) => {
+  //   res.json({ message: 'File uploaded successfully', filename: req.file.filename })
+  // })
+  app.use(multer({ storage: storage }).any())
   app.use('/graphql', express.json(), expressMiddleware(server, { context: authMiddleware }))
 
   if (process.env.NODE_ENV === 'production') {

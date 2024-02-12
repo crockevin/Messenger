@@ -5,17 +5,20 @@ import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
 import Avatar from '@mui/material/Avatar'
 import { useEffect, useState, useRef } from 'react'
-import { QUERY_SINGLE_USER_CONVERSATIONS } from '../../utlis/queries'
-import { messageAdded } from '../../utlis/subscriptions'
+import { QUERY_SINGLE_USER_CONVERSATIONS } from '../../utils/queries'
+import { messageAdded } from '../../utils/subscriptions'
 import { useQuery, useSubscription, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { Box } from '@mui/material'
 import SingleChat from '../SingleChat'
+import Auth from '../../utils/auth'
+import { Grid } from '@mui/material'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 export default function NavInbox() {
-  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [selectedMessage, setSelectedMessage] = useState(null)
   const ref = useRef(null)
-  const { id } = useParams()
+  const id = Auth.getProfile().data._id
   const [inbox, setInbox] = useState([])
   const { loading, data } = useQuery(QUERY_SINGLE_USER_CONVERSATIONS, {
     variables: { userId: id },
@@ -23,8 +26,13 @@ export default function NavInbox() {
       if (data && data.userConversation) {
         setInbox(data.userConversation)
       }
-    }
+    },
   })
+
+  // Click trashcan icon to delete conversation
+  const deleteMessage = () => {
+    console.log('deleting conversation: ')
+  }
 
   // const { data: newMessage } = useSubscription(messageAdded, {
   //   variables: { conversationId: conversationId },
@@ -38,8 +46,8 @@ export default function NavInbox() {
   // }, [newMessage])
 
   const handleClick = (message) => {
-    setSelectedMessage(message);
-  };
+    setSelectedMessage(message)
+  }
 
   if (loading) {
     return <p>loading...</p>
@@ -47,55 +55,56 @@ export default function NavInbox() {
 
   // Render a new component when a message is selected
   if (selectedMessage) {
-    return <SingleChat message={selectedMessage} />;
+    return <SingleChat message={selectedMessage} />
   }
   console.log(data.userConversation)
   return (
-    <Box sx={{ pb: 7 }} ref={ref}>
-      <CssBaseline />
-      <List>
-        {inbox &&
-          inbox.map((message) => {
-            return (
-              <>
-                {message.lastMessage && (
-                  <ListItemButton key={message.id} onClick={() => handleClick(message.id)}>
-                    <ListItemAvatar>
-                      <Avatar alt={message.otherUser.username} src={message.otherUser.username} />
-                    </ListItemAvatar>
-                    <ListItemText primary={message.otherUser.username} secondary={message.lastMessage} />
-                  </ListItemButton>
-                )}
-              </>
-            );
-          })}
-      </List>
-    </Box>
+    <Grid container>
+      <Grid item xs={12} sx={{ pb: 7 }} ref={ref}>
+        <CssBaseline />
+        <Box
+          sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        >
+          <List
+            sx={{
+              flex: '1',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            {inbox &&
+              inbox.map((message) => {
+                return (
+                  message.lastMessage && (
+                    <ListItemButton
+                      key={message.id}
+                      onClick={() => handleClick(message.id)}
+                    >
+                      <ListItemAvatar>
+                        <Avatar
+                          alt={message.otherUser.username}
+                          src={message.otherUser.username}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={message.otherUser.username}
+                        secondary={message.lastMessage}
+                      />
+                    </ListItemButton>
+                  )
+                )
+              })}
+          </List>
+          {data.userConversation && data.userConversation.length > 0 ? (
+            <Box sx={{ width: '10%', display: 'flex' }}>
+              <ListItemButton onClick={deleteMessage}>
+                <DeleteForeverIcon />
+              </ListItemButton>
+            </Box>
+          ) : null}
+        </Box>
+      </Grid>
+    </Grid>
   )
 }
-
-
-
-// const testMessages = [
-//   {
-//     username: "Kevin", // USERNAME
-//     message: 'I love otters.', // CONTENT
-//     pfp: '/static/images/avatar/4.jpg', // PFP
-//   },
-//   {
-//     username: 'Nic',
-//     message: `My back hurts.`,
-//     pfp: '/static/images/avatar/5.jpg',
-//   },
-//   {
-//     username: 'Chris',
-//     message: `Let's play some Apex, Nic. Really need you to carry me out of Bronze.`,
-//     pfp: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     username: 'Tyler',
-//     message: `Who wants to have a cookout this weekend? I just got some furniture
-//       for my backyard and would love to fire up the grill.`,
-//     pfp: '/static/images/avatar/1.jpg',
-//   },
-// ]

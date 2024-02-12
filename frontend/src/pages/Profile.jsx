@@ -1,13 +1,17 @@
-import ProfileHeader from '../components/Profile/ProfileHeader' // Top Nav bar
 import { useEffect } from 'react'
-import { Typography, Box } from '@mui/material'
 import { gql } from '@apollo/client'
 import { useQuery } from 'react-query'
 import { useLazyQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
-import { QUERY_SINGLE_USER } from '../utlis/queries'
-import Auth from '../utlis/auth'
+
+import ProfileHeader from '../components/Profile/ProfileHeader' // Top Nav bar
+import { QUERY_SINGLE_USER } from '../utils/queries'
+import Auth from '../utils/auth'
 import ProfileFooterNav from '../components/Profile/ProfileFooterNav'
+
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import { Typography } from '@mui/material'
 
 // get user by id param, grab user data and spread across page
 export default function Profile() {
@@ -33,13 +37,20 @@ export default function Profile() {
   return (
     <>
       <ProfileHeader />
-      {user ? (
-        <Typography align="center" variant="h4">
-          Welcome, {user.username}! ✅
-        </Typography>
-      ) : (
-        <p>❌ User not found ❌</p>
-      )}
+        <Grid container spacing={1}>
+          <Grid item xs={4}>
+
+          </Grid>
+          {/* <Grid item xs={8}>
+            {user ? (
+              <Typography align="center" variant="h4">
+              Welcome, {user.username}! ✅
+              </Typography>
+            ) : (
+            <p>❌ User not found ❌</p>
+            )}
+          </Grid> */}
+        </Grid>
       <ProfileFooterNav />
     </>
   )

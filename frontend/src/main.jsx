@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import '../src/index.css'
-import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, split } from '@apollo/client'
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, split, useMutation } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { QueryClientProvider, QueryClient } from 'react-query'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
+import Auth from "./utils/auth";
+import { onlineStatus } from './utils/mutation.js'
+
+
 
 const queryClient = new QueryClient()
 // Construct our main GraphQL API endpoint
@@ -50,6 +54,7 @@ const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache(),
 })
+const auth = Auth.loggedIn()
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

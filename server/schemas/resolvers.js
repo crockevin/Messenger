@@ -2,7 +2,7 @@ const { User, Message, Conversation } = require('../models')
 const { signToken, AuthenticationError } = require('../utils/auth')
 const { PubSub } = require('graphql-subscriptions')
 const pubSub = new PubSub()
-
+const fs = require('fs')
 const resolvers = {
   Query: {
     users: async () => {
@@ -44,7 +44,27 @@ const resolvers = {
           throw new Error('ERROR')
         }
         const token = signToken(user)
+        user.isOnline = true
+        await user.save()
         return { token, user }
+      } catch (e) {
+        throw new Error(e)
+      }
+    },
+    deleteUser: async (parent, { userId }) => {
+      try {
+        const user = await User.findById(userId)
+        const name = user.username
+        await User.updateMany({ friendRequests: userId }, { $pull: { friendRequests: userId } })
+        const conversations = await Conversation.find({
+          users: userId,
+        })
+        for (const conversation of conversations) {
+          await Message.deleteMany({ conversation: conversation._id })
+          await conversation.deleteOne()
+        }
+        await user.deleteOne()
+        return `${name} got Hollow Purpled`
       } catch (e) {
         throw new Error(e)
       }
@@ -64,6 +84,15 @@ const resolvers = {
         users: [user, friend],
       })
       await conversation.save()
+    },
+    addfriendRequest: async (parent, { userId, friendId }) => {
+      const user = await User.findById(userId)
+      const friend = await User.findById(friendId)
+      if (!user || !friend) {
+        throw new Error('User or friend not found')
+      }
+      friend.friendRequests.push(user)
+      await friend.save()
     },
     login: async (parent, { email, password }) => {
       try {
@@ -111,17 +140,35 @@ const resolvers = {
         throw new Error(e)
       }
     },
-    DeleteUser: async (parent, arg, { user }) => {
-      if (!user) {
-        throw new Error('User not authenticated')
-      }
+    updateOnlineStatus: async (parent, { userId, isOnline }) => {
       try {
-        const { _id } = user;
-        await User.deleteOne({ _id});
-        return true
-      } catch (e) {
-        throw new Error('Failed to delete user')
+        console.log('test')
+        const user = await User.findById(userId)
+        if (!user) {
+          throw new Error('User not found')
+        }
+        user.isOnline = isOnline
+        await user.save()
+        return `${user.username} status updated`
+      } catch (error) {
+        console.error('Resolver error:', error)
+        throw new Error('Failed to update user status')
       }
+    },
+    singleUpload: async (parent, { file, userId }) => {
+      const user = await User.findById(userId)
+      if (!user) {
+        throw new Error('User not found')
+      }
+      const { createReadStream, filename, mimetype, encoding } = await file
+      const stream = createReadStream()
+      const path = `uploads/${filename}`
+      user.pfp = path
+      console.log(path)
+      await user.save()
+      await stream.pipe(fs.createWriteStream(path))
+
+      return { filename, mimetype, encoding, path }
     },
   },
   Subscription: {
