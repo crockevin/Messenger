@@ -11,16 +11,25 @@ import { QUERY_SINGLE_USER } from '../../utils/queries'
 import auth from '../../utils/auth'
 import App from '../../App'
 
+/*
+TO DO:
+Add friend button function
+Remove friend button functionality added later
+Avatar/PFP corrections
+Generate a default avatar based on username
+*/
+
+const isFriend = false
+
 export default function NavProfile() {
   const { id } = useParams()
-  console.log(`User id: ${id}`)
 
   // boolean to check if profile is yours
   const sameUser = id == auth.getProfile().data._id
   console.log('id=' + id)
   console.log('authId= ' + auth.getProfile().data._id)
 
-
+  //mediaquery variable to render based on viewport size
   const smallView = useMediaQuery('(max-width:800px)')
 
   const { loading, data } = useQuery(QUERY_SINGLE_USER, {
@@ -31,8 +40,8 @@ export default function NavProfile() {
     return <p>Loading...</p> // Replace with loading spinner
   }
   const user = data?.user // Access the 'username' field from the response data
-  console.log(user)
   return (
+    //non-specific page layout
     <Grid
       container
       direction="column"
@@ -42,6 +51,7 @@ export default function NavProfile() {
         minHeight: '80vh', 
       }}
     >
+      {/* conditionally renders based on whether the profile is the user's or another user's */}
       {!sameUser ? (
         <Paper
           elevation={3}
@@ -59,14 +69,16 @@ export default function NavProfile() {
           }}
         >
           <Grid container direction="column" alignItems="center" spacing={2}>
-            <Grid item>
+            <Grid item sx={{ padding: 1 }}>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
             </Grid>
-            <Grid item>
+            <Grid item sx={{ padding: 1 }}>
               <Typography>{user.username}</Typography>
             </Grid>
             {/* send friend request */}
-            <Grid item>
+            {/* buttons render base on whether the other user is on current user's friends list */}
+            {!isFriend ? (
+            <Grid item sx={{ padding: 1.5 }}>
               <Button
                 color="secondary"
                 variant="contained"
@@ -75,8 +87,17 @@ export default function NavProfile() {
               >
                 Add Friend
               </Button>
-            </Grid>
-            <Grid item>
+            </Grid> ) : (
+            <Grid item sx={{ padding: 1.5 }}>
+            <Button
+              color="secondary"
+              variant="contained"
+              type="addFriend"
+              href="#"
+            >
+              Remove Friend
+            </Button>
+            <Grid item sx={{ padding: 1.5 }}>
               <Button
                 color="secondary"
                 variant="contained"
@@ -86,6 +107,8 @@ export default function NavProfile() {
                 Send Message
               </Button>
             </Grid>
+
+          </Grid>)}
           </Grid>
         </Paper>
       ) : (
@@ -106,7 +129,7 @@ export default function NavProfile() {
               }}
             >
               <Grid item sx={{ padding: 1.5 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="User Avatar" src="/static/images/avatar/1.jpg" />
               </Grid>
               <Grid item sx={{ padding: 1.5 }}>
                 <Typography>{user.username}</Typography>
@@ -141,19 +164,8 @@ export default function NavProfile() {
               <Typography>This is where the chats will go!</Typography>
             </Paper>
           </Grid>
-        </Grid>
+        </Grid> 
       )}
     </Grid>
   )
-}
-
-{
-  /* <Button
-                color="primary"
-                variant="contained"
-                type="signup"
-                href="/settings"
-              >
-                Edit Profile
-              </Button> */
 }
