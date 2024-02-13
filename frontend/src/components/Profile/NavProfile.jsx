@@ -47,9 +47,7 @@ export default function NavProfile() {
   const { id } = useParams()
   const currentPage = id
 
-  console.log('this is just id ' + id)
-  console.log('current page id ' + currentPage)
-
+  
   const { loading, data } = useQuery(QUERY_SINGLE_USER, {
     variables: { 
       id: id,
@@ -59,23 +57,25 @@ export default function NavProfile() {
   if (loading) {
     return <p>Loading...</p> // Replace with loading spinner
   }
-
+  
   const user = data?.user // Access the 'username' field from the response data
   console.log('this is user ', user)
-
+  
   
   // boolean to check if profile is yours
   const myPage = currentPage === auth.getProfile().data._id
-
+  
   //mediaquery variable to render based on viewport size
   const smallView = useMediaQuery('(max-width:800px)')
-
-
-
-
+  
+  
+  
+  
   const userId = auth.getProfile().data._id
   const friendId = id
-
+  console.log('friendid ' + friendId)
+  console.log('userid ' + userId)
+  
   const [addFriendMutation, { data: addFriendData, loading: addFriendLoading, error: addFriendError }] = useMutation(addFriend)
 
   const handleAddFriend = () => {
@@ -176,7 +176,7 @@ export default function NavProfile() {
               <Avatar>U</Avatar>
             </Grid>
             <Grid item sx={{ padding: 1 }}>
-              <Typography>{id.username}</Typography>
+              <Typography>{friendId.username}</Typography>
             </Grid>
             {/* send friend request */}
             {/* buttons render base on whether the other user is on current user's friends list */}
