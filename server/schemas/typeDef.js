@@ -46,6 +46,7 @@ type File {
 }
 
 type Query {
+    findUser(username: String): [User]
     users: [User]
     user(id: ID!): User
     conversation(id: ID!): Conversation

@@ -57,7 +57,7 @@ export default function NavInbox() {
   if (selectedMessage) {
     return <SingleChat message={selectedMessage} />
   }
-  console.log(data.userConversation)
+  // console.log(data.userConversation)
   return (
     <Grid container>
       <Grid item xs={12} sx={{ pb: 7 }} ref={ref}>
