@@ -8,33 +8,37 @@ import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 
 import { QUERY_SINGLE_USER } from '../../utils/queries'
-// import { addFriend } from '../../utils/mutation'
+import { addFriend } from '../../utils/mutation'
 import auth from '../../utils/auth'
 import App from '../../App'
+import FriendsList from '../FriendsList'
 
 /*
 TO DO:
 Add friend button function
+Friends list rendered if you have friends
 Remove friend button functionality added later
 Avatar/PFP corrections
 Generate a default avatar based on username
 */
 
 /*
-Get current id
-Get friend id
 add friend id to friend list
 check if friend id is on friend list (for profile rendering purposes)
 */
 
-// const handleAddFriend = (addFriendMutation, currentUserId, friendId) => {
-//   addFriendMutation({
+// const handleAddFriend = () => {
+//   console.log('Friend Added')
+//   const userId = auth.getProfile().data._id
+//   const friendId = id
+
+//   const [add, { data, loading, error }] = useMutation(addFriend, {
 //     variables: {
-//       userId: currentUserId,
-//       friendId: friendId
-//     }
-//   });
-// };
+//       userId: userId,
+//       friendId: friendId,
+//     },
+//   })
+// }
 
 const isFriend = false
 
@@ -42,10 +46,6 @@ export default function NavProfile() {
   const { id } = useParams()
   const currentPage = id
 
-  const userId = auth.getProfile().data._id
-  const friendId = id
-
-  
   // boolean to check if profile is yours
   const myPage = currentPage == auth.getProfile().data._id
 
@@ -53,8 +53,27 @@ export default function NavProfile() {
   const smallView = useMediaQuery('(max-width:800px)')
 
   const { loading, data } = useQuery(QUERY_SINGLE_USER, {
-    variables: { id: id },
+    variables: { 
+      id: id,
+    },
   })
+
+
+  const userId = auth.getProfile().data._id
+  const friendId = id
+
+  const [addFriendMutation, { data: addFriendData, loading: addFriendLoading, error: addFriendError }] = useMutation(addFriend)
+
+  const handleAddFriend = () => {
+    console.log('Friend Added')
+
+    addFriendMutation({
+      variables: {
+        userId: userId,
+        friendId: friendId,
+      },
+    })
+  }
 
   if (loading) {
     return <p>Loading...</p> // Replace with loading spinner
@@ -103,7 +122,7 @@ export default function NavProfile() {
                   color="secondary"
                   variant="contained"
                   type="addFriend"
-                  href="#"
+                  onClick={handleAddFriend}
                 >
                   Add Friend
                 </Button>
@@ -182,7 +201,9 @@ export default function NavProfile() {
                 maxWidth: '100%',
               }}
             >
-              <Typography>This is where the chats will go!</Typography>
+              {/* <Typography>This is where your friends list will go! */}
+                <FriendsList data={data}/>
+              {/* </Typography> */}
             </Paper>
           </Grid>
         </Grid>

@@ -52,11 +52,11 @@ export const onlineStatus = gql`
   }
 `
 
-// export const addFriend = gql`
-//   mutation addFriend($userId: ID!, $friendId: ID!) {
-//     addfriend(
-//       userId: $userId
-//       friendId: $friendId
-//     )
-//   }
-// `
+export const addFriend = gql`
+  mutation addFriend($userId: ID!, $friendId: ID!) {
+    addfriend(
+      userId: $userId
+      friendId: $friendId
+    )
+  }
+`
