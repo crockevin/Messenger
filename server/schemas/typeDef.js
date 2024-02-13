@@ -65,7 +65,7 @@ type Mutation {
     addfriend(userId: ID!, friendId: ID!): String
     addfriendRequest(userId: ID!, friendId: ID!): String
     deleteUser(userId: ID!): String
-    deleteConversation(conversationId: ID!): String
+    deleteConversation(conversationId: ID!, userId: ID!, otherUserId: ID!): String
     updateOnlineStatus(userId: ID!, isOnline: Boolean!): String
     singleUpload(userId: ID!, file: Upload!): File
 }

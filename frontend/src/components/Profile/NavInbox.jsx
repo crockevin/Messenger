@@ -45,6 +45,9 @@ export default function NavInbox() {
     });
   };
 
+  // message.otherUser = other user's id
+  // useState on click to change the calue to the id and then useMutation to delete from there
+
 
   ////////// Don't touch:
 

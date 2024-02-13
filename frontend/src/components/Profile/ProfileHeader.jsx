@@ -105,7 +105,7 @@ export default function ProfileHeader() {
     if (inputRef.current && document.activeElement !== inputRef.current) {
       inputRef.current.focus();
     }
-  });
+  },);
 
   if (loading) return <p>Loading...</p> // change to loading spinner component
   if (error) return <p>Error: {error.message}</p>

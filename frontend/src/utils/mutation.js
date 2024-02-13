@@ -52,7 +52,7 @@ export const onlineStatus = gql`
 `
 // DELETE CONVO 
 export const delete_Conversation = gql `
-mutation deleteConversation($conversationId: ID!) {
-  deleteConversation(conversationId: $conversationId)
+mutation deleteConversation($conversationId: ID!, $userId: ID!, $otherUserId: ID!) {
+  deleteConversation(conversationId: $conversationId, userId: $userId, otherUserId: $otherUserId )
 }
 `

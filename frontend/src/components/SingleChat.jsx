@@ -21,8 +21,7 @@ export default function NavInbox(props) {
     },
   })
 
-  // refetch added to ensure new data conversation data is Queried 
-  // otherwise new message requires 'refresh' in order to see it if you leave and come back
+  // refetchQuery added to ensure new data conversation data is Queried + updated to page
   const [sendMessage, { messageData, messageLoading, error }] = useMutation(addMessage, {
     refetchQueries: [
       { query: QUERY_CONVERSATION, variables: {conversationId: props.message }}
