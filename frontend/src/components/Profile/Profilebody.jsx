@@ -42,26 +42,26 @@ export default function ProfileBody() {
   );
 }
 
-const messageExamples = [
-  {
-    username: "Kevin", // USERNAME
-    message: 'I love otters.', // CONTENT
-    pfp: '/static/images/avatar/4.jpg', // PFP
-  },
-  {
-    username: 'Nic',
-    message: `My back hurts.`,
-    pfp: '/static/images/avatar/5.jpg',
-  },
-  {
-    username: 'Chris',
-    message: `Can you give me that link for the aimbot you use?.`,
-    pfp: '/static/images/avatar/1.jpg',
-  },
-  {
-    username: 'Tyler',
-    message: `Who wants to have a cookout this weekend? I just got some furniture
-      for my backyard and would love to fire up the grill.`,
-    pfp: '/static/images/avatar/1.jpg',
-  },
-];
+// const messageExamples = [
+//   {
+//     username: "Kevin", // USERNAME
+//     message: 'I love otters.', // CONTENT
+//     pfp: '/static/images/avatar/4.jpg', // PFP
+//   },
+//   {
+//     username: 'Nic',
+//     message: `My back hurts.`,
+//     pfp: '/static/images/avatar/5.jpg',
+//   },
+//   {
+//     username: 'Chris',
+//     message: `Can you give me that link for the aimbot you use?.`,
+//     pfp: '/static/images/avatar/1.jpg',
+//   },
+//   {
+//     username: 'Tyler',
+//     message: `Who wants to have a cookout this weekend? I just got some furniture
+//       for my backyard and would love to fire up the grill.`,
+//     pfp: '/static/images/avatar/1.jpg',
+//   },
+// ];

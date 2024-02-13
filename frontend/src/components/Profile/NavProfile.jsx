@@ -48,10 +48,13 @@ export default function NavProfile() {
 
   const currentPage = id
 
+
+
   // boolean to check if profile is yours
   const myPage = currentPage == auth.getProfile().data._id
 
   //mediaquery variable to render based on viewport size
+
   const smallView = useMediaQuery('(max-width:800px)')
 
   const { loading, data } = useQuery(QUERY_SINGLE_USER, {
@@ -110,8 +113,13 @@ export default function NavProfile() {
           }}
         >
           <Grid container direction="column" alignItems="center" spacing={2}>
+
+            <Grid item>
+              <Avatar alt="Remy Sharp" src="#" />
+
             <Grid item sx={{ padding: 1 }}>
               <Avatar>U</Avatar>
+
             </Grid>
             <Grid item sx={{ padding: 1 }}>
               <Typography>{user.username}</Typography>
@@ -171,7 +179,11 @@ export default function NavProfile() {
               }}
             >
               <Grid item sx={{ padding: 1.5 }}>
+
+                <Avatar alt="Remy Sharp" src="#" />
+
                 <Avatar>U</Avatar>
+
               </Grid>
               <Grid item sx={{ padding: 1.5 }}>
                 <Typography>{user.username}</Typography>

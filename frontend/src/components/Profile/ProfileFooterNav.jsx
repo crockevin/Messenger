@@ -68,18 +68,9 @@ export default function ProfileFooterNav() {
             icon={<AddCircleOutlineIcon />}
             onClick={() => handleClick(1)}
           />
-          {/* <Badge badgeContent={1} color="primary">
-            <BottomNavigationAction
-              label="Test"
-              icon={<MailIcon />}
-              onClick={() => handleClick(4)}
-            />
-          </Badge> */}
         </BottomNavigation>
       </Paper>
       {selectedComponent}
     </div>
   )
 }
-
-// Define your separate components
