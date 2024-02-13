@@ -63,6 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function ProfileHeader() {
   const inputRef = useRef(null)
+  const [inputMounted, setInputMounted] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
   const [username, setUsername] = useState('')
@@ -81,10 +82,14 @@ export default function ProfileHeader() {
   })
 
   useEffect(() => {
-    if (inputRef && inputRef.current) {
+    setInputMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (inputMounted && inputRef && inputRef.current) {
       inputRef.current.focus()
     }
-  }, [])
+  }, [inputMounted])
 
   // Render the suggestions box
   const renderSuggestions = () => {
