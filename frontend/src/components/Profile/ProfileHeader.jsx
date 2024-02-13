@@ -78,7 +78,7 @@ export default function ProfileHeader() {
   const { data, loading, error } = useQuery(QUERY_SEARCH_USERS, {
     variables: { username },
     onCompleted: (data) => {
-      console.log(data)
+      // console.log(data)
     },
   })
 

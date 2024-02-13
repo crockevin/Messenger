@@ -19,7 +19,6 @@ export default function NavProfile() {
   // console.log('id=' + id)
   // console.log('authId= ' + auth.getProfile().data._id)
 
-
   const smallView = useMediaQuery('(max-width:800px)')
 
   const { loading, data } = useQuery(QUERY_SINGLE_USER, {
@@ -37,7 +36,7 @@ export default function NavProfile() {
       justifyContent="center"
       alignItems="center"
       sx={{
-        minHeight: '80vh', 
+        minHeight: '80vh',
       }}
     >
       {!sameUser ? (
@@ -52,13 +51,13 @@ export default function NavProfile() {
             alignItems: 'center',
             textAlign: 'center',
             padding: 7.5,
-            width: '30%', 
-            maxWidth: 400, 
+            width: '30%',
+            maxWidth: 400,
           }}
         >
           <Grid container direction="column" alignItems="center" spacing={2}>
             <Grid item>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              <Avatar alt="Remy Sharp" src="#" />
             </Grid>
             <Grid item>
               <Typography>{user.username}</Typography>
@@ -99,12 +98,12 @@ export default function NavProfile() {
                 alignItems: 'center',
                 padding: 2.5,
                 // minHeight: '100%',
-                margin: '0 2%', 
-                maxWidth: '100%'
+                margin: '0 2%',
+                maxWidth: '100%',
               }}
             >
               <Grid item sx={{ padding: 1.5 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="Remy Sharp" src="#" />
               </Grid>
               <Grid item sx={{ padding: 1.5 }}>
                 <Typography>{user.username}</Typography>
@@ -133,7 +132,7 @@ export default function NavProfile() {
                 padding: 2.5,
                 margin: '0 2%',
                 minHeight: '100%',
-                maxWidth: '100%'
+                maxWidth: '100%',
               }}
             >
               <Typography>This is where the chats will go!</Typography>

@@ -29,10 +29,22 @@ export default function NavInbox() {
     },
   })
 
-  // Click trashcan icon to delete conversation
-  const deleteMessage = () => {
-    console.log('deleting conversation: ')
-  }
+  // Mutation to delete convo and refetch conversations
+  const [deleteConversationMutation] = useMutation(DELETE_CONVERSATION, {
+      refetchQueries: [
+        { query: QUERY_SINGLE_USER_CONVERSATIONS, variables: { userId: id } },
+      ],
+    }
+  )
+
+  const deleteConversation = (conversationId) => {
+    deleteConversationMutation({
+      variables: { conversationId },
+    }).catch((error) => {
+      console.error('Error deleting conversation:', error.message);
+    });
+  };
+
 
   // const { data: newMessage } = useSubscription(messageAdded, {
   //   variables: { conversationId: conversationId },
@@ -98,7 +110,7 @@ export default function NavInbox() {
           </List>
           {data.userConversation && data.userConversation.length > 0 ? (
             <Box sx={{ width: '10%', display: 'flex' }}>
-              <ListItemButton onClick={deleteMessage}>
+              <ListItemButton onClick={() => deleteConversation(data.userConversation[0].id)}>
                 <DeleteForeverIcon />
               </ListItemButton>
             </Box>
