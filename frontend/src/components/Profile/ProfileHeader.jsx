@@ -19,7 +19,8 @@ import { useQuery } from '@apollo/client'
 import { useState } from 'react'
 import { QUERY_SEARCH_USERS } from '../../utils/queries'
 import { useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -63,14 +64,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function ProfileHeader() {
   const inputRef = useRef(null)
-  const [inputMounted, setInputMounted] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
   const [username, setUsername] = useState('')
 
   // Update the username search
   const handleSearchInputChange = (event) => {
-    setUsername(event.target.value)
+  setUsername(event.target.value)
   }
 
   // query usernames based off username variable
@@ -81,29 +81,13 @@ export default function ProfileHeader() {
     },
   })
 
-  useEffect(() => {
-    setInputMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (inputMounted && inputRef && inputRef.current) {
-      inputRef.current.focus()
-    }
-  }, [inputMounted])
-
   // Render the suggestions box
   const renderSuggestions = () => {
     console.log('suggestions: ' + suggestions)
     return (
-      <Box className="navSuggestions">
+      <Box className='navSuggestions'>
         {suggestions.map((user) => (
-          <Link
-            className="searchLink"
-            to={`/profile/${user._id}`}
-            key={user.id}
-          >
-            {user.username}
-          </Link> // or 'user.id' ?
+          <Link className='searchLink' to={`/profile/${user._id}`} key={user.id}>{user.username}</Link> // or 'user.id' ?
         ))}
       </Box>
     )
@@ -228,7 +212,6 @@ export default function ProfileHeader() {
             </SearchIconWrapper>
             <StyledInputBase
               type="text"
-              ref={inputRef}
               placeholder="Search for friends…"
               inputProps={{ 'aria-label': 'search' }}
               value={username}
