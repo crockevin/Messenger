@@ -14,6 +14,7 @@ import SingleChat from '../SingleChat'
 import Auth from '../../utils/auth'
 import { Grid } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { delete_Conversation } from '../../utils/mutation'
 
 export default function NavInbox() {
   const [selectedMessage, setSelectedMessage] = useState(null)
@@ -30,13 +31,12 @@ export default function NavInbox() {
   })
 
   // Mutation to delete convo and refetch conversations
-  const [deleteConversationMutation] = useMutation(DELETE_CONVERSATION, {
+  const [deleteConversationMutation] = useMutation(delete_Conversation, {
       refetchQueries: [
         { query: QUERY_SINGLE_USER_CONVERSATIONS, variables: { userId: id } },
       ],
     }
   )
-
   const deleteConversation = (conversationId) => {
     deleteConversationMutation({
       variables: { conversationId },
@@ -45,6 +45,8 @@ export default function NavInbox() {
     });
   };
 
+
+  ////////// Don't touch:
 
   // const { data: newMessage } = useSubscription(messageAdded, {
   //   variables: { conversationId: conversationId },
