@@ -16,7 +16,6 @@ import { Typography } from '@mui/material'
 // get user by id param, grab user data and spread across page
 export default function Profile() {
   const { id } = useParams()
-  console.log(`User id: ${id}`)
 
   const [loadUser, { loading, data, error }] = useLazyQuery(QUERY_SINGLE_USER, {
     variables: { id: id },

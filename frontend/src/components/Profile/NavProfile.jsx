@@ -13,12 +13,11 @@ import App from '../../App'
 
 export default function NavProfile() {
   const { id } = useParams()
-  console.log(`User id: ${id}`)
 
   // boolean to check if profile is yours
   const sameUser = id == auth.getProfile().data._id
-  console.log('id=' + id)
-  console.log('authId= ' + auth.getProfile().data._id)
+  // console.log('id=' + id)
+  // console.log('authId= ' + auth.getProfile().data._id)
 
 
   const smallView = useMediaQuery('(max-width:800px)')
@@ -31,7 +30,6 @@ export default function NavProfile() {
     return <p>Loading...</p> // Replace with loading spinner
   }
   const user = data?.user // Access the 'username' field from the response data
-  console.log(user)
   return (
     <Grid
       container

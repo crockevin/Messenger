@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { styled, alpha } from '@mui/material/styles'
 import AppBar from '@mui/material/AppBar'
-import {Box} from '@mui/material'
+import { Box } from '@mui/material'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
@@ -18,6 +18,8 @@ import MoreIcon from '@mui/icons-material/MoreVert'
 import { useQuery } from '@apollo/client'
 import { useState } from 'react'
 import { QUERY_SEARCH_USERS } from '../../utils/queries'
+import { useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -59,39 +61,53 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-
 export default function ProfileHeader() {
-
-  const [username, setUsername] = useState('');
-
-  // Update the username search
-const handleSearchInputChange = (event) => {
-  setUsername(event.target.value);
-};
-
-// Render the suggestions box
-const renderSuggestions = () => {
-  return (
-    <div>
-      {suggestions.map((user) => (
-        <div key={user.id}>{user.username}</div>
-      ))}
-    </div>
-  );
-};
-
-  // query usernames based off username variable
-  const {data, loading, error} = useQuery(QUERY_SEARCH_USERS, {
-    variables: { username },
-  });
-
-  if (loading) return <p>Loading...</p>; // change to loading spinner component
-  if (error) return <p>Error: {error.message}</p>
-
-  const suggestions = data.searchUsers; // Update suggestions field with fetched results
-
+  const inputRef = useRef(null)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
+  const [username, setUsername] = useState('')
+
+  // Update the username search
+  const handleSearchInputChange = (event) => {
+    setUsername(event.target.value)
+  }
+
+  // query usernames based off username variable
+  const { data, loading, error } = useQuery(QUERY_SEARCH_USERS, {
+    variables: { username },
+    onCompleted: (data) => {
+      console.log(data)
+    },
+  })
+
+  useEffect(() => {
+    if (inputRef && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
+
+  // Render the suggestions box
+  const renderSuggestions = () => {
+    console.log('suggestions: ' + suggestions)
+    return (
+      <Box className="navSuggestions">
+        {suggestions.map((user) => (
+          <Link
+            className="searchLink"
+            to={`/profile/${user._id}`}
+            key={user.id}
+          >
+            {user.username}
+          </Link> // or 'user.id' ?
+        ))}
+      </Box>
+    )
+  }
+
+  if (loading) return <p>Loading...</p> // change to loading spinner component
+  if (error) return <p>Error: {error.message}</p>
+
+  const suggestions = data?.findUser // Update suggestions field with fetched results
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
@@ -206,14 +222,17 @@ const renderSuggestions = () => {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-            type='text'
+              type="text"
+              ref={inputRef}
               placeholder="Search for friends…"
               inputProps={{ 'aria-label': 'search' }}
               value={username}
               onChange={handleSearchInputChange}
             />
-            {renderSuggestions()}
+            {/* Render the suggestions box under the input */}
+            {username && <>{renderSuggestions()}</>}
           </Search>
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton

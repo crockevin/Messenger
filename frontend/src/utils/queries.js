@@ -70,16 +70,15 @@ export const QUERY_SINGLE_USER_CONVERSATIONS = gql`
     }
   }
 `
-// search bar
 
-export const QUERY_SEARCH_USERS  = gql`
-query searchUsers($username: String!) {
-  searchUsers(username: $username) {
-    _id
-    username
-    pfp
-    isOnline
-    # friends
+// search bar
+export const QUERY_SEARCH_USERS = gql`
+  query findUser($username: String ) {
+    findUser(username: $username) {
+      _id
+      username
+      isOnline
+      # friends
+    }
   }
-}
 `
