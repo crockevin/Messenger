@@ -19,8 +19,7 @@ import { useQuery } from '@apollo/client'
 import { useState } from 'react'
 import { QUERY_SEARCH_USERS } from '../../utils/queries'
 import { useRef, useEffect } from 'react'
-import {Link} from 'react-router-dom'
-
+import { Link } from 'react-router-dom'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -63,15 +62,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }))
 
 export default function ProfileHeader() {
-  const inputRef = useRef(null)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
   const [username, setUsername] = useState('')
+  const inputRef = useRef(null) // Ref for the input field
 
   // Update the username search
   const handleSearchInputChange = (event) => {
-  setUsername(event.target.value)
+    setUsername(event.target.value)
   }
+
+
 
   // query usernames based off username variable
   const { data, loading, error } = useQuery(QUERY_SEARCH_USERS, {
@@ -85,13 +86,26 @@ export default function ProfileHeader() {
   const renderSuggestions = () => {
     console.log('suggestions: ' + suggestions)
     return (
-      <Box className='navSuggestions'>
+      <Box className="navSuggestions">
         {suggestions.map((user) => (
-          <Link className='searchLink' to={`/profile/${user._id}`} key={user.id}>{user.username}</Link> // or 'user.id' ?
+          <Link
+            className="searchLink"
+            to={`/profile/${user._id}`}
+            key={user.id}
+          >
+            {user.username}
+          </Link> // or 'user.id' ?
         ))}
       </Box>
     )
   }
+
+  useEffect(() => {
+    // Focus on the input field after each render, but only if it's not already focused
+    if (inputRef.current && document.activeElement !== inputRef.current) {
+      inputRef.current.focus();
+    }
+  });
 
   if (loading) return <p>Loading...</p> // change to loading spinner component
   if (error) return <p>Error: {error.message}</p>
@@ -216,6 +230,7 @@ export default function ProfileHeader() {
               inputProps={{ 'aria-label': 'search' }}
               value={username}
               onChange={handleSearchInputChange}
+              inputRef={inputRef} // Assign the ref to the input field
             />
             {/* Render the suggestions box under the input */}
             {username && <>{renderSuggestions()}</>}
