@@ -21,9 +21,16 @@ export default function NavInbox(props) {
     },
   })
 
+  // refetchQuery added to ensure new data conversation data is Queried + updated to page
   const [sendMessage, { messageData, messageLoading, error }] = useMutation(
     addMessage,
     {
+      refetchQueries: [
+        {
+          query: QUERY_CONVERSATION,
+          variables: { conversationId: props.message },
+        },
+      ],
       variables: {
         senderId: id,
         conversationId: props.message,
@@ -47,7 +54,10 @@ export default function NavInbox(props) {
     return <p>loading</p>
   }
   return (
-    <Grid container direction="column">
+    <Grid
+      container
+      direction="column"
+    >
       {messages &&
         messages.map((message) => (
           <Grid
@@ -56,15 +66,15 @@ export default function NavInbox(props) {
             sx={{
               textAlign: 'center',
               backgroundColor:
-                message.sender._id === id ? '#013440' : '#80ADA0', 
-              color: message.sender._id === id ? '#fff' : '#fff',
-              borderRadius: 10,
+              message.sender._id === id ? '#013440' : '#80ADA0',
+              color: '#fff',
+              borderRadius: 16,
               padding: '0.5rem',
               marginBottom: '0.5rem',
               maxWidth: '70%',
               marginLeft: message.sender._id === id ? 'auto' : 2,
               marginRight: message.sender._id !== id ? 'auto' : 2,
-              marginTop: 1
+              marginTop: 1,
             }}
           >
             <Typography variant="body1">{message.content}</Typography>

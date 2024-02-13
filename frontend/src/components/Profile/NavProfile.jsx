@@ -172,8 +172,13 @@ export default function NavProfile() {
           }}
         >
           <Grid container direction="column" alignItems="center" spacing={2}>
+
+            <Grid item>
+              <Avatar alt="Remy Sharp" src="#" />
+
             <Grid item sx={{ padding: 1 }}>
               <Avatar>U</Avatar>
+
             </Grid>
             <Grid item sx={{ padding: 1 }}>
               <Typography>{friendId.username}</Typography>
@@ -213,11 +218,11 @@ export default function NavProfile() {
                 </Grid>
               </Grid>
             )}
+            </Grid>
           </Grid>
         </Paper>
-      ) }
+       )}
     </Grid>
   )
 }
-
 
