@@ -45,20 +45,32 @@ const isFriend = false
 
 export default function NavProfile() {
   const { id } = useParams()
-
   const currentPage = id
 
-  // boolean to check if profile is yours
-  const myPage = currentPage == auth.getProfile().data._id
-
-  //mediaquery variable to render based on viewport size
-  const smallView = useMediaQuery('(max-width:800px)')
+  console.log('this is just id ' + id)
+  console.log('current page id ' + currentPage)
 
   const { loading, data } = useQuery(QUERY_SINGLE_USER, {
     variables: { 
       id: id,
     },
   })
+  console.log('data ' + data)
+  if (loading) {
+    return <p>Loading...</p> // Replace with loading spinner
+  }
+
+  const user = data?.user // Access the 'username' field from the response data
+  console.log('this is user ', user)
+
+  
+  // boolean to check if profile is yours
+  const myPage = currentPage === auth.getProfile().data._id
+
+  //mediaquery variable to render based on viewport size
+  const smallView = useMediaQuery('(max-width:800px)')
+
+
 
 
   const userId = auth.getProfile().data._id
@@ -77,10 +89,6 @@ export default function NavProfile() {
     })
   }
 
-  if (loading) {
-    return <p>Loading...</p> // Replace with loading spinner
-  }
-  const user = data?.user // Access the 'username' field from the response data
   return (
     //non-specific page layout
     <Grid
@@ -93,7 +101,61 @@ export default function NavProfile() {
       }}
     >
       {/* conditionally renders based on whether the profile is the user's or another user's */}
-      {!myPage ? (
+      {myPage && user ? (
+  <Grid container spacing={3}>
+    <Grid item xs={12} sm={smallView ? 12 : 4}>
+      <Paper
+        elevation={3}
+        sx={{
+          backgroundColor: '#013440',
+          color: '#e4ebf2',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: 2.5,
+          // minHeight: '100%',
+          margin: '0 2%',
+          maxWidth: '100%',
+        }}
+      >
+        <Grid item sx={{ padding: 1.5 }}>
+          <Avatar>U</Avatar>
+        </Grid>
+        <Grid item sx={{ padding: 1.5 }}>
+          <Typography>{user.username}</Typography>
+        </Grid>
+        <Grid item sx={{ padding: 1.5 }}>
+          <Button
+            color="secondary"
+            variant="contained"
+            type="editProfile"
+            href="/settings"
+          >
+            Edit Profile
+          </Button>
+        </Grid>
+      </Paper>
+    </Grid>
+    <Grid item xs={12} sm={smallView ? 12 : 8}>
+      <Paper
+        elevation={3}
+        sx={{
+          backgroundColor: '#e4ebf2',
+          color: '#013440',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: 2.5,
+          margin: '0 2%',
+          minHeight: '100%',
+          maxWidth: '100%',
+        }}
+      >
+          <FriendsList data={data}/>
+      </Paper>
+    </Grid>
+  </Grid>
+) : (
         <Paper
           elevation={3}
           sx={{
@@ -114,7 +176,7 @@ export default function NavProfile() {
               <Avatar>U</Avatar>
             </Grid>
             <Grid item sx={{ padding: 1 }}>
-              <Typography>{user.username}</Typography>
+              <Typography>{id.username}</Typography>
             </Grid>
             {/* send friend request */}
             {/* buttons render base on whether the other user is on current user's friends list */}
@@ -153,63 +215,9 @@ export default function NavProfile() {
             )}
           </Grid>
         </Paper>
-      ) : (
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={smallView ? 12 : 4}>
-            <Paper
-              elevation={3}
-              sx={{
-                backgroundColor: '#013440',
-                color: '#e4ebf2',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: 2.5,
-                // minHeight: '100%',
-                margin: '0 2%',
-                maxWidth: '100%',
-              }}
-            >
-              <Grid item sx={{ padding: 1.5 }}>
-                <Avatar>U</Avatar>
-              </Grid>
-              <Grid item sx={{ padding: 1.5 }}>
-                <Typography>{user.username}</Typography>
-              </Grid>
-              <Grid item sx={{ padding: 1.5 }}>
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  type="editProfile"
-                  href="/settings"
-                >
-                  Edit Profile
-                </Button>
-              </Grid>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={smallView ? 12 : 8}>
-            <Paper
-              elevation={3}
-              sx={{
-                backgroundColor: '#e4ebf2',
-                color: '#013440',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: 2.5,
-                margin: '0 2%',
-                minHeight: '100%',
-                maxWidth: '100%',
-              }}
-            >
-              {/* <Typography>This is where your friends list will go! */}
-                <FriendsList data={data}/>
-              {/* </Typography> */}
-            </Paper>
-          </Grid>
-        </Grid>
-      )}
+      ) }
     </Grid>
   )
 }
+
+
