@@ -40,10 +40,12 @@ check if friend id is on friend list (for profile rendering purposes)
 //   })
 // }
 
+//test for page change
 const isFriend = false
 
 export default function NavProfile() {
   const { id } = useParams()
+
   const currentPage = id
 
   // boolean to check if profile is yours

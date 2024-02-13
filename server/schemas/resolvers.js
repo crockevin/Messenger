@@ -14,6 +14,9 @@ const resolvers = {
       console.log('User Data:', user)
       return user
     },
+    findUser: async (parent, { username }) => {
+      return await User.find({ username: { $regex: username, $options: 'i' } })
+    },
     conversation: async (parent, { id }) => {
       return Conversation.findById(id).populate('messages').populate('users')
     },
