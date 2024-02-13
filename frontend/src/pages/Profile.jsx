@@ -13,6 +13,8 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import { Typography } from '@mui/material'
 
+import { BrowserRouter,Route,Routes }from 'react-router-dom'
+
 // get user by id param, grab user data and spread across page
 export default function Profile() {
   const { id } = useParams()
@@ -36,21 +38,7 @@ export default function Profile() {
   const user = data?.user // Access the 'username' field from the response data
   return (
     <>
-      <ProfileHeader />
-        <Grid container spacing={1}>
-          <Grid item xs={4}>
-
-          </Grid>
-          {/* <Grid item xs={8}>
-            {user ? (
-              <Typography align="center" variant="h4">
-              Welcome, {user.username}! ✅
-              </Typography>
-            ) : (
-            <p>❌ User not found ❌</p>
-            )}
-          </Grid> */}
-        </Grid>
+      
       <ProfileFooterNav />
     </>
   )
