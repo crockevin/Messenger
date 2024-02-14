@@ -71,10 +71,7 @@ export default function SignUp() {
     }
 
     if (formState.password.length < 8) {
-      setErrorMessage(
-        (prevMessage) =>
-          prevMessage + ' Password should be at least 8 characters long'
-      )
+      setErrorMessage((prevMessage) => prevMessage + ' Password should be at least 8 characters long')
     }
 
     if (errorMessage) {
@@ -122,13 +119,8 @@ export default function SignUp() {
             </Alert>
           )}
           {showErrorAlert && (
-            <Alert
-              severity="error"
-              sx={{ width: '100%', mb: 2 }}
-              onClose={handleClearError}
-            >
-              {errorMessage ||
-                'Registration failed! Please be sure all inputs are valid, or try a different username.'}
+            <Alert severity="error" sx={{ width: '100%', mb: 2 }} onClose={handleClearError}>
+              {errorMessage || 'Registration failed! Please be sure all inputs are valid, or try a different username.'}
             </Alert>
           )}
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
