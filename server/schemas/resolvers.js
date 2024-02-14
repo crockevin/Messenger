@@ -166,21 +166,21 @@ const resolvers = {
         console.log(error)
       }
     },
-    updateOnlineStatus: async (parent, { userId, isOnline }) => {
-      try {
-        console.log('test')
-        const user = await User.findById(userId)
-        if (!user) {
-          throw new Error('User not found')
-        }
-        user.isOnline = isOnline
-        await user.save()
-        return `${user.username} status updated`
-      } catch (error) {
-        console.error('Resolver error:', error)
-        throw new Error('Failed to update user status')
-      }
-    },
+    // updateOnlineStatus: async (parent, { userId, isOnline }) => {
+    //   try {
+    //     console.log('test')
+    //     const user = await User.findById(userId)
+    //     if (!user) {
+    //       throw new Error('User not found')
+    //     }
+    //     user.isOnline = isOnline
+    //     await user.save()
+    //     return `${user.username} status updated`
+    //   } catch (error) {
+    //     console.error('Resolver error:', error)
+    //     throw new Error('Failed to update user status')
+    //   }
+    // },
     singleUpload: async (parent, { file, userId }) => {
       const user = await User.findById(userId)
       if (!user) {
