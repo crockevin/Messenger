@@ -143,25 +143,25 @@ const resolvers = {
         throw new Error(e)
       }
     },
-    deleteConversation: async (parent, {conversationId, userId, otherUserId }, context ) => {
+    deleteConversation: async (parent, { conversationId, userId, otherUserId }, context) => {
       try {
         const conversation = await Conversation.findById(conversationId)
-      
-      if (!conversation) {
-        throw new Error('Conversation not found')
-      }
-      const user = await User.findById(userId)
-      if (!user) {
-        throw new Error('User not found')
-      }
-      const otherUser = await User.findById(otherUserId)
-      if (!otherUser) {
-        throw new Error('Other user not found')
-      }
-      await Message.deleteMany({ conversation: conversation._id })
-      await conversation.deleteOne()
-      const newConversation = new Conversation({ users: [user, otherUser] })
-      await newConversation.save()
+
+        if (!conversation) {
+          throw new Error('Conversation not found')
+        }
+        const user = await User.findById(userId)
+        if (!user) {
+          throw new Error('User not found')
+        }
+        const otherUser = await User.findById(otherUserId)
+        if (!otherUser) {
+          throw new Error('Other user not found')
+        }
+        await Message.deleteMany({ conversation: conversation._id })
+        await conversation.deleteOne()
+        const newConversation = new Conversation({ users: [user, otherUser] })
+        await newConversation.save()
       } catch (error) {
         console.log(error)
       }
@@ -180,21 +180,6 @@ const resolvers = {
         console.error('Resolver error:', error)
         throw new Error('Failed to update user status')
       }
-    },
-    singleUpload: async (parent, { file, userId }) => {
-      const user = await User.findById(userId)
-      if (!user) {
-        throw new Error('User not found')
-      }
-      const { createReadStream, filename, mimetype, encoding } = await file
-      const stream = createReadStream()
-      const path = `uploads/${filename}`
-      user.pfp = path
-      console.log(path)
-      await user.save()
-      await stream.pipe(fs.createWriteStream(path))
-
-      return { filename, mimetype, encoding, path }
     },
   },
   Subscription: {
