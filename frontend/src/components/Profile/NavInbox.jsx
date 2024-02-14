@@ -21,33 +21,49 @@ export default function NavInbox() {
   const ref = useRef(null)
   const id = Auth.getProfile().data._id
   const [inbox, setInbox] = useState([])
+
+  // Query users conversations
   const { loading, data } = useQuery(QUERY_SINGLE_USER_CONVERSATIONS, {
     variables: { userId: id },
     onCompleted: (data) => {
       if (data && data.userConversation) {
+        console.log('Conversation Data Object:', data?.userConversation)
         setInbox(data.userConversation)
       }
     },
   })
 
-  // Mutation to delete convo and refetch conversations
+  // Mutation to delete conversation and re-query conversations
   const [deleteConversationMutation] = useMutation(delete_Conversation, {
-      refetchQueries: [
-        { query: QUERY_SINGLE_USER_CONVERSATIONS, variables: { userId: id } },
-      ],
+    refetchQueries: [
+      { query: QUERY_SINGLE_USER_CONVERSATIONS, variables: { userId: id } },
+    ],
+    update: (cache, { data }) => {
+      // Manually update the cache if needed
+    },
+  })
+
+  // Grab convo ID
+  const conversationId = data?.userConversation[0].id
+  console.log('Convo ID:', conversationId)
+
+  // Grab Other User's Id - (current user id already defined as 'id')
+  const otherUserId = data?.userConversation[0]?.otherUser?._id
+  console.log('Other UserId: ', otherUserId)
+  console.log('UserID: ', id)
+
+  // Delete Icon click -> message.otherUser = other user's id
+  // useState on click to change the value to the id, and then useMutation to delete from there
+  const handleDeleteClick = async ({ conversationId, otherUserId, id }) => {
+    try {
+      console.log('Delete convo: ')
+      await deleteConversationMutation({
+        variables: { conversationId, userId: id, otherUserId },
+      })
+    } catch (error) {
+      console.error('Error deleting conversation: ' + error.message)
     }
-  )
-  const deleteConversation = (conversationId) => {
-    deleteConversationMutation({
-      variables: { conversationId },
-    }).catch((error) => {
-      console.error('Error deleting conversation:', error.message);
-    });
-  };
-
-  // message.otherUser = other user's id
-  // useState on click to change the calue to the id and then useMutation to delete from there
-
+  }
 
   ////////// Don't touch:
 
@@ -115,7 +131,15 @@ export default function NavInbox() {
           </List>
           {data.userConversation && data.userConversation.length > 0 ? (
             <Box sx={{ width: '10%', display: 'flex' }}>
-              <ListItemButton onClick={() => deleteConversation(data.userConversation[0].id)}>
+              <ListItemButton
+                onClick={() =>
+                  handleDeleteClick({
+                    conversationId: data.userConversation[0].id,
+                    otherUserId: data.userConversation[0].otherUser._id,
+                    id: id,
+                  })
+                }
+              >
                 <DeleteForeverIcon />
               </ListItemButton>
             </Box>
