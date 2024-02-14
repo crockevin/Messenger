@@ -37,7 +37,7 @@ function Copyright(props) {
 }
 
 export default function SignUp() {
-  const navigate = useNavigate() // Initialize useNavigate hook - on handlesubmit sends to /profile
+  const navigate = useNavigate()
 
   const [formState, setFormState] = useState({
     username: '',
@@ -45,8 +45,9 @@ export default function SignUp() {
     password: '',
   })
 
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false) // Successful sign in alert
-  const [showErrorAlert, setShowErrorAlert] = useState(false) //  Failed sign in alert
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const [AddUser, { error, data }] = useMutation(signup)
 
@@ -61,22 +62,42 @@ export default function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    console.log(formState)
+
+    setErrorMessage('') // Clear previous error message
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formState.email)) {
+      setErrorMessage('Invalid email')
+    }
+
+    if (formState.password.length < 8) {
+      setErrorMessage((prevMessage) => prevMessage + ' Password should be at least 8 characters long')
+    }
+
+    if (errorMessage) {
+      setShowErrorAlert(true)
+      return
+    }
+
     try {
       const { data } = await AddUser({
         variables: { ...formState },
       })
       Auth.login(data.AddUser.token)
-      // Show success alert
       setShowSuccessAlert(true)
-      
+
       setTimeout(() => {
         navigate(`/Profile/${data.AddUser.user._id}`)
-      }, 1500) 
+      }, 1500)
     } catch (e) {
       setShowErrorAlert(true)
       console.error('AddUser Error:', e)
     }
+  }
+
+  const handleClearError = () => {
+    setErrorMessage('')
+    setShowErrorAlert(false)
   }
 
   return (
@@ -92,16 +113,16 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          {/* Render success/failure alert conditionally */}
-          {showSuccessAlert ? (
+          {showSuccessAlert && (
             <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
               Registration successful! Redirecting to profile...
             </Alert>
-          ) : showErrorAlert ? (
-            <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
-              Registration failed! Please be sure all inputs are valid, or try a different username.
+          )}
+          {showErrorAlert && (
+            <Alert severity="error" sx={{ width: '100%', mb: 2 }} onClose={handleClearError}>
+              {errorMessage || 'Registration failed! Please be sure all inputs are valid, or try a different username.'}
             </Alert>
-          ) : null}
+          )}
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon color="primary" />
           </Avatar>
@@ -122,7 +143,7 @@ export default function SignUp() {
                   id="username"
                   label="Username"
                   name="username"
-                  value={formState.name}
+                  value={formState.username}
                   onChange={handleChange}
                 />
               </Grid>
@@ -153,10 +174,9 @@ export default function SignUp() {
               </Grid>
             </Grid>
             <Button
-              TextField="secondary"
-              type="submit"
-              fullWidth
               variant="contained"
+              fullWidth
+              type="submit"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
