@@ -14,6 +14,7 @@ import SingleChat from '../SingleChat'
 import Auth from '../../utils/auth'
 import { Grid } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { delete_Conversation } from '../../utils/mutation'
 
 export default function NavInbox() {
   const [selectedMessage, setSelectedMessage] = useState(null)
@@ -29,10 +30,26 @@ export default function NavInbox() {
     },
   })
 
-  // Click trashcan icon to delete conversation
-  const deleteMessage = () => {
-    console.log('deleting conversation: ')
-  }
+  // Mutation to delete convo and refetch conversations
+  const [deleteConversationMutation] = useMutation(delete_Conversation, {
+      refetchQueries: [
+        { query: QUERY_SINGLE_USER_CONVERSATIONS, variables: { userId: id } },
+      ],
+    }
+  )
+  const deleteConversation = (conversationId) => {
+    deleteConversationMutation({
+      variables: { conversationId },
+    }).catch((error) => {
+      console.error('Error deleting conversation:', error.message);
+    });
+  };
+
+  // message.otherUser = other user's id
+  // useState on click to change the calue to the id and then useMutation to delete from there
+
+
+  ////////// Don't touch:
 
   // const { data: newMessage } = useSubscription(messageAdded, {
   //   variables: { conversationId: conversationId },
@@ -57,7 +74,7 @@ export default function NavInbox() {
   if (selectedMessage) {
     return <SingleChat message={selectedMessage} />
   }
-  console.log(data.userConversation)
+  // console.log(data.userConversation)
   return (
     <Grid container>
       <Grid item xs={12} sx={{ pb: 7 }} ref={ref}>
@@ -98,7 +115,7 @@ export default function NavInbox() {
           </List>
           {data.userConversation && data.userConversation.length > 0 ? (
             <Box sx={{ width: '10%', display: 'flex' }}>
-              <ListItemButton onClick={deleteMessage}>
+              <ListItemButton onClick={() => deleteConversation(data.userConversation[0].id)}>
                 <DeleteForeverIcon />
               </ListItemButton>
             </Box>

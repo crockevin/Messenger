@@ -20,7 +20,25 @@ export default function NavInbox(props) {
       }
     },
   })
-  const [sendMessage, { messageData, messageLoading, error }] = useMutation(addMessage)
+
+  // refetchQuery added to ensure new data conversation data is Queried + updated to page
+  const [sendMessage, { messageData, messageLoading, error }] = useMutation(
+    addMessage,
+    {
+      refetchQueries: [
+        {
+          query: QUERY_CONVERSATION,
+          variables: { conversationId: props.message },
+        },
+      ],
+      variables: {
+        senderId: id,
+        conversationId: props.message,
+        content: sendNewMessage,
+      },
+    }
+  )
+
   const { data: newMessage } = useSubscription(messageAdded, {
     variables: { conversationId: props.message },
   })
@@ -49,50 +67,55 @@ export default function NavInbox(props) {
     return <p>loading</p>
   }
   return (
-    <Container>
-      <Box mt={2}>
-        <Button variant="contained" color="primary">
-          New Message
-        </Button>
-        {/* {showNewMessage && <NewMessage onSend={handleSend} />} */}
-      </Box>
-      <Box mt={2}>
-        <Typography variant="h5" component="div">
-          Messages
-        </Typography>
-        {messages &&
-          messages.map((message) => (
-            <Typography key={message.id} component="div">
-              {message.content} {message.sender._id}
-            </Typography>
-          ))}
-      </Box>
-    </Container>
-  );
+    <Grid
+      container
+      direction="column"
+    >
+      {messages &&
+        messages.map((message) => (
+          <Grid
+            item
+            key={message.id}
+            sx={{
+              textAlign: 'center',
+              backgroundColor:
+              message.sender._id === id ? '#013440' : '#80ADA0',
+              color: '#fff',
+              borderRadius: 16,
+              padding: '0.5rem',
+              marginBottom: '0.5rem',
+              maxWidth: '70%',
+              marginLeft: message.sender._id === id ? 'auto' : 2,
+              marginRight: message.sender._id !== id ? 'auto' : 2,
+              marginTop: 1,
+            }}
+          >
+            <Typography variant="body1">{message.content}</Typography>
+          </Grid>
+        ))}
+      <Grid item sx={{ position: 'fixed', bottom: 57, left: 0, right: 0 }}>
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault() // Prevent the default form submission behavior
+            sendMessage() // Call the sendMessage function to send the new message
+          }}
+        >
+          <TextField
+            onChange={(e) => setSendNewMessage(e.target.value)}
+            fullWidth
+            id="fullWidth"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button type="submit" variant="contained">
+                    Send Message
+                  </Button>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Form>
+      </Grid>
+    </Grid>
+  )
 }
-//export default function SingleChat({ message }) {
-//   return (
-//     <Grid container direction="column">
-//       <Grid item>
-//         <Typography variant="h5">{message.user.username}</Typography>
-//       </Grid>
-//       <Grid item>
-//         <Typography>{message.content}</Typography>
-//       </Grid>
-//       <Grid container direction="row">
-//         <Grid item sx={{ position: 'fixed', bottom: 57, left: 0, right: 0 }}>
-//           <TextField
-//             fullWidth
-//             id="fullWidth"
-//             InputProps={{
-//               endAdornment: <Button variant="contained">Send</Button>,
-//             }}
-//           />
-//         </Grid>
-//       </Grid>
-//       {/* Add more details or rendering logic as needed */}
-//     </Grid>
-//   )
-// }
-
-// sx={{ position: 'fixed', bottom: 60, left: 0, right: 0 }}>

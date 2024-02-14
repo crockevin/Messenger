@@ -1,12 +1,12 @@
 :root {
-    /* Color themse */
-    --primary: #013440;
-    --secondary: #BBDDF2;
-    --third: #e4ebf2;
-    --fourth: #242526;
+  /* Color themse */
+  --primary: #013440;
+  --secondary: #bbddf2;
+  --third: #e4ebf2;
+  --fourth: #242526;
 }
 
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }

@@ -14,6 +14,9 @@ const resolvers = {
       console.log('User Data:', user)
       return user
     },
+    findUser: async (parent, { username }) => {
+      return await User.find({ username: { $regex: username, $options: 'i' } })
+    },
     conversation: async (parent, { id }) => {
       return Conversation.findById(id).populate('messages').populate('users')
     },
@@ -138,6 +141,29 @@ const resolvers = {
         return message
       } catch (e) {
         throw new Error(e)
+      }
+    },
+    deleteConversation: async (parent, {conversationId, userId, otherUserId }, context ) => {
+      try {
+        const conversation = await Conversation.findById(conversationId)
+      
+      if (!conversation) {
+        throw new Error('Conversation not found')
+      }
+      const user = await User.findById(userId)
+      if (!user) {
+        throw new Error('User not found')
+      }
+      const otherUser = await User.findById(otherUserId)
+      if (!otherUser) {
+        throw new Error('Other user not found')
+      }
+      await Message.deleteMany({ conversation: conversation._id })
+      await conversation.deleteOne()
+      const newConversation = new Conversation({ users: [user, otherUser] })
+      await newConversation.save()
+      } catch (error) {
+        console.log(error)
       }
     },
     updateOnlineStatus: async (parent, { userId, isOnline }) => {

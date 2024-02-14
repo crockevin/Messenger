@@ -12,6 +12,14 @@ import ProfileFooterNav from '../components/Profile/ProfileFooterNav'
 import { DeleteUser } from '../utils/mutation'
 import Auth from '../utils/auth'
 
+/*
+TO DO:
+Get page to work
+Add functionality for change Username
+Add functionality for change Password
+Add change PFP/Avatar
+*/ 
+
 const Settings = () => {
   const id = Auth.getProfile().data._id
   const [loading, setLoading] = useState(false)
