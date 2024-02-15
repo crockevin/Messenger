@@ -4,23 +4,57 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
 import Avatar from '@mui/material/Avatar'
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { QUERY_SINGLE_USER_CONVERSATIONS } from '../../utils/queries'
 import { messageAdded } from '../../utils/subscriptions'
 import { useQuery, useSubscription, useMutation } from '@apollo/client'
-import { useParams } from 'react-router-dom'
-import { Box } from '@mui/material'
 import SingleChat from '../SingleChat'
 import Auth from '../../utils/auth'
 import { Grid } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { delete_Conversation } from '../../utils/mutation'
+import { Badge } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 export default function NavInbox() {
   const [selectedMessage, setSelectedMessage] = useState(null)
   const ref = useRef(null)
   const id = Auth.getProfile().data._id
   const [inbox, setInbox] = useState([])
+
+  // Online Status of other user
+  // const onlineStatus = data?.userConversation.otherUser.isOnline
+
+
+  // AVATAR STYLING FOR ONLINE
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      backgroundColor: '#44b700',
+      color: '#44b700',
+      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+      '&::after': {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        borderRadius: '50%',
+        animation: 'ripple 1.2s infinite ease-in-out',
+        border: '1px solid currentColor',
+        content: '""',
+      },
+    },
+    '@keyframes ripple': {
+      '0%': {
+        transform: 'scale(.8)',
+        opacity: 1,
+      },
+      '100%': {
+        transform: 'scale(2.4)',
+        opacity: 0,
+      },
+    },
+  }))
 
   // Query users conversations
   const { loading, data, refetch } = useQuery(QUERY_SINGLE_USER_CONVERSATIONS, {
@@ -35,7 +69,7 @@ export default function NavInbox() {
   })
 
   const convoData = data?.userConversation || {}
-  console.log('Convo Data: ', convoData)
+  // console.log('Convo Data: ', convoData)
 
   // Mutation to delete conversation and re-query conversations
   const [deleteConversation] = useMutation(delete_Conversation, {
@@ -68,10 +102,7 @@ export default function NavInbox() {
     }
   }
 
-  // useEffect(() => {}, [inbox])
-
   ////////// Don't touch:
-
   // const { data: newMessage } = useSubscription(messageAdded, {
   //   variables: { conversationId: conversationId },
   // })
@@ -121,10 +152,19 @@ export default function NavInbox() {
                         onClick={() => handleClick(message.id)}
                       >
                         <ListItemAvatar>
-                          <Avatar
-                            alt={message.otherUser.username}
-                            src={message.otherUser.username}
-                          />
+                          <StyledBadge
+                            overlap="circular"
+                            anchorOrigin={{
+                              vertical: 'bottom',
+                              horizontal: 'right',
+                            }}
+                            variant="dot"               
+                          >
+                            <Avatar
+                              alt={message.otherUser.username}
+                              src={message.otherUser.username}
+                            />
+                          </StyledBadge>
                         </ListItemAvatar>
                         <ListItemText
                           primary={message.otherUser.username}
@@ -132,7 +172,7 @@ export default function NavInbox() {
                         />
                       </ListItemButton>
                     </Grid>
-                    <Grid item xs={1} sx={{ marginRight: 1.8}}>
+                    <Grid item xs={1} sx={{ marginRight: 1.8 }}>
                       <ListItemButton
                         onClick={() =>
                           handleDeleteClick({
