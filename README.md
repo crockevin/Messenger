@@ -30,7 +30,7 @@ Providing sophistication and security, without sacrificing speed.
 
 ## Deployed application link
 
-Deployed application: 
+Deployed application: https://messeger-8qqs.onrender.com/
 
 
 ## How to use?
