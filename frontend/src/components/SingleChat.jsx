@@ -1,17 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { TextField, Typography, Grid, Button } from '@mui/material'
 import { addMessage } from '../utils/mutation'
-import { useMutation, useQuery, useSubscription } from '@apollo/client'
-import { QUERY_CONVERSATION } from '../utils/queries'
-import { messageAdded } from '../utils/subscriptions'
-import auth from '../utils/auth'
-import { Form } from 'react-router-dom'
-import { InputAdornment } from '@mui/material'
+import { useMutation, useQuery, useSubscription } from '@apollo/client';
+import { QUERY_CONVERSATION } from '../utils/queries';
+import { messageAdded } from '../utils/subscriptions';
+
+
 
 export default function NavInbox(props) {
   const id = auth.getProfile().data._id
   const [messages, setMessages] = useState([])
-  const [sendNewMessage, setSendNewMessage] = useState('')
   const { loading, data } = useQuery(QUERY_CONVERSATION, {
     variables: { conversationId: props.message },
     onCompleted: (data) => {
