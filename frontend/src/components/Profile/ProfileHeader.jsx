@@ -20,6 +20,7 @@ import { useState } from 'react'
 import { QUERY_SEARCH_USERS } from '../../utils/queries'
 import { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import Auth from '../../utils/auth'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -127,6 +128,9 @@ export default function ProfileHeader() {
     setAnchorEl(null)
     handleMobileMenuClose()
   }
+  const loggout = () => {
+    Auth.logout()
+  }
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget)
@@ -151,7 +155,7 @@ export default function ProfileHeader() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={loggout}>Logout</MenuItem>
     </Menu>
   )
 
