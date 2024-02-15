@@ -10,7 +10,7 @@ import Container from '@mui/material/Container'
 import NavBar from '../components/Navbar'
 import { Box } from '@mui/material'
 import Alert from '@mui/material/Alert'
-
+import { useEffect } from 'react'
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -28,7 +28,7 @@ function Copyright(props) {
     >
       {'Copyright © '}
       <Link color="inherit" href="/">
-        Messenger App
+        Pulse App
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -38,7 +38,11 @@ function Copyright(props) {
 
 export default function SignUp() {
   const navigate = useNavigate()
-
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      navigate(`/profile/${Auth.getProfile().data._id}`)
+    }
+  }, [])
   const [formState, setFormState] = useState({
     username: '',
     email: '',

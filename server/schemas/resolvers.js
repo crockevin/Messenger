@@ -38,6 +38,17 @@ const resolvers = {
         throw new Error('Error retrieving user conversations')
       }
     },
+    findConversation: async (parent, { userId, friendId }) => {
+      const user = await User.findById(userId)
+      const friend = await User.findById(friendId)
+      if (!user || !friend) {
+        throw new Error('User or friend not found')
+      }
+      const conversation = await Conversation.findOne({
+        users: [userId, friendId],
+      })
+      return conversation
+    },
   },
   Mutation: {
     AddUser: async (parent, { username, email, password }) => {
@@ -134,6 +145,8 @@ const resolvers = {
           throw new Error('Message could not be created')
         }
         conversation.messages.push(message._id)
+        conversation.lastMessage = message.content
+        conversation.lastSender = message.sender
         await conversation.save()
         await message.populate('sender')
         const channel = `MESSAGE_ADDED${conversationId}`
@@ -143,25 +156,25 @@ const resolvers = {
         throw new Error(e)
       }
     },
-    deleteConversation: async (parent, {conversationId, userId, otherUserId }, context ) => {
+    deleteConversation: async (parent, { conversationId, userId, otherUserId }, context) => {
       try {
         const conversation = await Conversation.findById(conversationId)
-      
-      if (!conversation) {
-        throw new Error('Conversation not found')
-      }
-      const user = await User.findById(userId)
-      if (!user) {
-        throw new Error('User not found')
-      }
-      const otherUser = await User.findById(otherUserId)
-      if (!otherUser) {
-        throw new Error('Other user not found')
-      }
-      await Message.deleteMany({ conversation: conversation._id })
-      await conversation.deleteOne()
-      const newConversation = new Conversation({ users: [user, otherUser] })
-      await newConversation.save()
+
+        if (!conversation) {
+          throw new Error('Conversation not found')
+        }
+        const user = await User.findById(userId)
+        if (!user) {
+          throw new Error('User not found')
+        }
+        const otherUser = await User.findById(otherUserId)
+        if (!otherUser) {
+          throw new Error('Other user not found')
+        }
+        await Message.deleteMany({ conversation: conversation._id })
+        await conversation.deleteOne()
+        const newConversation = new Conversation({ users: [user, otherUser] })
+        await newConversation.save()
       } catch (error) {
         console.log(error)
       }
@@ -180,21 +193,6 @@ const resolvers = {
         console.error('Resolver error:', error)
         throw new Error('Failed to update user status')
       }
-    },
-    singleUpload: async (parent, { file, userId }) => {
-      const user = await User.findById(userId)
-      if (!user) {
-        throw new Error('User not found')
-      }
-      const { createReadStream, filename, mimetype, encoding } = await file
-      const stream = createReadStream()
-      const path = `uploads/${filename}`
-      user.pfp = path
-      console.log(path)
-      await user.save()
-      await stream.pipe(fs.createWriteStream(path))
-
-      return { filename, mimetype, encoding, path }
     },
   },
   Subscription: {

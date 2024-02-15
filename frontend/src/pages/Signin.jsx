@@ -17,6 +17,7 @@ import { login } from '../utils/mutation'
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert'
 import Auth from '../utils/auth'
+import { useEffect } from 'react'
 
 // move to own file
 function Copyright(props) {
@@ -29,7 +30,7 @@ function Copyright(props) {
     >
       {'Copyright © '}
       <Link color="inherit" href="/">
-        Messenger App
+        Pulse App
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -38,7 +39,13 @@ function Copyright(props) {
 }
 
 export default function Signin() {
+
   const navigate = useNavigate() // Initialize useNavigate hook - on handlesubmit sends to /profile
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      navigate(`/profile/${Auth.getProfile().data._id}`)
+    }
+  }, [])
 
   const [formState, setFormState] = useState({
     email: '',

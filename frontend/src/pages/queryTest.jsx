@@ -1,48 +1,55 @@
-import { useEffect, useState } from 'react'
-import { QUERY_CONVERSATION } from '../utils/queries'
-import { messageAdded } from '../utils/subscriptions'
-import { addMessage } from '../utils/mutation'
-import { useQuery, useSubscription, useMutation } from '@apollo/client'
-import { useParams } from 'react-router-dom'
+import React, { useState } from 'react';
+import Auth from '../utils/auth'
 
+const UploadForm = () => {
+  const id = Auth.getProfile().data._id
+  const [file, setFile] = useState(null);
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
-function Conversation() {
-  const { conversationId } = useParams()
-  const [messages, setMessages] = useState([])
-  const { loading, data } = useQuery(QUERY_CONVERSATION, {
-    variables: { conversationId: conversationId },
-    onCompleted: (data) => {
-      if (data && data.conversation) {
-        setMessages(data.conversation.messages)
-      }
-    },
-  })
-
-  const { data: newMessage } = useSubscription(messageAdded, {
-    variables: { conversationId: conversationId },
-  })
-
-  useEffect(() => {
-    if (newMessage && newMessage.messageAdded) {
-      const message = newMessage.messageAdded
-      setMessages((prevMessages) => [...prevMessages, message])
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!file) {
+      alert('Please select a file');
+      return;
     }
-  }, [newMessage])
-  if (loading) {
-    return <p>loading</p>
-  }
-  return (
-    <>
-      {messages.length}
-      {messages &&
-        messages.map((message) => (
-          <div key={message.id}>
-            {message.content} {message.sender._id}
-          </div>
-        ))}
-    </>
-  )
-}
 
-export default Conversation
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('userId', id);
+
+    try {
+      const response = await fetch('/uploads', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload file');
+      }
+
+      const responseData = await response.json();
+      console.log(responseData);
+      alert(responseData);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Error uploading file');
+    }
+  };
+  console.log(id)
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <img src='/uploads/65c8404a5808ba7d44be39d80.5grid.png' />
+        <label htmlFor="pfp">Select File:</label>
+        <input type="file" id="pfp" onChange={handleFileChange} />
+      </div>
+      <button type="submit">Upload</button>
+    </form>
+  );
+};
+
+export default UploadForm;
