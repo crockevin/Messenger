@@ -73,12 +73,20 @@ export const QUERY_SINGLE_USER_CONVERSATIONS = gql`
 
 // search bar
 export const QUERY_SEARCH_USERS = gql`
-  query findUser($username: String ) {
+  query findUser($username: String) {
     findUser(username: $username) {
       _id
       username
       isOnline
       # friends
+    }
+  }
+`
+
+export const FIND_ONE_CONVERSATION = gql`
+  query convo($userId: ID!, $friendId: ID!) {
+    findConversation(userId: $userId, friendId: $friendId) {
+      id
     }
   }
 `

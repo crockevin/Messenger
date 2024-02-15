@@ -38,6 +38,17 @@ const resolvers = {
         throw new Error('Error retrieving user conversations')
       }
     },
+    findConversation: async (parent, { userId, friendId }) => {
+      const user = await User.findById(userId)
+      const friend = await User.findById(friendId)
+      if (!user || !friend) {
+        throw new Error('User or friend not found')
+      }
+      const conversation = await Conversation.findOne({
+        users: [userId, friendId],
+      })
+      return conversation
+    },
   },
   Mutation: {
     AddUser: async (parent, { username, email, password }) => {

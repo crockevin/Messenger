@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { Box, Typography, TextField, Button } from '@mui/material'
 import { useParams } from 'react-router-dom'
-// import { useHistory } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client'
 import { QUERY_SINGLE_USER_CONVERSATIONS } from '../../utils/queries'
+import { addMessage } from '../../utils/mutation'
 
 export default function NavNew() {
   const { id } = useParams()
   const [recipientId, setRecipientId] = useState('')
   const [message, setMessage] = useState('')
   const [alertMessage, setAlertMessage] = useState('')
-  const history = useHistory()
+  //const history = useHistory()
 
   const { loading, data } = useQuery(QUERY_SINGLE_USER_CONVERSATIONS, {
     variables: { userId: recipientId },
@@ -85,7 +85,7 @@ export default function NavNew() {
     </Box>
   )
 }
-     // OLD CODE !!
+// OLD CODE !!
 // import React, { useState } from 'react';
 // import { Box, Typography, TextField, Button } from '@mui/material';
 // import { useParams } from 'react-router-dom';
