@@ -36,6 +36,7 @@ export default function NavInbox(props) {
         conversationId: props.message,
         content: sendNewMessage,
       },
+      // onCompleted: ()
     }
   )
 
@@ -68,10 +69,7 @@ export default function NavInbox(props) {
     return <p>loading</p>
   }
   return (
-    <Grid
-      container
-      direction="column"
-    >
+    <Grid container direction="column">
       {messages &&
         messages.map((message) => (
           <Grid
