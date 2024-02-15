@@ -8,7 +8,8 @@
     "develop": "concurrently \"cd server && npm run dev\" \"cd frontend && npm run dev\"",
     "install": "cd server && npm i && cd ../frontend && npm i",
     "seed": "cd server && npm run seed",
-    "build": "cd frontend && npm run build"
+    "build": "cd frontend && npm run build",
+    "render-build":"npm install && npm run build"
   },
   "keywords": [],
   "author": "",
