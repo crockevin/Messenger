@@ -1,4 +1,12 @@
-import React from 'react';
+import React from 'react'
+
+
+import List from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import ListItemText from '@mui/material/ListItemText'
+import Avatar from '@mui/material/Avatar'
+import { Typography, Box, Button, Grid } from '@mui/material'
 
 function FriendsList({ data }) {
   if (!data || !data.user) {
@@ -8,13 +16,13 @@ function FriendsList({ data }) {
   const { friends } = data.user;
 
   return (
-    <div>
-      <h2>Friends List</h2>
+    <Grid container>
+      <Typography variant='h2'>Friends List</Typography>
       {friends.length === 0 ? (
-        <p>Get some friends!</p>
+        <Typography>Get some friends!</Typography>
       ) : (
-        <div>
-          <p>Total Friends: {friends.length}</p>
+        <Grid container>
+          <Typography>Total Friends: {friends.length}</Typography>
           <ul>
             {friends.map(friends => (
               <li key={friends._id}>
@@ -22,9 +30,9 @@ function FriendsList({ data }) {
               </li>
             ))}
           </ul>
-        </div>
+          </Grid>
       )}
-    </div>
+    </Grid>
   );
 }
 
