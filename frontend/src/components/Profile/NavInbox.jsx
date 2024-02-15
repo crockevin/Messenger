@@ -23,47 +23,52 @@ export default function NavInbox() {
   const [inbox, setInbox] = useState([])
 
   // Query users conversations
-  const { loading, data } = useQuery(QUERY_SINGLE_USER_CONVERSATIONS, {
+  const { loading, data, refetch } = useQuery(QUERY_SINGLE_USER_CONVERSATIONS, {
     variables: { userId: id },
     onCompleted: (data) => {
       if (data && data.userConversation) {
         console.log('Conversation Data Object:', data?.userConversation)
         setInbox(data.userConversation)
+        console.log('Inbox: ', inbox)
       }
     },
   })
 
+  const convoData = data?.userConversation || {}
+  console.log('Convo Data: ', convoData)
+
   // Mutation to delete conversation and re-query conversations
-  const [deleteConversationMutation] = useMutation(delete_Conversation, {
+  const [deleteConversation] = useMutation(delete_Conversation, {
     refetchQueries: [
-      { query: QUERY_SINGLE_USER_CONVERSATIONS, variables: { userId: id } },
+      {
+        query: QUERY_SINGLE_USER_CONVERSATIONS,
+        variables: { userId: id },
+      },
     ],
-    update: (cache, { data }) => {
-      // Manually update the cache if needed
+    onCompleted: (data) => {
+      console.log('Delete Mutation Completed:', data)
     },
   })
 
-  // Grab convo ID
-  const conversationId = data?.userConversation[0].id
-  console.log('Convo ID:', conversationId)
-
-  // Grab Other User's Id - (current user id already defined as 'id')
-  const otherUserId = data?.userConversation[0]?.otherUser?._id
-  console.log('Other UserId: ', otherUserId)
-  console.log('UserID: ', id)
-
-  // Delete Icon click -> message.otherUser = other user's id
-  // useState on click to change the value to the id, and then useMutation to delete from there
+  // Delete convo on Icon click
   const handleDeleteClick = async ({ conversationId, otherUserId, id }) => {
     try {
-      console.log('Delete convo: ')
-      await deleteConversationMutation({
+      console.log('Deleting convo: ', conversationId)
+      await deleteConversation({
         variables: { conversationId, userId: id, otherUserId },
       })
+      // MANUALLY refetch the conversation data (bc refetchQuery isn't working)
+      await refetch()
+      // // Update the local state to reflect the changes immediately
+      // setInbox((prevInbox) =>
+      //   prevInbox.filter((conversation) => conversation.id !== conversationId)
+      // )
     } catch (error) {
       console.error('Error deleting conversation: ' + error.message)
     }
   }
+
+  // useEffect(() => {}, [inbox])
 
   ////////// Don't touch:
 
@@ -90,14 +95,14 @@ export default function NavInbox() {
   if (selectedMessage) {
     return <SingleChat message={selectedMessage} />
   }
-  // console.log(data.userConversation)
   return (
-    <Grid container>
-      <Grid item xs={12} sx={{ pb: 7 }} ref={ref}>
-        <CssBaseline />
-        <Box
-          sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-        >
+    <Grid container xs={12} sx={{ pb: 7 }} ref={ref}>
+      <CssBaseline />
+      <Grid
+        container
+        sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+      >
+        <Grid container>
           <List
             sx={{
               flex: '1',
@@ -106,45 +111,46 @@ export default function NavInbox() {
               alignItems: 'center',
             }}
           >
-            {inbox &&
-              inbox.map((message) => {
-                return (
-                  message.lastMessage && (
-                    <ListItemButton
-                      key={message.id}
-                      onClick={() => handleClick(message.id)}
-                    >
-                      <ListItemAvatar>
-                        <Avatar
-                          alt={message.otherUser.username}
-                          src={message.otherUser.username}
+            {convoData.map((message) => {
+              return (
+                message.lastMessage && (
+                  <>
+                    <Grid item xs={11}>
+                      <ListItemButton
+                        key={message.id}
+                        onClick={() => handleClick(message.id)}
+                      >
+                        <ListItemAvatar>
+                          <Avatar
+                            alt={message.otherUser.username}
+                            src={message.otherUser.username}
+                          />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={message.otherUser.username}
+                          secondary={message.lastMessage}
                         />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={message.otherUser.username}
-                        secondary={message.lastMessage}
-                      />
-                    </ListItemButton>
-                  )
+                      </ListItemButton>
+                    </Grid>
+                    <Grid item xs={1} sx={{ marginRight: 1.8}}>
+                      <ListItemButton
+                        onClick={() =>
+                          handleDeleteClick({
+                            conversationId: data.userConversation[0].id,
+                            otherUserId: data.userConversation[0].otherUser._id,
+                            id: id,
+                          })
+                        }
+                      >
+                        <DeleteForeverIcon />
+                      </ListItemButton>
+                    </Grid>
+                  </>
                 )
-              })}
+              )
+            })}
           </List>
-          {data.userConversation && data.userConversation.length > 0 ? (
-            <Box sx={{ width: '10%', display: 'flex' }}>
-              <ListItemButton
-                onClick={() =>
-                  handleDeleteClick({
-                    conversationId: data.userConversation[0].id,
-                    otherUserId: data.userConversation[0].otherUser._id,
-                    id: id,
-                  })
-                }
-              >
-                <DeleteForeverIcon />
-              </ListItemButton>
-            </Box>
-          ) : null}
-        </Box>
+        </Grid>
       </Grid>
     </Grid>
   )

@@ -36,6 +36,7 @@ export default function NavInbox(props) {
         conversationId: props.message,
         content: sendNewMessage,
       },
+      // onCompleted: ()
     }
   )
 
@@ -54,10 +55,7 @@ export default function NavInbox(props) {
     return <p>loading</p>
   }
   return (
-    <Grid
-      container
-      direction="column"
-    >
+    <Grid container direction="column">
       {messages &&
         messages.map((message) => (
           <Grid
@@ -66,7 +64,7 @@ export default function NavInbox(props) {
             sx={{
               textAlign: 'center',
               backgroundColor:
-              message.sender._id === id ? '#013440' : '#80ADA0',
+                message.sender._id === id ? '#013440' : '#80ADA0',
               color: '#fff',
               borderRadius: 16,
               padding: '0.5rem',
