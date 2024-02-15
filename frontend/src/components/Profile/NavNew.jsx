@@ -1,134 +1,88 @@
-import React, { useState } from 'react'
-import { Box, Typography, TextField, Button } from '@mui/material'
-import { useParams } from 'react-router-dom'
-import { useQuery, useMutation } from '@apollo/client'
+import CssBaseline from '@mui/material/CssBaseline'
+import List from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import ListItemText from '@mui/material/ListItemText'
+import Avatar from '@mui/material/Avatar'
+import { useEffect, useState, useRef } from 'react'
 import { QUERY_SINGLE_USER_CONVERSATIONS } from '../../utils/queries'
-import { addMessage } from '../../utils/mutation'
+import { messageAdded } from '../../utils/subscriptions'
+import { useQuery, useSubscription, useMutation } from '@apollo/client'
+import { useParams } from 'react-router-dom'
+import { Box } from '@mui/material'
+import SingleChat from '../SingleChat'
+import Auth from '../../utils/auth'
+import { Grid } from '@mui/material'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { delete_Conversation } from '../../utils/mutation'
 
-export default function NavNew() {
-  const { id } = useParams()
-  const [recipientId, setRecipientId] = useState('')
-  const [message, setMessage] = useState('')
-  const [alertMessage, setAlertMessage] = useState('')
-  //const history = useHistory()
-
+export default function NavInbox() {
+  const [selectedMessage, setSelectedMessage] = useState(null)
+  const ref = useRef(null)
+  const id = Auth.getProfile().data._id
+  const [inbox, setInbox] = useState([])
   const { loading, data } = useQuery(QUERY_SINGLE_USER_CONVERSATIONS, {
-    variables: { userId: recipientId },
-    onError: (error) => {
-      setAlertMessage('User not found')
-    },
-  })
-
-  const [sendMessage] = useMutation(addMessage, {
+    variables: { userId: id },
     onCompleted: (data) => {
-      console.log('Message sent successfully', data)
-
-      history.push(`/singlechat/${data.addMessage.conversationId}`)
-    },
-    onError: (error) => {
-      console.error('Error sending message', error)
+      if (data && data.userConversation) {
+        setInbox(data.userConversation)
+      }
     },
   })
 
-  const handleSendMessage = () => {
-    if (!message.trim()) {
-      setAlertMessage('Please enter a message')
-      return
-    }
-
-    sendMessage({
-      variables: {
-        senderId: id,
-        conversationId: data.userConversation.id,
-        content: message,
-      },
-    })
+  const handleClick = (message) => {
+    setSelectedMessage(message)
   }
 
+  if (loading) {
+    return <p>loading...</p>
+  }
+
+  // Render a new component when a message is selected
+  if (selectedMessage) {
+    return <SingleChat message={selectedMessage} />
+  }
+  // console.log(data.userConversation)
   return (
-    <Box
-      sx={{
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '300px',
-        backgroundColor: '#fff',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-        borderRadius: '8px',
-        padding: '20px',
-      }}
-    >
-      <Typography variant="h5" sx={{ marginBottom: '20px' }}>
-        New Message
-      </Typography>
-      <TextField
-        label="Recipient"
-        fullWidth
-        value={recipientId}
-        onChange={(e) => setRecipientId(e.target.value)}
-        sx={{ marginBottom: '20px' }}
-      />
-      <TextField
-        label="Message"
-        multiline
-        rows={4}
-        fullWidth
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        sx={{ marginBottom: '20px' }}
-      />
-      <Button variant="contained" onClick={handleSendMessage}>
-        Send
-      </Button>
-      {alertMessage && <Typography color="error">{alertMessage}</Typography>}
-    </Box>
+    <Grid container>
+      <Grid item xs={12} sx={{ pb: 7 }} ref={ref}>
+        <CssBaseline />
+        <Box
+          sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        >
+          <List
+            sx={{
+              flex: '1',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            {inbox &&
+              inbox.map((message) => {
+                return (
+                  !message.lastMessage && (
+                    <ListItemButton
+                      key={message.id}
+                      onClick={() => handleClick(message.id)}
+                    >
+                      <ListItemAvatar>
+                        <Avatar
+                          alt={message.otherUser.username}
+                          src={message.otherUser.username}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={message.otherUser.username}
+                        secondary={message.lastMessage}
+                      />
+                    </ListItemButton>
+                  )
+                )
+              })}
+          </List>
+        </Box>
+      </Grid>
+    </Grid>
   )
 }
-// OLD CODE !!
-// import React, { useState } from 'react';
-// import { Box, Typography, TextField, Button } from '@mui/material';
-// import { useParams } from 'react-router-dom';
-
-// export default function NavNew() {
-//     const { id } = useParams();
-//     const [message, setMessage] = useState('');
-
-//     const sendMessage = () => {
-//
-//         console.log("Message sent:", message);
-//     };
-
-//     return (
-//         <Box
-//             sx={{
-//                 position: 'fixed',
-//                 top: '50%',
-//                 left: '50%',
-//                 transform: 'translate(-50%, -50%)',
-//                 width: '300px',
-//                 backgroundColor: '#fff',
-//                 boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-//                 borderRadius: '8px',
-//                 padding: '20px',
-//             }}
-//         >
-//             <Typography variant="h5" sx={{ marginBottom: '20px' }}>New Message</Typography>
-//             <TextField
-//                 label="Recipient"
-//                 fullWidth
-//                 sx={{ marginBottom: '20px' }}
-//             />
-//             <TextField
-//                 label="Message"
-//                 multiline
-//                 rows={4}
-//                 fullWidth
-//                 value={message}
-//                 onChange={(e) => setMessage(e.target.value)}
-//                 sx={{ marginBottom: '20px' }}
-//             />
-//             <Button variant="contained" onClick={sendMessage}>Send</Button>
-//         </Box>
-//     );
-// }

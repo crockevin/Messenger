@@ -36,16 +36,20 @@ export default function NavProfile() {
       id: id,
     },
   })
-  
-  const user = data?.user
-  // console.log('this is user ', data)
-  
+
+  if (loading) {
+    return <p>Loading...</p> // Replace with loading spinner
+  }
+
+  const user = data?.user // Access the 'username' field from the response data
+  console.log('this is user ', user)
+
   // boolean to check if profile is yours
   const myPage = currentPage === auth.getProfile().data._id
-  
+
   //mediaquery variable to render based on viewport size
   const smallView = useMediaQuery('(max-width:800px)')
-  
+
   const userId = auth.getProfile().data._id
   const friendId = id
 

@@ -38,7 +38,11 @@ function Copyright(props) {
 
 export default function SignUp() {
   const navigate = useNavigate()
-
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      navigate(`/profile/${Auth.getProfile().data._id}`)
+    }
+  }, [])
   const [formState, setFormState] = useState({
     username: '',
     email: '',

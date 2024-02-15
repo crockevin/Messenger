@@ -145,6 +145,8 @@ const resolvers = {
           throw new Error('Message could not be created')
         }
         conversation.messages.push(message._id)
+        conversation.lastMessage = message.content
+        conversation.lastSender = message.sender
         await conversation.save()
         await message.populate('sender')
         const channel = `MESSAGE_ADDED${conversationId}`

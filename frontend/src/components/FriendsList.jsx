@@ -12,7 +12,6 @@ function FriendsList({ data }) {
   if (!data || !data.user) {
     return <div>Loading...</div>;
   }
-
   const { friends } = data.user;
 
   return (

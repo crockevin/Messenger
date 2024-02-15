@@ -21,7 +21,7 @@ const UploadForm = () => {
     formData.append('userId', id);
 
     try {
-      const response = await fetch('http://localhost:3001/uploads', {
+      const response = await fetch('/uploads', {
         method: 'POST',
         body: formData,
       });
@@ -43,6 +43,7 @@ const UploadForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
+        <img src='/uploads/65c8404a5808ba7d44be39d80.5grid.png' />
         <label htmlFor="pfp">Select File:</label>
         <input type="file" id="pfp" onChange={handleFileChange} />
       </div>

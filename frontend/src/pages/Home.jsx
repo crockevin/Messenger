@@ -1,7 +1,18 @@
 import { Typography, Button, Grid } from '@mui/material'
 import NavBar from '../components/Navbar'
-
+import Auth from '../utils/auth'
+import { Navigate, redirect } from 'react-router-dom'
+import Profile from './Profile'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 export default function Home() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      navigate(`/profile/${Auth.getProfile().data._id}`)
+    }
+  }, [])
   return (
     <>
       <NavBar />

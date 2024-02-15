@@ -10,6 +10,7 @@ import { useMutation } from '@apollo/client'
 import { onlineStatus } from './utils/mutation'
 import { useEffect } from 'react'
 import Auth from './utils/auth'
+import { createHttpLink } from '@apollo/client'
 
 // Custom Theme instance - Colors, Fonts, etc go here for global use/overriding default values
 const theme = createTheme({
@@ -40,7 +41,9 @@ import Profile from './pages/Profile'
 import Conversation from './pages/queryTest'
 import Settings from './pages/Settings'
 import ErrorPage from './pages/ErrorPage'
-
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
@@ -51,7 +54,7 @@ const router = createBrowserRouter(
       <Route path="Profile/:id" element={<Profile />} />
       <Route path="conversation/:conversationId" element={<Conversation />} />
       <Route path="Settings" element={<Settings />} />
-      <Route path='*' element={<ErrorPage/>} />
+      <Route path='*' element={<ErrorPage />} />
     </Route>
   )
 )
@@ -91,6 +94,7 @@ function App() {
       }
     }, [])
   }
+
   return (
     <ThemeProvider theme={theme}>
       <RouterProvider router={router} />
