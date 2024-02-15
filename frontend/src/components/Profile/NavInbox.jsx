@@ -32,10 +32,10 @@ export default function NavInbox() {
 
   // Mutation to delete convo and refetch conversations
   const [deleteConversationMutation] = useMutation(delete_Conversation, {
-      refetchQueries: [
-        { query: QUERY_SINGLE_USER_CONVERSATIONS, variables: { userId: id } },
-      ],
-    }
+    refetchQueries: [
+      { query: QUERY_SINGLE_USER_CONVERSATIONS, variables: { userId: id } },
+    ],
+  }
   )
   const deleteConversation = (conversationId) => {
     deleteConversationMutation({
@@ -61,7 +61,7 @@ export default function NavInbox() {
   //     setMessages((prevMessages) => [...prevMessages, message])
   //   }
   // }, [newMessage])
-
+  console.log(data)
   const handleClick = (message) => {
     setSelectedMessage(message)
   }
@@ -113,13 +113,6 @@ export default function NavInbox() {
                 )
               })}
           </List>
-          {data.userConversation && data.userConversation.length > 0 ? (
-            <Box sx={{ width: '10%', display: 'flex' }}>
-              <ListItemButton onClick={() => deleteConversation(data.userConversation[0].id)}>
-                <DeleteForeverIcon />
-              </ListItemButton>
-            </Box>
-          ) : null}
         </Box>
       </Grid>
     </Grid>

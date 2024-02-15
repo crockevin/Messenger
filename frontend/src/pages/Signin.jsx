@@ -38,7 +38,13 @@ function Copyright(props) {
 }
 
 export default function Signin() {
+
   const navigate = useNavigate() // Initialize useNavigate hook - on handlesubmit sends to /profile
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      navigate(`/profile/${Auth.getProfile().data._id}`)
+    }
+  }, [])
 
   const [formState, setFormState] = useState({
     email: '',
