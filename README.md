@@ -1,5 +1,5 @@
-# Messenger
-Providing sophistication and security, without sacrificng speed.
+# Pulse
+Providing sophistication and security, without sacrificing speed.
 
 ## Motivation
 - To create an instant messenger application using the MERN stack.
