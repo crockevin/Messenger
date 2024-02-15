@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { TextField, Typography, Grid, Button } from '@mui/material'
 import { addMessage } from '../utils/mutation'
 import { useMutation, useQuery, useSubscription } from '@apollo/client'
@@ -51,6 +51,20 @@ export default function NavInbox(props) {
     }
   }, [newMessage])
 
+  // Reference for scrolling to bottom of chat container
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  }, [messages]);
+
+  const handleSendMessage = () => {
+    sendMessage();
+    setSendNewMessage('');
+  };
+
   if (loading) {
     return <p>loading</p>
   }
@@ -78,14 +92,16 @@ export default function NavInbox(props) {
             <Typography variant="body1">{message.content}</Typography>
           </Grid>
         ))}
+      <div ref={messagesEndRef} /> {/* Empty div for scrolling to bottom */}
       <Grid item sx={{ position: 'fixed', bottom: 57, left: 0, right: 0 }}>
         <Form
           onSubmit={(e) => {
-            e.preventDefault() // Prevent the default form submission behavior
-            sendMessage() // Call the sendMessage function to send the new message
+            e.preventDefault(); // Prevent the default form submission behavior
+            handleSendMessage(); // Call the sendMessage function to send the new message
           }}
         >
           <TextField
+            value={sendNewMessage}
             onChange={(e) => setSendNewMessage(e.target.value)}
             fullWidth
             id="fullWidth"
