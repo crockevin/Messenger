@@ -30,7 +30,7 @@ function Copyright(props) {
     >
       {'Copyright © '}
       <Link color="inherit" href="/">
-        Messenger App
+        Pulse App
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
