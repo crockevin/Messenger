@@ -46,7 +46,7 @@ type Query {
     user(id: ID!): User
     conversation(id: ID!): Conversation
     userConversation(userId:ID!): [UserConversation]
-    
+    findConversation(userId: ID!, friendId: ID!): Conversation
 }
 
 type Subscription {
