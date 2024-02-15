@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useMatches, useParams } from 'react-router-dom'
+import { Navigate, useMatches, useParams } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client'
 
 import { Typography, Box, Button, useMediaQuery } from '@mui/material'
@@ -7,14 +7,19 @@ import { Avatar } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 
-import { QUERY_SINGLE_USER } from '../../utils/queries'
+import { QUERY_SINGLE_USER, FIND_ONE_CONVERSATION } from '../../utils/queries'
 import { addFriend } from '../../utils/mutation'
 import auth from '../../utils/auth'
 import App from '../../App'
 import FriendsList from '../FriendsList'
+import NavInbox from './NavInbox'
 
 /*
 TO DO:
+Top Priority:
+'Send Message Button' links to inbox/messages
+'Friends List' friend items link to inbox/messages
+
 page swap if user is on currentUser friend list
 Remove friend button functionality added later
 Avatar/PFP corrections
@@ -22,14 +27,11 @@ Generate a default avatar based on username
 check if friend id is on friend list (for profile rendering purposes)
 */
 
-//test for page change
-// const isFriend = false
-
 export default function NavProfile() {
   const { id } = useParams()
   const currentPage = id
 
-  const { loading, data } = useQuery(QUERY_SINGLE_USER, {
+  const { userLoading, data } = useQuery(QUERY_SINGLE_USER, {
     variables: {
       id: id,
     },
@@ -38,7 +40,6 @@ export default function NavProfile() {
   if (loading) {
     return <p>Loading...</p> // Replace with loading spinner
   }
-
 
   const user = data?.user // Access the 'username' field from the response data
   console.log('this is user ', user)
@@ -51,12 +52,9 @@ export default function NavProfile() {
 
   const userId = auth.getProfile().data._id
   const friendId = id
-  // console.log('friendid ' + friendId)
-  // console.log('userid ' + userId)
 
-  const isFriend = false
-  // auth.getProfile().data
-  // console.log('isFriend ' + isFriend)
+  //test variable to be changed later
+  const isFriend = true
 
   const [
     addFriendMutation,
@@ -76,7 +74,22 @@ export default function NavProfile() {
         friendId: friendId,
       },
     })
+  }
 
+  const { convoLoading, Data } =useQuery(FIND_ONE_CONVERSATION, {
+    variables: {
+      userId: userId,
+      friendId: friendId,
+    }
+  })
+
+  const handleSendMessage = () => {
+    console.log('Message Sent')   
+    console.log('this is convo ' + Data)
+  }
+ 
+  if (userLoading || convoLoading) {
+    return <p>Loading...</p>
   }
 
   return (
@@ -196,7 +209,7 @@ export default function NavProfile() {
                     color="secondary"
                     variant="contained"
                     type="newMessage"
-                    href="#"
+                    onClick={handleSendMessage}
                   >
                     Send Message
                   </Button>
@@ -206,6 +219,7 @@ export default function NavProfile() {
           </Grid>
         </Paper>
       )}
+      
     </Grid>
   )
 }
