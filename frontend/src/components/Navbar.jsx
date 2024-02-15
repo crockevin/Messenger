@@ -131,4 +131,5 @@ function NavBar() {
     </AppBar>
   )
 }
+
 export default NavBar
