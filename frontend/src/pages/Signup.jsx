@@ -10,7 +10,7 @@ import Container from '@mui/material/Container'
 import NavBar from '../components/Navbar'
 import { Box } from '@mui/material'
 import Alert from '@mui/material/Alert'
-
+import { useEffect } from 'react'
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'

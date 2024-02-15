@@ -37,7 +37,7 @@ export default function NavProfile() {
     },
   })
 
-  if (loading) {
+  if (userLoading) {
     return <p>Loading...</p> // Replace with loading spinner
   }
 
@@ -76,7 +76,7 @@ export default function NavProfile() {
     })
   }
 
-  const { convoLoading, Data } =useQuery(FIND_ONE_CONVERSATION, {
+  const { convoLoading, Data } = useQuery(FIND_ONE_CONVERSATION, {
     variables: {
       userId: userId,
       friendId: friendId,
@@ -84,10 +84,10 @@ export default function NavProfile() {
   })
 
   const handleSendMessage = () => {
-    console.log('Message Sent')   
+    console.log('Message Sent')
     console.log('this is convo ' + Data)
   }
- 
+
   if (userLoading || convoLoading) {
     return <p>Loading...</p>
   }
@@ -219,7 +219,7 @@ export default function NavProfile() {
           </Grid>
         </Paper>
       )}
-      
+
     </Grid>
   )
 }
