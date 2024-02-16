@@ -37,12 +37,8 @@ export default function NavProfile() {
     },
   })
 
-  if (userLoading) {
-    return <p>Loading...</p> // Replace with loading spinner
-  }
-
-  const user = data?.user // Access the 'username' field from the response data
-  console.log('this is user ', user)
+  const user = data?.user
+  // console.log('this is user ', data)
 
   // boolean to check if profile is yours
   const myPage = currentPage === auth.getProfile().data._id
@@ -54,7 +50,7 @@ export default function NavProfile() {
   const friendId = id
 
   //test variable to be changed later
-  const isFriend = true
+  const isFriend = false
 
   const [
     addFriendMutation,
