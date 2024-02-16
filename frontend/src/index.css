@@ -29,9 +29,14 @@
 }
 
 .searchLink {
+
+  color: black;
+  text-decoration: none;
+}
+
+.searchLink:hover {
+  background-color: #01344063;
+
     color: black;
     text-decoration: none;
-}
-.searchLink:hover {
-    background-color: #01344063;
 }

@@ -33,7 +33,7 @@ const authLink = setContext((_, { headers }) => {
 httpLink = authLink.concat(httpLink)
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://messeger-8qqs.onrender.com/graphql',
+  uri: 'ws://localhost:3001/graphql',
   options: {
     reconnect: true,
   }
