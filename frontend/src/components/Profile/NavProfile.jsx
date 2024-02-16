@@ -13,6 +13,7 @@ import auth from '../../utils/auth'
 import App from '../../App'
 import FriendsList from '../FriendsList'
 import NavInbox from './NavInbox'
+import NavNew from './NavNew'
 
 /*
 TO DO:
@@ -42,7 +43,7 @@ export default function NavProfile() {
   }
 
   const user = data?.user // Access the 'username' field from the response data
-  console.log('this is user ', user)
+  // console.log('this is user ', user)
 
   // boolean to check if profile is yours
   const myPage = currentPage === auth.getProfile().data._id
@@ -52,9 +53,6 @@ export default function NavProfile() {
 
   const userId = auth.getProfile().data._id
   const friendId = id
-
-  //test variable to be changed later
-  const isFriend = true
 
   const [
     addFriendMutation,
@@ -76,21 +74,35 @@ export default function NavProfile() {
     })
   }
 
-  const { convoLoading, Data } = useQuery(FIND_ONE_CONVERSATION, {
-    variables: {
-      userId: userId,
-      friendId: friendId,
-    }
-  })
+  // const { convoLoading, Data } = useQuery(FIND_ONE_CONVERSATION, {
+  //   variables: {
+  //     userId: userId,
+  //     friendId: friendId,
+  //   }
+  // })
 
-  const handleSendMessage = () => {
-    console.log('Message Sent')
-    console.log('this is convo ' + Data)
-  }
+  console.log('convo data ' + Data)
 
-  if (userLoading || convoLoading) {
-    return <p>Loading...</p>
-  }
+  // const handleSendMessage = () => {
+  //   if (!Data){
+  // } 
+
+
+  
+  
+  // function SendMessage({ handleSendMessage }) {
+  //   const { loading, error, data } = useQuery(FIND_ONE_CONVERSATION, {
+  //     variables: {
+  //       userId: userId,
+  //       friendId: friendId,
+  //     }
+  //   })
+  //   if (loading) return 'Loading'
+  //   if (error) return `Error ${error.message}`
+  // }
+  
+   //test variable to be changed later
+   const isFriend = false
 
   return (
     //non-specific page layout
@@ -222,6 +234,6 @@ export default function NavProfile() {
 
     </Grid>
   )
-}
 
+}
 //65cbdf4942719f9ce4389dfa
